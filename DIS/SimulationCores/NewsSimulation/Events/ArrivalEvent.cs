@@ -15,7 +15,13 @@ namespace DIS.SimulationCores.NewsSimulation.Events
 
         public override void Execute()
         {
-            throw new NotImplementedException();
+            base.Execute();
+
+            var core = ((NewsStand)_myCore);
+            core._working = true;
+            core._totalWaitingTime = core._actualTime - _customer._arrivalTime;
+
+            core.AddEvent(new StartEvent(core._actualTime, core, _customer));
         }
     }
 }

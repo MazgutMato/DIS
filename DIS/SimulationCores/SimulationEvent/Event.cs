@@ -14,6 +14,12 @@ namespace DIS.SimulationCores.SimulationEvent
             _eventTime = eventTime;
             _myCore = core;
         }
-        public abstract void Execute();
+        public virtual void Execute()
+        {
+            if( _myCore._actualTime > _eventTime )
+            {
+                throw new Exception("Invalid event time!");
+            }
+        }
     }
 }

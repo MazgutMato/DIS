@@ -8,7 +8,9 @@ namespace DIS.SimulationCores.NewsSimulation
 {
     public class Customer
     {
-        public double _waitingTime { get; set; }
-        public Customer() { }
+        public double _arrivalTime { get; set; }
+        public Customer(double arrivalTime) { 
+            _arrivalTime = arrivalTime;
+        }
     }
 }
