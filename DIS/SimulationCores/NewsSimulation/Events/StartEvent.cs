@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DIS.SimulationCores.SimulationEvent;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,17 @@ using System.Threading.Tasks;
 
 namespace DIS.SimulationCores.NewsSimulation.Events
 {
-    internal class StartEvent
+    public class StartEvent : NewsEvent
     {
+        public StartEvent(double eventTime, EventCore core, Customer customer) : base(eventTime, core, customer)
+        {
+        }
+
+        public override void Execute()
+        {
+            base.Execute();
+
+
+        }
     }
 }
