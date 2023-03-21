@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.SimulationCores
+namespace DIS.SimulationCores.RouteSimulation
 {
     public class RouteCoreA : SimulationCore
     {
@@ -13,8 +13,8 @@ namespace DIS.SimulationCores
         public double _elapsedTime { get; set; }
         public double _waitingTime { get; set; }
         public RouteCoreA(int repCount) : base(repCount)
-        {            
-            _waitingTime = 0;         
+        {
+            _waitingTime = 0;
             _elapsedTime = 0;
         }
         protected override void BeforeSimulation()
@@ -50,17 +50,17 @@ namespace DIS.SimulationCores
             double actualTime = 0;
             foreach (var item in _path)
             {
-                actualTime += item.Next();                
+                actualTime += item.Next();
             }
 
             _elapsedTime += actualTime;
 
-            if((actualTime - 125) > 0)
+            if (actualTime - 125 > 0)
             {
-                _waitingTime += (actualTime - 125);
+                _waitingTime += actualTime - 125;
             }
-            
-            
+
+
         }
         public override double GetResult()
         {

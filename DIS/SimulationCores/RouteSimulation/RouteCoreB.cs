@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.SimulationCores
+namespace DIS.SimulationCores.RouteSimulation
 {
     public class RouteCoreB : SimulationCore
     {
         ICollection<Distribution>? _path;
         public double _elapsedTime;
-        public int _onTime; 
+        public int _onTime;
         public RouteCoreB(int repCount) : base(repCount)
         {
             _elapsedTime = 0;
@@ -52,7 +52,7 @@ namespace DIS.SimulationCores
         }
         public override double GetResult()
         {
-            return ((double)_onTime) / _actualRepCount;
+            return (double)_onTime / _actualRepCount;
         }
         protected override void RepBody()
         {
@@ -64,7 +64,7 @@ namespace DIS.SimulationCores
 
             _elapsedTime += actualTime;
 
-            if ((actualTime) <= 320)
+            if (actualTime <= 320)
             {
                 _onTime++;
             }

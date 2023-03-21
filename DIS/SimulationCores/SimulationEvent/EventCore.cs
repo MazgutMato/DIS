@@ -17,7 +17,7 @@ namespace DIS.SimulationCores.SimulationEvent
             this._actualTime = 0;
         }
 
-        public void Simulate(double maxTime)
+        protected void Simulate(double maxTime)
         {
             while (_actualTime < maxTime && _priorityQueue.Count > 0)
             {
