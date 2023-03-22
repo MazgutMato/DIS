@@ -10,9 +10,9 @@ namespace DIS.Distributions
     {
         private double _lambda;
 
-        public Exponential(double lambda) : base()
+        public Exponential(double mean) : base()
         {
-            _lambda = lambda;
+            _lambda = 1/mean;
         }
 
         public override double Next()
