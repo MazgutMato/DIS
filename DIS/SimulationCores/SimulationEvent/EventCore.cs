@@ -8,13 +8,13 @@ namespace DIS.SimulationCores.SimulationEvent
 {
     public abstract class EventCore : SimulationCore
     {
-        private PriorityQueue<Event, double> _priorityQueue;
+        private PriorityQueue<Event, double> _eventQueue;
         public double _actualTime { get; set; }
         public double _maxTime { get; }
 
         public EventCore(int repCount, double maxTime) : base(repCount)
         {
-            this._priorityQueue = new PriorityQueue<Event,double>();
+            this._eventQueue = new PriorityQueue<Event,double>();
             this._actualTime = 0;
             this._maxTime = maxTime;
         }
@@ -23,18 +23,17 @@ namespace DIS.SimulationCores.SimulationEvent
         {
             base.BeforeRep();
 
-            this._priorityQueue = new PriorityQueue<Event, double>();
+            this._eventQueue = new PriorityQueue<Event, double>();
             this._actualTime = 0;
         }
 
         protected override void RepBody()
         {
-            while (_actualTime < _maxTime && _priorityQueue.Count > 0)
+            while (_actualTime < _maxTime && _eventQueue.Count > 0)
             {
-                var actualEvent = _priorityQueue.Dequeue();
-                _actualTime = actualEvent._eventTime;
+                var actualEvent = _eventQueue.Dequeue();
 
-                if (_actualTime < _maxTime)
+                if (actualEvent._eventTime < _maxTime)
                 {
                     actualEvent.Execute();
                 }
@@ -44,7 +43,7 @@ namespace DIS.SimulationCores.SimulationEvent
         public bool AddEvent(Event addedEvent){
             if(addedEvent != null && addedEvent._eventTime > 0)
             {
-                _priorityQueue.Enqueue(addedEvent, addedEvent._eventTime); 
+                _eventQueue.Enqueue(addedEvent, addedEvent._eventTime); 
                 return true;
             }
             return false;

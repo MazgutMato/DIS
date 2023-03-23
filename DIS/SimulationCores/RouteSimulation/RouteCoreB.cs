@@ -50,10 +50,6 @@ namespace DIS.SimulationCores.RouteSimulation
             var c_m = new DiscreteEmpirical(c_mParams);
             _path.Add(c_m);
         }
-        public override double GetResult()
-        {
-            return (double)_onTime / _actualRepCount;
-        }
         protected override void RepBody()
         {
             double actualTime = 0;

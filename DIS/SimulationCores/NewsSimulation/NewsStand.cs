@@ -1,6 +1,7 @@
 ﻿using DIS.Distributions;
 using DIS.SimulationCores.NewsSimulation.Events;
 using DIS.SimulationCores.SimulationEvent;
+using DIS.SimulationCores.Statistics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,15 @@ namespace DIS.SimulationCores.NewsSimulation
 {
     public class NewsStand : EventCore
     {
-        public Dictionary<string, Distribution>? _generators;
         public bool _working { get; set; }
         public PriorityQueue<Customer, double>? _waitingCustomers;
-        public double _totalWaitingTime;
+        public double _lengthLastUpdate { get; set; }
         public NewsStand(int repCount, double maxTime) : base(repCount, maxTime)
         {
+            _statistics = new Dictionary<string, Statistic>();
+
+            _statistics.Add("waitingTime", new NormalStatistic());
+            _statistics.Add("lineLength", new WeightStatistic());
         }
 
         protected override void BeforeRep()
@@ -24,7 +28,11 @@ namespace DIS.SimulationCores.NewsSimulation
             base.BeforeRep();
 
             _working = false;
-            _totalWaitingTime = 0;
+            _lengthLastUpdate = 0;
+
+            _statistics = new Dictionary<string, Statistic>();
+            _statistics.Add("waitingTime", new NormalStatistic());
+            _statistics.Add("lineLength", new WeightStatistic());
 
             _generators = new Dictionary<string, Distribution>();
             _generators.Add("customers", new Exponential(5));
@@ -43,11 +51,5 @@ namespace DIS.SimulationCores.NewsSimulation
                 throw new Exception("Distribution doesnt exists!");
             }
         }
-
-        public override double GetResult()
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

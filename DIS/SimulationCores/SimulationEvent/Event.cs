@@ -20,6 +20,7 @@ namespace DIS.SimulationCores.SimulationEvent
             {
                 throw new Exception("Invalid event time!");
             }
+            _myCore._actualTime = _eventTime;
         }
     }
 }

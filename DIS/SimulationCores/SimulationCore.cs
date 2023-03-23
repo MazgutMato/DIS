@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DIS.Distributions;
+using DIS.SimulationCores.Statistics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +13,10 @@ namespace DIS.SimulationCores
         public int _totalRepCount { get; }
         public int _actualRepCount { get; set; }
         public int _dataGenerate { get; set; }
-        public event EventHandler? _updateChart;
         public bool _stopSimulation { get; set; }
         public int _ignore { get; set; }
+        public Dictionary<string, Distribution>? _generators;
+        public Dictionary<string, Statistic>? _statistics;
         protected SimulationCore(int repCount)
         {
             _totalRepCount = repCount;
@@ -34,22 +37,14 @@ namespace DIS.SimulationCores
             AfterSimulation();
         }
         protected abstract void RepBody();
-        public abstract double GetResult();
         protected virtual void BeforeSimulation() {
             _actualRepCount = 0;
             _stopSimulation = false;
         }
-        protected virtual void AfterSimulation() {
-            _updateChart?.Invoke(this, EventArgs.Empty);
-        }
+        protected virtual void AfterSimulation() {}
         protected virtual void BeforeRep() { }
         protected virtual void AfterRep() {
             _actualRepCount++;
-
-            if(_actualRepCount % (_totalRepCount / _dataGenerate) == 0 && (_actualRepCount / (double)_totalRepCount * 100) > _ignore)
-            {
-                _updateChart?.Invoke(this, EventArgs.Empty);
-            }
         }
     }
 }

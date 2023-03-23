@@ -62,9 +62,5 @@ namespace DIS.SimulationCores.RouteSimulation
 
 
         }
-        public override double GetResult()
-        {
-            return _waitingTime / _actualRepCount;
-        }
     }
 }

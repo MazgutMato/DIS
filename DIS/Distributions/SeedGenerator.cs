@@ -8,7 +8,7 @@ namespace DIS.Distributions
 {
     public static class SeedGenerator
     {
-        private static Random _random = new Random();
+        private static Random _random = new Random(1);
         public static int GetSeed()
         {
             return _random.Next();
