@@ -1,11 +1,15 @@
 using DIS.Distributions;
 using DIS.SimulationCores;
 using DIS.SimulationCores.RouteSimulation;
+using DIS.SimulationCores.Statistics;
 using DIS_1.ChartModels;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using System.Collections.ObjectModel;
+using static System.Windows.Forms.AxHost;
+using System.Net.NetworkInformation;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace DIS_1
 {
@@ -65,7 +69,7 @@ namespace DIS_1
 
             if(_core != null)
             {
-                _core._updateChart += UpdateData;
+                _core._dataUpdate += UpdateData;
                 _core._dataGenerate = dataCount;
                 _core._ignore = ignore;
 
@@ -82,12 +86,18 @@ namespace DIS_1
 
         private void UpdateData(object sender, EventArgs e)
         {
-            var result = _core?.GetResult();
-            BeginInvoke(new Action(() =>
+            if (_core._globalStatistics.TryGetValue("waitingTime", out Statistic statistic))
             {
-                textBoxResult.Text = result.ToString();
-                _chartModel.Add(new(_core?._actualRepCount, result));
-            }));
+                var normalStatistic = (NormalStatistic)statistic;
+                var result = normalStatistic.GetResult();
+
+                BeginInvoke(new Action(() =>
+                {
+                    textBoxResult.Text = result.ToString();
+                    _chartModel.Add(new(_core?._actualRepCount, result));
+                }));
+            }
+            
         }
     }
 }

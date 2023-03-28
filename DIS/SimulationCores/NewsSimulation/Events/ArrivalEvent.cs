@@ -36,7 +36,7 @@ namespace DIS.SimulationCores.NewsSimulation.Events
                 else
                 {
                     //Update line length
-                    if (core._statistics.TryGetValue("lineLength", out Statistic statistic))
+                    if (core._localStatistic.TryGetValue("lineLength", out Statistic statistic))
                     {
                         var weightStatistic = (WeightStatistic)statistic;
                         weightStatistic.AddValue(core._waitingCustomers.Count);

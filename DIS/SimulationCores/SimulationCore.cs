@@ -16,7 +16,8 @@ namespace DIS.SimulationCores
         public bool _stopSimulation { get; set; }
         public int _ignore { get; set; }
         public Dictionary<string, Distribution>? _generators;
-        public Dictionary<string, Statistic>? _statistics;
+        public Dictionary<string, Statistic> _globalStatistics;
+        public event EventHandler _dataUpdate;
         protected SimulationCore(int repCount)
         {
             _totalRepCount = repCount;
@@ -24,6 +25,11 @@ namespace DIS.SimulationCores
             _dataGenerate = 1000;
             _ignore = 30;
             _stopSimulation = false;
+            _globalStatistics = new Dictionary<string, Statistic>();
+        }
+        protected virtual void OnDataUpdate(EventArgs e)
+        {
+            _dataUpdate?.Invoke(this, e);
         }
         public void RunSimulation()
         {
@@ -45,6 +51,12 @@ namespace DIS.SimulationCores
         protected virtual void BeforeRep() { }
         protected virtual void AfterRep() {
             _actualRepCount++;
+
+            if (!_stopSimulation)
+            {
+                this.OnDataUpdate(EventArgs.Empty);
+            }
         }
+     
     }
 }

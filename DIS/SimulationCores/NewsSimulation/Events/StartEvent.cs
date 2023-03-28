@@ -21,7 +21,7 @@ namespace DIS.SimulationCores.NewsSimulation.Events
 
             var core = ((NewsStand)_myCore);
             //Update waiting time
-            if (core._statistics.TryGetValue("waitingTime", out Statistic statistic))
+            if (core._localStatistic.TryGetValue("waitingTime", out Statistic statistic))
             {
                 var normalStatistic = (NormalStatistic)statistic;
                 normalStatistic.AddValue(core._actualTime - _customer._arrivalTime);

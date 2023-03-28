@@ -15,11 +15,7 @@ namespace DIS.SimulationCores.NewsSimulation
         public bool _working { get; set; }
         public PriorityQueue<Customer, double>? _waitingCustomers;
         public NewsStand(int repCount, double maxTime) : base(repCount, maxTime)
-        {
-            _statistics = new Dictionary<string, Statistic>();
-
-            _statistics.Add("waitingTime", new NormalStatistic());
-            _statistics.Add("lineLength", new WeightStatistic(this));
+        {                        
         }
 
         protected override void BeforeRep()
@@ -28,13 +24,13 @@ namespace DIS.SimulationCores.NewsSimulation
 
             _working = false;
 
-            _statistics = new Dictionary<string, Statistic>();
-            _statistics.Add("waitingTime", new NormalStatistic());
-            _statistics.Add("lineLength", new WeightStatistic(this));
+            _localStatistic = new Dictionary<string, Statistic>();
+            _localStatistic.Add("waitingTime", new NormalStatistic());
+            _localStatistic.Add("lineLength", new WeightStatistic(this));
 
             _generators = new Dictionary<string, Distribution>();
-            _generators.Add("customers", new Exponential(5));
-            _generators.Add("service", new Exponential(4));
+            _generators.Add("customers", new Exponential(5*60));
+            _generators.Add("service", new Exponential(4*60));
 
             _waitingCustomers = new PriorityQueue<Customer, double>();
 
