@@ -63,6 +63,23 @@ namespace DIS.SimulationCores.RouteSimulation
 
 
         }
+        protected override void AfterRep()
+        {
+            base.AfterRep();
+
+            if (_globalStatistics.TryGetValue("waitingTime", out Statistic statistic))
+            {
+                var normalStatistic = (NormalStatistic)statistic;
+                normalStatistic.AddValue(_waitingTime);
+            }
+            else
+            {
+                var newStat = new NormalStatistic();
+                newStat.AddValue(_waitingTime);
+                _globalStatistics.Add("waitingTime", newStat);
+            }
+            this.OnDataUpdate(EventArgs.Empty);
+        }
         protected override void AfterSimulation()
         {
             base.AfterSimulation();

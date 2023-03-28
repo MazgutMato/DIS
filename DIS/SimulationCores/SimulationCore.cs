@@ -51,11 +51,6 @@ namespace DIS.SimulationCores
         protected virtual void BeforeRep() { }
         protected virtual void AfterRep() {
             _actualRepCount++;
-
-            if (!_stopSimulation)
-            {
-                this.OnDataUpdate(EventArgs.Empty);
-            }
         }
      
     }

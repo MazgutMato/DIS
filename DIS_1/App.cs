@@ -1,23 +1,16 @@
-using DIS.Distributions;
 using DIS.SimulationCores;
 using DIS.SimulationCores.RouteSimulation;
 using DIS.SimulationCores.Statistics;
 using DIS_1.ChartModels;
-using LiveChartsCore;
-using LiveChartsCore.Defaults;
-using LiveChartsCore.SkiaSharpView;
-using System.Collections.ObjectModel;
-using static System.Windows.Forms.AxHost;
-using System.Net.NetworkInformation;
-using static SkiaSharp.HarfBuzz.SKShaper;
+using DIS.SimulationCores.NewsSimulation;
 
 namespace DIS_1
 {
-    public partial class RouteSimulation : Form
+    public partial class App : Form
     {
         public SimulationCore? _core { get; set; }
         public ChartModel _chartModel { get; set; }
-        public RouteSimulation()
+        public App()
         {
             InitializeComponent();
 
@@ -58,8 +51,7 @@ namespace DIS_1
         }
         private async void RunSimulation()
         {
-            buttonRouteA.Enabled = false;
-            buttonRouteB.Enabled = false;
+            comboBoxProject.Enabled = false;
 
             _chartModel.Clear();
             textBoxResult.Text = "0";
@@ -78,10 +70,9 @@ namespace DIS_1
             await Task.Run(() =>
             {
                 _core?.RunSimulation();
-            });            
+            });
 
-            buttonRouteA.Enabled = true;
-            buttonRouteB.Enabled = true;
+            comboBoxProject.Enabled = true;
         }
 
         private void UpdateData(object sender, EventArgs e)
@@ -98,6 +89,17 @@ namespace DIS_1
                 }));
             }
             
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var repCount = Convert.ToInt32(textBoxRepCount.Text);
+
+            _core = new NewsStand(repCount, 10000);
+
+            RunSimulation();
+
+            var end = 0;
         }
     }
 }

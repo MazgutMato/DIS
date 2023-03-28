@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TestApp;
 
 var sim = new NewsStand(1, 10000000);
+sim.RunSimulation();
 
 var stat = new NormalStatistic();
 
