@@ -29,8 +29,8 @@ namespace DIS.SimulationCores.NewsSimulation
             _localStatistic.Add("lineLength", new WeightStatistic(this));
 
             _generators = new Dictionary<string, Distribution>();
-            _generators.Add("customers", new Exponential(5*60));
-            _generators.Add("service", new Exponential(4*60));
+            _generators.Add("customers", new Exponential(5));
+            _generators.Add("service", new Exponential(4));
 
             _waitingCustomers = new PriorityQueue<Customer, double>();
 

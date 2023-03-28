@@ -22,7 +22,6 @@ namespace DIS.SimulationCores.SimulationEvent
         public double _speed { get; set; }
         public double _sleepTime { get; set; }
         public Mode _mode { get; set; }
-        public bool _pause { get; set; }
         public EventCore(int repCount, double maxTime) : base(repCount)
         {
             this._eventQueue = new PriorityQueue<Event,double>();
@@ -32,7 +31,6 @@ namespace DIS.SimulationCores.SimulationEvent
             this._speed = 1;
             this._sleepTime = 0.1;
             this._mode = Mode.NORMAL;
-            this._pause = false;
         }
 
         protected override void BeforeRep()
@@ -47,12 +45,9 @@ namespace DIS.SimulationCores.SimulationEvent
 
         protected override void RepBody()
         {
+            base.RepBody();
             while (_actualTime < _maxTime && _eventQueue.Count > 0 && !_stopSimulation)
             {
-                while (_pause)
-                {
-                    Thread.Sleep(500);
-                }
                 var actualEvent = _eventQueue.Dequeue();
 
                 if (actualEvent._eventTime < _maxTime)
