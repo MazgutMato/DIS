@@ -9,12 +9,14 @@ namespace DIS.SimulationCores.Statistics
 {
     public class NormalStatistic : Statistic
     {
-        public NormalStatistic() : base() { 
-            
+        public NormalStatistic() : base()
+        {
         }
-        public void AddValue(double value)
+
+        public override void AddValue(double value)
         {
             _sum += value;
+            _sum2 += Math.Pow(value,2);
             _count += 1;
         }
     }
