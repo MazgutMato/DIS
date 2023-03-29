@@ -16,7 +16,6 @@ namespace DIS.SimulationCores.SimulationEvent
     public abstract class EventCore : SimulationCore
     {
         private PriorityQueue<Event, double> _eventQueue;
-        public Dictionary<string, Statistic> _localStatistic { get; set; }
         public double _actualTime { get; set; }
         public double _maxTime { get; }
         public double _speed { get; set; }
@@ -29,7 +28,7 @@ namespace DIS.SimulationCores.SimulationEvent
             this._actualTime = 0;
             this._maxTime = maxTime;
             this._speed = 1;
-            this._sleepTime = 0.1;
+            this._sleepTime = 1000;
             this._mode = Mode.NORMAL;
         }
 
@@ -45,9 +44,16 @@ namespace DIS.SimulationCores.SimulationEvent
 
         protected override void RepBody()
         {
-            base.RepBody();
-            while (_actualTime < _maxTime && _eventQueue.Count > 0 && !_stopSimulation)
+            while (_actualTime <= _maxTime && _eventQueue.Count > 0 && !_stopSimulation)
             {
+                while (_pause)
+                {
+                    if (_stopSimulation)
+                    {
+                        return;
+                    }
+                    Thread.Sleep(100);
+                }
                 var actualEvent = _eventQueue.Dequeue();
 
                 if (actualEvent._eventTime < _maxTime)
@@ -57,36 +63,13 @@ namespace DIS.SimulationCores.SimulationEvent
             }
         }
 
-        protected override void AfterRep()
-        {
-            base.AfterRep();
-
-            if (!_stopSimulation)
+        public void AddEvent(Event addedEvent){
+            if(addedEvent != null && addedEvent._eventTime >= 0)
             {
-                foreach(var stat in _localStatistic)
-                {
-                    if (_globalStatistics.TryGetValue(stat.Key, out Statistic statistic))
-                    {
-                        var normalStatistic = (NormalStatistic)statistic;
-                        normalStatistic.AddValue(stat.Value.GetResult());
-                    }
-                    else
-                    {
-                        var newStat = new NormalStatistic();
-                        newStat.AddValue(stat.Value.GetResult());
-                        _globalStatistics.Add(stat.Key, newStat);   
-                    }
-                }
+                _eventQueue.Enqueue(addedEvent, addedEvent._eventTime);
+                return;
             }
-        }
-
-        public bool AddEvent(Event addedEvent){
-            if(addedEvent != null && addedEvent._eventTime > 0)
-            {
-                _eventQueue.Enqueue(addedEvent, addedEvent._eventTime); 
-                return true;
-            }
-            return false;
+            throw new Exception("Cannot add event!");
         }
     }    
 }

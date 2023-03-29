@@ -1,10 +1,7 @@
 using DIS.SimulationCores;
-using DIS.SimulationCores.RouteSimulation;
-using DIS.SimulationCores.Statistics;
 using DIS_1.ChartModels;
 using DIS.SimulationCores.NewsSimulation;
-using System.Collections;
-using static System.Windows.Forms.AxHost;
+using DIS.SimulationCores.SimulationEvent;
 
 namespace DIS_1
 {
@@ -25,7 +22,10 @@ namespace DIS_1
             textBoxRepCount.Text = "1000000";
             textBoxDataCount.Text = "1000";
             textBoxIgnore.Text = "30";
+            trackBarSpeed.Value = 1;
+            textBoxSpeed.Text = "1";
 
+            buttonNormal.Enabled = false;
             buttonStop.Enabled = false;
             buttonPause.Enabled = false;
         }
@@ -61,11 +61,46 @@ namespace DIS_1
 
         private void UpdateData(object sender, EventArgs e)
         {
+            //Local update
+            if(_core is EventCore)
+            {
+                var core = (EventCore)_core;
+                textBoxActualTime.Invoke((MethodInvoker)delegate ()
+                {
+                    textBoxActualTime.Text = core._actualTime.ToString();
+                });
+
+                dataGridViewLocal.Invoke((MethodInvoker)delegate ()
+                {
+                    foreach (var item in _core._localStatistic)
+                    {
+                        var key = item.Key.ToString();
+                        var stat = item.Value;
+
+                        // Check if a row with the key already exists in the control
+                        DataGridViewRow dataGridViewRow = dataGridViewLocal.Rows.Cast<DataGridViewRow>().FirstOrDefault(x => x.Cells[0].Value.ToString() == key);
+
+                        if (dataGridViewRow == null)
+                        {
+                            // Create a new row and add it to the control
+                            dataGridViewRow = new DataGridViewRow();
+                            dataGridViewRow.CreateCells(dataGridViewLocal, key, stat.GetResult());
+                            dataGridViewLocal.Rows.Add(dataGridViewRow);
+                        }
+                        else
+                        {
+                            // Update the value of the existing row
+                            dataGridViewRow.Cells[1].Value = stat.GetResult();
+                        }
+                    }
+                });
+            }
+
+            //GlobalUpdate
             textBoxActualRep.Invoke((MethodInvoker)delegate ()
             {
                 textBoxActualRep.Text = _core._actualRepCount.ToString();
             });
-
             dataGridViewGlobal.Invoke((MethodInvoker)delegate ()
             {
                 foreach (var item in _core._globalStatistics)
@@ -119,8 +154,19 @@ namespace DIS_1
             buttonRun.Enabled = false;
             buttonStop.Enabled = true;
             buttonPause.Enabled = true;
+            buttonNormal.Enabled = false;
+            buttonTurbo.Enabled = true;
+            textBoxSpeed.Text = "1";
+            trackBarSpeed.Value = 1;
 
             RunSimulation();
+        }
+
+        private void buttonPause_Click(object sender, EventArgs e)
+        {
+            _core._pause = true;
+            buttonRun.Enabled = true;
+            buttonPause.Enabled = false;
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
@@ -135,10 +181,43 @@ namespace DIS_1
             buttonPause.Enabled = false;
         }
 
-        private void buttonPause_Click(object sender, EventArgs e)
+        private void trackBarSpeed_Scroll(object sender, EventArgs e)
         {
-            _core._pause = true;
-            buttonRun.Enabled = true;
+            if (_core != null && _core is EventCore)
+            {
+                var core = (EventCore)_core;
+
+                core._speed = trackBarSpeed.Value;
+                textBoxSpeed.Text = trackBarSpeed.Value.ToString();
+            }
+        }
+
+        private void buttonTurbo_Click(object sender, EventArgs e)
+        {
+            if(_core == null || _core is not EventCore)
+            {
+                return;
+            }
+
+            var core = (EventCore)_core;
+            core._mode = Mode.TURBO;
+
+            buttonNormal.Enabled = true;
+            buttonTurbo.Enabled = false;
+        }
+
+        private void buttonNormal_Click(object sender, EventArgs e)
+        {
+            if (_core == null || _core is not EventCore)
+            {
+                return;
+            }
+
+            var core = (EventCore)_core;
+            core._mode = Mode.NORMAL;
+
+            buttonNormal.Enabled = false;
+            buttonTurbo.Enabled = true;
         }
     }
 }

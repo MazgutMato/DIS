@@ -18,6 +18,7 @@ namespace DIS.SimulationCores
         public int _ignore { get; set; }
         public Dictionary<string, Distribution>? _generators;
         public Dictionary<string, Statistic> _globalStatistics;
+        public Dictionary<string, Statistic> _localStatistic { get; set; }
         public event EventHandler _dataUpdate;
         protected SimulationCore(int repCount)
         {
@@ -39,7 +40,7 @@ namespace DIS.SimulationCores
         public void RunSimulation()
         {
             BeforeSimulation();
-            while(_actualRepCount < _totalRepCount && !_stopSimulation)
+            while (_actualRepCount < _totalRepCount && !_stopSimulation)
             {
                 BeforeRep();
                 RepBody();
@@ -47,27 +48,40 @@ namespace DIS.SimulationCores
             }
             AfterSimulation();
         }
-        protected virtual void RepBody()
-        {
-            while (_pause && !_stopSimulation)
-            {
-                Thread.Sleep(100);
-            }
-        }
+        protected abstract void RepBody();
         protected virtual void AfterRep()
         {
             _actualRepCount++;
 
-            if (_actualRepCount % (_totalRepCount / _dataGenerate) == 0 && 
-                (_actualRepCount / (double)_totalRepCount * 100) > _ignore)
+            if (!_stopSimulation)
             {
+                foreach (var stat in _localStatistic)
+                {
+                    if (_globalStatistics.TryGetValue(stat.Key, out Statistic statistic))
+                    {
+                        var normalStatistic = (NormalStatistic)statistic;
+                        normalStatistic.AddValue(stat.Value.GetResult());
+                    }
+                    else
+                    {
+                        var newStat = new NormalStatistic();
+                        newStat.AddValue(stat.Value.GetResult());
+                        _globalStatistics.Add(stat.Key, newStat);
+                    }
+                }
+                //if (_actualRepCount % (_totalRepCount / _dataGenerate) == 0 &&
+                //    (_actualRepCount / (double)_totalRepCount * 100) > _ignore)
+                //{
+                //    this.OnDataUpdate(EventArgs.Empty);
+                //}
                 this.OnDataUpdate(EventArgs.Empty);
             }
         }
-        protected virtual void AfterSimulation() {
+        protected virtual void AfterSimulation()
+        {
             this.OnDataUpdate(EventArgs.Empty);
         }
-        protected virtual void OnDataUpdate(EventArgs e)
+        public void OnDataUpdate(EventArgs e)
         {
             _dataUpdate?.Invoke(this, e);
         }

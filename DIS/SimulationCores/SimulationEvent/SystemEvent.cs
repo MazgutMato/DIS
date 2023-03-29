@@ -16,7 +16,12 @@ namespace DIS.SimulationCores.SimulationEvent
         {
             base.Execute();
 
-            Thread.Sleep(500);
+            _myCore.OnDataUpdate(EventArgs.Empty);
+
+            if(_myCore._mode == Mode.NORMAL)
+            {
+                Thread.Sleep(Convert.ToInt32(_myCore._sleepTime));                
+            }
 
             _myCore.AddEvent(new SystemEvent(_eventTime + _myCore._speed, _myCore));
         }
