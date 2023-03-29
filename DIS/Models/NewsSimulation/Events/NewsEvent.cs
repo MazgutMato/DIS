@@ -1,11 +1,11 @@
-﻿using DIS.SimulationCores.SimulationEvent;
+﻿using DIS.SimulationCores.EventSimulation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.SimulationCores.NewsSimulation.Events
+namespace DIS.Models.NewsSimulation.Events
 {
     public abstract class NewsEvent : Event
     {

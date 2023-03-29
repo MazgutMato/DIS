@@ -1,6 +1,6 @@
 ﻿using DIS.Distributions;
 using DIS.SimulationCores;
-using DIS.SimulationCores.NewsSimulation;
+using DIS.Models.NewsSimulation;
 using DIS.SimulationCores.Statistics;
 using System.Threading.Tasks;
 using TestApp;

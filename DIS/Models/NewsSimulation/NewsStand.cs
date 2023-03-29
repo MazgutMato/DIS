@@ -1,6 +1,6 @@
 ﻿using DIS.Distributions;
-using DIS.SimulationCores.NewsSimulation.Events;
-using DIS.SimulationCores.SimulationEvent;
+using DIS.SimulationCores.EventSimulation;
+using DIS.Models.NewsSimulation.Events;
 using DIS.SimulationCores.Statistics;
 using System;
 using System.Collections.Generic;
@@ -8,14 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.SimulationCores.NewsSimulation
+namespace DIS.Models.NewsSimulation
 {
     public class NewsStand : EventCore
     {
         public bool _working { get; set; }
         public PriorityQueue<Customer, double>? _waitingCustomers;
         public NewsStand(int repCount, double maxTime) : base(repCount, maxTime)
-        {                        
+        {
         }
 
         protected override void BeforeRep()

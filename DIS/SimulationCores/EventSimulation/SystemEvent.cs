@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.SimulationCores.SimulationEvent
+namespace DIS.SimulationCores.EventSimulation
 {
     public class SystemEvent : Event
     {
@@ -18,9 +18,9 @@ namespace DIS.SimulationCores.SimulationEvent
 
             _myCore.OnDataUpdate(EventArgs.Empty);
 
-            if(_myCore._mode == Mode.NORMAL)
+            if (_myCore._mode == Mode.NORMAL)
             {
-                Thread.Sleep(Convert.ToInt32(_myCore._sleepTime));                
+                Thread.Sleep(Convert.ToInt32(_myCore._sleepTime));
             }
 
             _myCore.AddEvent(new SystemEvent(_eventTime + _myCore._speed, _myCore));

@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.SimulationCores.NewsSimulation
+namespace DIS.Models.NewsSimulation
 {
     public class Customer
     {
         public double _arrivalTime { get; set; }
-        public Customer(double arrivalTime) { 
+        public Customer(double arrivalTime)
+        {
             _arrivalTime = arrivalTime;
         }
     }

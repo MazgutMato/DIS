@@ -1,5 +1,6 @@
 ﻿using DIS.Distributions;
-using DIS.SimulationCores.SimulationEvent;
+using DIS.SimulationCores.EventSimulation;
+using DIS.Models.NewsSimulation.Events;
 using DIS.SimulationCores.Statistics;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.SimulationCores.NewsSimulation.Events
+namespace DIS.Models.NewsSimulation.Events
 {
     public class ArrivalEvent : NewsEvent
     {
@@ -18,7 +19,7 @@ namespace DIS.SimulationCores.NewsSimulation.Events
         public override void Execute()
         {
             base.Execute();
-            var core = ((NewsStand)_myCore);
+            var core = (NewsStand)_myCore;
 
             //Arivaval next customer
             if (core._generators.TryGetValue("customers", out Distribution distribution))
@@ -51,7 +52,7 @@ namespace DIS.SimulationCores.NewsSimulation.Events
             else
             {
                 throw new Exception("Distribution doesnt exists!");
-            }            
+            }
         }
     }
 }

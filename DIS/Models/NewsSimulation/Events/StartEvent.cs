@@ -1,5 +1,5 @@
 ﻿using DIS.Distributions;
-using DIS.SimulationCores.SimulationEvent;
+using DIS.SimulationCores.EventSimulation;
 using DIS.SimulationCores.Statistics;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.SimulationCores.NewsSimulation.Events
+namespace DIS.Models.NewsSimulation.Events
 {
     public class StartEvent : NewsEvent
     {
@@ -19,7 +19,7 @@ namespace DIS.SimulationCores.NewsSimulation.Events
         {
             base.Execute();
 
-            var core = ((NewsStand)_myCore);
+            var core = (NewsStand)_myCore;
             //Update waiting time
             if (core._localStatistic.TryGetValue("waitingTime", out Statistic statistic))
             {
@@ -33,7 +33,7 @@ namespace DIS.SimulationCores.NewsSimulation.Events
             //End of service
             if (core._generators.TryGetValue("service", out Distribution distribution))
             {
-                var endTime = distribution.Next();                
+                var endTime = distribution.Next();
                 core.AddEvent(new EndEvent(core._actualTime + endTime, core, _customer));
             }
             else

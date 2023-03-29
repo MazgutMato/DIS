@@ -1,4 +1,5 @@
-﻿using DIS.SimulationCores.SimulationEvent;
+﻿using DIS.SimulationCores.EventSimulation;
+using DIS.Models.NewsSimulation.Events;
 using DIS.SimulationCores.Statistics;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.SimulationCores.NewsSimulation.Events
+namespace DIS.Models.NewsSimulation.Events
 {
     public class EndEvent : NewsEvent
     {
@@ -18,9 +19,9 @@ namespace DIS.SimulationCores.NewsSimulation.Events
         {
             base.Execute();
 
-            var core = ((NewsStand)_myCore);
+            var core = (NewsStand)_myCore;
 
-            if(core._waitingCustomers.Count > 0)
+            if (core._waitingCustomers.Count > 0)
             {
                 //Update line length
                 if (core._localStatistic.TryGetValue("lineLength", out Statistic statistic))

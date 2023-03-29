@@ -1,7 +1,7 @@
 using DIS.SimulationCores;
 using DIS_1.ChartModels;
-using DIS.SimulationCores.NewsSimulation;
-using DIS.SimulationCores.SimulationEvent;
+using DIS.Models.NewsSimulation;
+using DIS.SimulationCores.EventSimulation;
 
 namespace DIS_1
 {

@@ -1,4 +1,4 @@
-﻿using DIS.SimulationCores.SimulationEvent;
+﻿using DIS.SimulationCores.EventSimulation;
 using System;
 using System.Collections.Generic;
 using System.Linq;

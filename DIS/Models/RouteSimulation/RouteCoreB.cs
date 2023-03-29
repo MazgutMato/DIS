@@ -1,11 +1,12 @@
 ﻿using DIS.Distributions;
+using DIS.SimulationCores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.SimulationCores.RouteSimulation
+namespace DIS.Models.RouteSimulation
 {
     public class RouteCoreB : SimulationCore
     {
