@@ -11,72 +11,74 @@ using System.Threading.Tasks;
 
 namespace DIS.Models.STKSimulation.Events
 {
-    public class ArrivalEvent : STKEvent
+    public class ArrivalEvent : Event
     {
-        public ArrivalEvent(double eventTime, EventCore core, Vehicle vehicle) : base(eventTime, core, vehicle)
+        public ArrivalEvent(double eventTime, EventCore core) : base(eventTime, core)
         {
         }
 
         public override void Execute()
         {
             base.Execute();
-
-            base.Execute();
             var core = (STKCore)_myCore;
 
             //Arivaval next customer
             if (core._generators.TryGetValue("arrival", out Distribution distributionArrival))
             {
-                var nextArrival = distributionArrival.Next();
-                var nextVehicle = new Vehicle(nextArrival);
-
-                if (core._generators.TryGetValue("vehicleType", out Distribution distributionType))
-                {
-                    var type = distributionType.Next();
-
-                    if(type < 0.14)
-                    {
-                        nextVehicle._vehicleType = VehicleType.TRUCK;
-                    } else if(type < 0.35)
-                    {
-                        nextVehicle._vehicleType = VehicleType.VAN;
-                    }
-                    else
-                    {
-                        nextVehicle._vehicleType = VehicleType.CAR;
-                    }
-                }
-                else
-                {
-                    throw new Exception("Distribution doesnt exists!");
-                }
+                var nextArrival = distributionArrival.Next();                                
                 
-                core.AddEvent(new ArrivalEvent(core._actualTime + nextArrival, core, nextVehicle));
+                core.AddEvent(new ArrivalEvent(core._actualTime + nextArrival, core));             
+            }
+            else
+            {
+                throw new Exception("Distribution doesnt exists!");
+            }
 
-                //Start of service
-                if (core._working != true)
+            //Start of payment
+            if (core._paymentParking.Count > 0 && core._technicWorkers.Count > 0)
+            {
+                var paymentVehicle = core._paymentParking.Dequeue();
+                var paymentWorker = core._technicWorkers.Dequeue();
+                paymentWorker._vehicle = paymentVehicle;
+                core.AddEvent(new StartPaymentEvent(core._actualTime, core, paymentWorker));
+            }
+
+            //Arrival vehicle
+            var arrivalVehicle = new Vehicle(core._actualTime);
+            //Set a type of vehicle
+            if (core._generators.TryGetValue("vehicleType", out Distribution distributionType))
+            {
+                var type = distributionType.Next();
+
+                if (type < 0.14)
                 {
-                    core._working = true;
-                    core.AddEvent(new StartEvent(core._actualTime, core, _customer));
+                    arrivalVehicle._vehicleType = VehicleType.TRUCK;
+                }
+                else if (type < 0.35)
+                {
+                    arrivalVehicle._vehicleType = VehicleType.VAN;
                 }
                 else
                 {
-                    //Update line length
-                    if (core._localStatistic.TryGetValue("lineLength", out Statistic statistic))
-                    {
-                        var weightStatistic = (WeightStatistic)statistic;
-                        weightStatistic.AddValue(core._waitingCustomers.Count);
-                    }
-                    else
-                    {
-                        throw new Exception("Statistic doesnt exists!");
-                    }
-                    core._waitingCustomers.Enqueue(_customer, _customer._arrivalTime);
+                    arrivalVehicle._vehicleType = VehicleType.CAR;
                 }
             }
             else
             {
                 throw new Exception("Distribution doesnt exists!");
+            }
+            //Start taking
+            if (core._technicWorkers.Count > 0 && core._takeCarsCount + core._inspectionParking.Count 
+                < core._inspectionParkingCapacity)
+            {
+                core._takeCarsCount++;
+                var takingWorker = core._technicWorkers.Dequeue();
+                takingWorker._vehicle = arrivalVehicle;
+                core.AddEvent(new StartTakingEvent(core._actualTime, core, takingWorker));
+            }
+            else
+            {
+                core._vehicleLine.Enqueue(arrivalVehicle);
             }
         }
     }

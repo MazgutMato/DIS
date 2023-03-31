@@ -9,10 +9,10 @@ namespace DIS.Models.STKSimulation.Events
 {
     public class STKEvent : Event
     {
-        public Vehicle _vehicle { get; set; }
-        public STKEvent(double eventTime, EventCore core, Vehicle vehicle) : base(eventTime, core)
-        {
-            _vehicle = vehicle;
+        public Worker _worker { get; set; }        
+        public STKEvent(double eventTime, EventCore core, Worker worker) : base(eventTime, core)
+        {            
+            _worker = worker;
         }
     }
 }

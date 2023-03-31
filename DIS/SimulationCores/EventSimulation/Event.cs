@@ -22,6 +22,10 @@ namespace DIS.SimulationCores.EventSimulation
                 throw new Exception("Invalid event time!");
             }
             _myCore._actualTime = _eventTime;
+            if (_myCore._mode == Mode.NORMAL)
+            {
+                _myCore.OnDataUpdate(EventArgs.Empty);
+            }
         }
     }
 }

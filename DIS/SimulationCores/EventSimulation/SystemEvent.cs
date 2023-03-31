@@ -14,14 +14,12 @@ namespace DIS.SimulationCores.EventSimulation
 
         public override void Execute()
         {
-            base.Execute();
-
-            _myCore.OnDataUpdate(EventArgs.Empty);
+            base.Execute();            
 
             if (_myCore._mode == Mode.NORMAL)
             {
                 Thread.Sleep(Convert.ToInt32(_myCore._sleepTime));
-            }
+            }        
 
             _myCore.AddEvent(new SystemEvent(_eventTime + _myCore._speed, _myCore));
         }
