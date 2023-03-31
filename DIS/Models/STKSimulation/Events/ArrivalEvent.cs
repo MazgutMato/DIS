@@ -1,6 +1,4 @@
 ﻿using DIS.Distributions;
-using DIS.Models.NewsSimulation.Events;
-using DIS.Models.NewsSimulation;
 using DIS.SimulationCores.EventSimulation;
 using DIS.SimulationCores.Statistics;
 using System;
@@ -23,8 +21,9 @@ namespace DIS.Models.STKSimulation.Events
             var core = (STKCore)_myCore;
 
             //Arivaval next customer
-            if (core._generators.TryGetValue("arrival", out Distribution distributionArrival))
+            if (core._generators.Count > 0)
             {
+                var distributionArrival = core._generators[0];
                 var nextArrival = distributionArrival.Next();                                
                 
                 core.AddEvent(new ArrivalEvent(core._actualTime + nextArrival, core));             
@@ -44,10 +43,12 @@ namespace DIS.Models.STKSimulation.Events
             }
 
             //Arrival vehicle
-            var arrivalVehicle = new Vehicle(core._actualTime);
+            core._totalVehicleCount++;
+            var arrivalVehicle = new Vehicle(core._totalVehicleCount, core._actualTime);
             //Set a type of vehicle
-            if (core._generators.TryGetValue("vehicleType", out Distribution distributionType))
+            if (core._generators.Count > 1)
             {
+                var distributionType = core._generators[1];
                 var type = distributionType.Next();
 
                 if (type < 0.14)

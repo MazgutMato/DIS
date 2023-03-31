@@ -8,14 +8,17 @@ namespace DIS.Models.STKSimulation
 {
     public class Vehicle
     {
+        public int _id { get; }
         public double _arrivalTime { get; set; }
         public VehicleType _vehicleType { get; set; }
-        public Vehicle(VehicleType vehicleType, double arrivalTime) { 
+        public Vehicle(int id, VehicleType vehicleType, double arrivalTime) { 
+            _id = id;
             _arrivalTime = arrivalTime;
             _vehicleType = vehicleType;
         }
-        public Vehicle(double arrivalTime)
+        public Vehicle(int id, double arrivalTime)
         {
+            _id = id;
             _arrivalTime = arrivalTime;
             _vehicleType = VehicleType.NONE;
         }

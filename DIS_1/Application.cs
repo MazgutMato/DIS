@@ -1,6 +1,6 @@
 using DIS.SimulationCores;
 using DIS_1.ChartModels;
-using DIS.Models.NewsSimulation;
+using DIS.Models.STKSimulation;
 using DIS.SimulationCores.EventSimulation;
 
 namespace DIS_1
@@ -72,13 +72,14 @@ namespace DIS_1
 
                 dataGridViewLocal.Invoke((MethodInvoker)delegate ()
                 {
+                    var statCount = 1;
                     foreach (var item in _core._localStatistic)
                     {
-                        var key = item.Key.ToString();
-                        var stat = item.Value;
+                        var key = statCount;
+                        var stat = item;
 
                         // Check if a row with the key already exists in the control
-                        DataGridViewRow dataGridViewRow = dataGridViewLocal.Rows.Cast<DataGridViewRow>().FirstOrDefault(x => x.Cells[0].Value.ToString() == key);
+                        DataGridViewRow dataGridViewRow = dataGridViewLocal.Rows.Cast<DataGridViewRow>().FirstOrDefault(x => x.Cells[0].Value.ToString() == key.ToString());
 
                         if (dataGridViewRow == null)
                         {
@@ -92,6 +93,7 @@ namespace DIS_1
                             // Update the value of the existing row
                             dataGridViewRow.Cells[1].Value = stat.GetResult();
                         }
+                        statCount++;
                     }
                 });
             }
@@ -103,13 +105,14 @@ namespace DIS_1
             });
             dataGridViewGlobal.Invoke((MethodInvoker)delegate ()
             {
+                var statCount = 1;
                 foreach (var item in _core._globalStatistics)
                 {
-                    var key = item.Key.ToString();
-                    var stat = item.Value;
+                    var key = statCount;
+                    var stat = item;
 
                     // Check if a row with the key already exists in the control
-                    DataGridViewRow dataGridViewRow = dataGridViewGlobal.Rows.Cast<DataGridViewRow>().FirstOrDefault(x => x.Cells[0].Value.ToString() == key);
+                    DataGridViewRow dataGridViewRow = dataGridViewGlobal.Rows.Cast<DataGridViewRow>().FirstOrDefault(x => x.Cells[0].Value.ToString() == key.ToString());
 
                     if (dataGridViewRow == null)
                     {
@@ -123,6 +126,7 @@ namespace DIS_1
                         // Update the value of the existing row
                         dataGridViewRow.Cells[1].Value = stat.GetResult();
                     }
+                    statCount++;
                 }
             });
         }
@@ -144,7 +148,7 @@ namespace DIS_1
 
             if (comboBoxProject.Text == "NewsStand")
             {
-                _core = new NewsStand(repCount, 10000);
+                _core = new STKCore(repCount, 10000);
             }
             else
             {

@@ -29,9 +29,6 @@ namespace DIS.Distributions
                 sumOfProbability += param._probability;
             }
 
-            var fisrt = sumOfProbability >= 0.98;
-            var second = sumOfProbability <= 1;
-
             if (sumOfProbability <= 0.98 || sumOfProbability > 1) {
                 throw new ArgumentException("Probability is not equal 1!");
             }

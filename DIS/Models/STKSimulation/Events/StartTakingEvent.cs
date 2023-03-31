@@ -18,9 +18,10 @@ namespace DIS.Models.STKSimulation.Events
             base.Execute();
 
             //End taking event
-            if (_myCore._generators.TryGetValue("takingTime", out Distribution distributionArrival))
+            if (_myCore._generators.Count > 2)
             {
-                var endOfTaking = distributionArrival.Next();
+                var distributionEndTaking = _myCore._generators[2];
+                var endOfTaking = distributionEndTaking.Next();
 
                 _myCore.AddEvent(new EndTakingEvent(_myCore._actualTime + endOfTaking, _myCore, _worker));
             }

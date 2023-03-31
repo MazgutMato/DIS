@@ -1,5 +1,4 @@
-﻿using DIS.Models.NewsSimulation;
-using DIS.SimulationCores.Statistics;
+﻿using DIS.SimulationCores.Statistics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +23,7 @@ namespace DIS.SimulationCores.EventSimulation
         public EventCore(int repCount, double maxTime) : base(repCount)
         {
             _eventQueue = new PriorityQueue<Event, double>();
-            _localStatistic = new Dictionary<string, Statistic>();
+            _localStatistic = new List<Statistic>();
             _actualTime = 0;
             _maxTime = maxTime;
             _speed = 1;
@@ -37,7 +36,7 @@ namespace DIS.SimulationCores.EventSimulation
             base.BeforeRep();
 
             _eventQueue = new PriorityQueue<Event, double>();
-            _localStatistic = new Dictionary<string, Statistic>();
+            _localStatistic = new List<Statistic>();
             AddEvent(new SystemEvent(0, this));
             _actualTime = 0;
         }

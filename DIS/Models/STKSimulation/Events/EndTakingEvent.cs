@@ -57,6 +57,7 @@ namespace DIS.Models.STKSimulation.Events
                     < core._inspectionParkingCapacity)
                 {
                     _worker._vehicle = core._vehicleLine.Dequeue();
+                    core._takeCarsCount++;
                     core.AddEvent(new StartTakingEvent(_eventTime, core, _worker));
                 }else
                 {
