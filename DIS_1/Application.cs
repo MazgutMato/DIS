@@ -13,15 +13,7 @@ namespace DIS_1
         {
             InitializeComponent();
 
-            _chartModel = new ChartModel();
-            cartesianChart1.Series = _chartModel._series;
-            cartesianChart1.XAxes = _chartModel._xAxes;
-            cartesianChart1.YAxes = _chartModel._yAxes;
-            _chartModel.RenameX("Replication count");
-
             textBoxRepCount.Text = "1000000";
-            textBoxDataCount.Text = "1000";
-            textBoxIgnore.Text = "30";
             trackBarSpeed.Value = 1;
             textBoxSpeed.Text = "1";
 
@@ -31,20 +23,11 @@ namespace DIS_1
         }
         private async void RunSimulation()
         {
-            comboBoxProject.Enabled = false;
-
-            _chartModel.Clear();
             textBoxActualRep.Text = "0";
-
-            var dataCount = Convert.ToInt32(textBoxDataCount.Text);
-            var ignore = Convert.ToInt32(textBoxIgnore.Text);
 
             if (_core != null)
             {
                 _core._dataUpdate += UpdateData;
-                _core._dataGenerate = dataCount;
-                _core._ignore = ignore;
-
             }
 
             await Task.Run(() =>
@@ -53,7 +36,6 @@ namespace DIS_1
             });
 
             _core = null;
-            comboBoxProject.Enabled = true;
             buttonRun.Enabled = true;
             buttonStop.Enabled = false;
             buttonPause.Enabled = false;
@@ -62,7 +44,7 @@ namespace DIS_1
         private void UpdateData(object sender, EventArgs e)
         {
             //Local update
-            if(_core is EventCore)
+            if (_core is EventCore)
             {
                 var core = (EventCore)_core;
                 textBoxActualTime.Invoke((MethodInvoker)delegate ()
@@ -146,14 +128,7 @@ namespace DIS_1
             //New simulation
             var repCount = Convert.ToInt32(textBoxRepCount.Text);
 
-            if (comboBoxProject.Text == "NewsStand")
-            {
-                _core = new STKCore(repCount, 10000);
-            }
-            else
-            {
-                return;
-            }
+            _core = new STKCore(repCount, 10000);
 
             buttonRun.Enabled = false;
             buttonStop.Enabled = true;
@@ -198,7 +173,7 @@ namespace DIS_1
 
         private void buttonTurbo_Click(object sender, EventArgs e)
         {
-            if(_core == null || _core is not EventCore)
+            if (_core == null || _core is not EventCore)
             {
                 return;
             }

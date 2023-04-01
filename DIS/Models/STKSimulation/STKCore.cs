@@ -78,7 +78,7 @@ namespace DIS.Models.STKSimulation
             var truckParams = new List<EmpiricalParam>();
             vanParams.AddRange(new[] {
                 new EmpiricalParam(37, 42, 0.05),
-                new EmpiricalParam(43, 45, 0.0),
+                new EmpiricalParam(43, 45, 0.1),
                 new EmpiricalParam(46, 47, 0.15),
                 new EmpiricalParam(48, 51, 0.4),
                 new EmpiricalParam(52, 55, 0.25),

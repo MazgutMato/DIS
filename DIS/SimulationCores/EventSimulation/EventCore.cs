@@ -1,4 +1,5 @@
-﻿using DIS.SimulationCores.Statistics;
+﻿using DIS.Models.STKSimulation.Events;
+using DIS.SimulationCores.Statistics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,8 +37,12 @@ namespace DIS.SimulationCores.EventSimulation
             base.BeforeRep();
 
             _eventQueue = new PriorityQueue<Event, double>();
-            _localStatistic = new List<Statistic>();
-            AddEvent(new SystemEvent(0, this));
+            AddEvent(new ArrivalEvent(0, this));
+            if (_mode == Mode.NORMAL)
+            {
+                AddEvent(new SystemEvent(0, this));
+            }
+            _localStatistic = new List<Statistic>();                        
             _actualTime = 0;
         }
 

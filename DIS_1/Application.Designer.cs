@@ -30,18 +30,10 @@
         {
             textBoxRepCount = new TextBox();
             labelRepCount = new Label();
-            DataCount = new Label();
-            textBoxDataCount = new TextBox();
             buttonStop = new Button();
             labelSett = new Label();
             labelResults = new Label();
-            cartesianChart1 = new LiveChartsCore.SkiaSharpView.WinForms.CartesianChart();
-            labelIgnore = new Label();
-            textBoxIgnore = new TextBox();
-            labelPercentage = new Label();
             textBoxActualRep = new TextBox();
-            comboBoxProject = new ComboBox();
-            label1 = new Label();
             buttonPause = new Button();
             buttonRun = new Button();
             label2 = new Label();
@@ -60,14 +52,29 @@
             textBoxActualTime = new TextBox();
             label6 = new Label();
             trackBarSpeed = new TrackBar();
+            dataGridViewArrival = new DataGridView();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            label7 = new Label();
+            label8 = new Label();
+            dataGridViewTechnical = new DataGridView();
+            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
+            label9 = new Label();
+            dataGridViewInspection = new DataGridView();
+            dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridViewGlobal).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewLocal).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBarSpeed).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewArrival).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewTechnical).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewInspection).BeginInit();
             SuspendLayout();
             // 
             // textBoxRepCount
             // 
-            textBoxRepCount.Location = new Point(469, 46);
+            textBoxRepCount.Location = new Point(95, 45);
             textBoxRepCount.Margin = new Padding(3, 2, 3, 2);
             textBoxRepCount.Name = "textBoxRepCount";
             textBoxRepCount.Size = new Size(125, 27);
@@ -76,28 +83,11 @@
             // labelRepCount
             // 
             labelRepCount.AutoSize = true;
-            labelRepCount.Location = new Point(389, 50);
+            labelRepCount.Location = new Point(15, 49);
             labelRepCount.Name = "labelRepCount";
             labelRepCount.Size = new Size(74, 20);
             labelRepCount.TabIndex = 4;
             labelRepCount.Text = "RepCount";
-            // 
-            // DataCount
-            // 
-            DataCount.AutoSize = true;
-            DataCount.Location = new Point(389, 82);
-            DataCount.Name = "DataCount";
-            DataCount.Size = new Size(80, 20);
-            DataCount.TabIndex = 6;
-            DataCount.Text = "DataCount";
-            // 
-            // textBoxDataCount
-            // 
-            textBoxDataCount.Location = new Point(469, 80);
-            textBoxDataCount.Margin = new Padding(3, 2, 3, 2);
-            textBoxDataCount.Name = "textBoxDataCount";
-            textBoxDataCount.Size = new Size(125, 27);
-            textBoxDataCount.TabIndex = 5;
             // 
             // buttonStop
             // 
@@ -114,7 +104,7 @@
             // 
             labelSett.AutoSize = true;
             labelSett.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
-            labelSett.Location = new Point(384, 10);
+            labelSett.Location = new Point(10, 9);
             labelSett.Margin = new Padding(1, 0, 1, 0);
             labelSett.Name = "labelSett";
             labelSett.Size = new Size(200, 28);
@@ -132,69 +122,14 @@
             labelResults.TabIndex = 9;
             labelResults.Text = "Global statistics";
             // 
-            // cartesianChart1
-            // 
-            cartesianChart1.Location = new Point(609, 176);
-            cartesianChart1.Margin = new Padding(3, 2, 3, 2);
-            cartesianChart1.Name = "cartesianChart1";
-            cartesianChart1.Size = new Size(718, 614);
-            cartesianChart1.TabIndex = 10;
-            // 
-            // labelIgnore
-            // 
-            labelIgnore.AutoSize = true;
-            labelIgnore.Location = new Point(654, 50);
-            labelIgnore.Name = "labelIgnore";
-            labelIgnore.Size = new Size(52, 20);
-            labelIgnore.TabIndex = 12;
-            labelIgnore.Text = "Ignore";
-            // 
-            // textBoxIgnore
-            // 
-            textBoxIgnore.Location = new Point(712, 46);
-            textBoxIgnore.Margin = new Padding(3, 2, 3, 2);
-            textBoxIgnore.Name = "textBoxIgnore";
-            textBoxIgnore.Size = new Size(33, 27);
-            textBoxIgnore.TabIndex = 11;
-            // 
-            // labelPercentage
-            // 
-            labelPercentage.AutoSize = true;
-            labelPercentage.Location = new Point(751, 50);
-            labelPercentage.Name = "labelPercentage";
-            labelPercentage.Size = new Size(21, 20);
-            labelPercentage.TabIndex = 13;
-            labelPercentage.Text = "%";
-            // 
             // textBoxActualRep
             // 
-            textBoxActualRep.Location = new Point(295, 142);
+            textBoxActualRep.Location = new Point(524, 32);
             textBoxActualRep.Margin = new Padding(3, 2, 3, 2);
             textBoxActualRep.Name = "textBoxActualRep";
             textBoxActualRep.ReadOnly = true;
             textBoxActualRep.Size = new Size(92, 27);
             textBoxActualRep.TabIndex = 14;
-            // 
-            // comboBoxProject
-            // 
-            comboBoxProject.FormattingEnabled = true;
-            comboBoxProject.Items.AddRange(new object[] { "RouteA", "NewsStand" });
-            comboBoxProject.Location = new Point(37, 36);
-            comboBoxProject.Margin = new Padding(2, 2, 2, 2);
-            comboBoxProject.Name = "comboBoxProject";
-            comboBoxProject.Size = new Size(147, 28);
-            comboBoxProject.TabIndex = 15;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
-            label1.Location = new Point(9, 6);
-            label1.Margin = new Padding(1, 0, 1, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(77, 28);
-            label1.TabIndex = 16;
-            label1.Text = "Project";
             // 
             // buttonPause
             // 
@@ -221,7 +156,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(349, 540);
+            label2.Location = new Point(651, 38);
             label2.Name = "label2";
             label2.Size = new Size(51, 20);
             label2.TabIndex = 20;
@@ -229,7 +164,7 @@
             // 
             // textBoxSpeed
             // 
-            textBoxSpeed.Location = new Point(402, 538);
+            textBoxSpeed.Location = new Point(704, 36);
             textBoxSpeed.Margin = new Padding(3, 2, 3, 2);
             textBoxSpeed.Name = "textBoxSpeed";
             textBoxSpeed.ReadOnly = true;
@@ -239,7 +174,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(441, 542);
+            label3.Location = new Point(743, 40);
             label3.Name = "label3";
             label3.Size = new Size(18, 20);
             label3.TabIndex = 21;
@@ -247,7 +182,7 @@
             // 
             // buttonTurbo
             // 
-            buttonTurbo.Location = new Point(349, 626);
+            buttonTurbo.Location = new Point(819, 32);
             buttonTurbo.Margin = new Padding(3, 2, 3, 2);
             buttonTurbo.Name = "buttonTurbo";
             buttonTurbo.Size = new Size(123, 34);
@@ -258,7 +193,7 @@
             // 
             // buttonNormal
             // 
-            buttonNormal.Location = new Point(349, 666);
+            buttonNormal.Location = new Point(819, 73);
             buttonNormal.Margin = new Padding(3, 2, 3, 2);
             buttonNormal.Name = "buttonNormal";
             buttonNormal.Size = new Size(123, 34);
@@ -306,7 +241,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(159, 146);
+            label4.Location = new Point(388, 36);
             label4.Name = "label4";
             label4.Size = new Size(130, 20);
             label4.TabIndex = 27;
@@ -315,7 +250,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(197, 496);
+            label5.Location = new Point(430, 73);
             label5.Name = "label5";
             label5.Size = new Size(88, 20);
             label5.TabIndex = 31;
@@ -359,7 +294,7 @@
             // 
             // textBoxActualTime
             // 
-            textBoxActualTime.Location = new Point(283, 492);
+            textBoxActualTime.Location = new Point(524, 70);
             textBoxActualTime.Margin = new Padding(3, 2, 3, 2);
             textBoxActualTime.Name = "textBoxActualTime";
             textBoxActualTime.ReadOnly = true;
@@ -379,8 +314,8 @@
             // 
             // trackBarSpeed
             // 
-            trackBarSpeed.Location = new Point(349, 566);
-            trackBarSpeed.Margin = new Padding(2, 2, 2, 2);
+            trackBarSpeed.Location = new Point(651, 64);
+            trackBarSpeed.Margin = new Padding(2);
             trackBarSpeed.Minimum = 1;
             trackBarSpeed.Name = "trackBarSpeed";
             trackBarSpeed.Size = new Size(125, 56);
@@ -388,11 +323,158 @@
             trackBarSpeed.Value = 1;
             trackBarSpeed.Scroll += trackBarSpeed_Scroll;
             // 
+            // dataGridViewArrival
+            // 
+            dataGridViewArrival.AllowUserToAddRows = false;
+            dataGridViewArrival.AllowUserToDeleteRows = false;
+            dataGridViewArrival.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
+            dataGridViewArrival.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+            dataGridViewArrival.BackgroundColor = Color.White;
+            dataGridViewArrival.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewArrival.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4 });
+            dataGridViewArrival.Location = new Point(517, 176);
+            dataGridViewArrival.Margin = new Padding(3, 4, 3, 4);
+            dataGridViewArrival.Name = "dataGridViewArrival";
+            dataGridViewArrival.ReadOnly = true;
+            dataGridViewArrival.RowHeadersWidth = 62;
+            dataGridViewArrival.RowTemplate.Height = 25;
+            dataGridViewArrival.Size = new Size(294, 308);
+            dataGridViewArrival.TabIndex = 33;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            dataGridViewTextBoxColumn3.HeaderText = "StatName";
+            dataGridViewTextBoxColumn3.MinimumWidth = 8;
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
+            dataGridViewTextBoxColumn3.Width = 8;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            dataGridViewTextBoxColumn4.HeaderText = "Value";
+            dataGridViewTextBoxColumn4.MinimumWidth = 8;
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            dataGridViewTextBoxColumn4.Width = 8;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            label7.Location = new Point(441, 141);
+            label7.Margin = new Padding(1, 0, 1, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(139, 28);
+            label7.TabIndex = 34;
+            label7.Text = "Arrival queue";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            label8.Location = new Point(441, 494);
+            label8.Margin = new Padding(1, 0, 1, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(180, 28);
+            label8.TabIndex = 36;
+            label8.Text = "Technical workers";
+            // 
+            // dataGridViewTechnical
+            // 
+            dataGridViewTechnical.AllowUserToAddRows = false;
+            dataGridViewTechnical.AllowUserToDeleteRows = false;
+            dataGridViewTechnical.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
+            dataGridViewTechnical.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+            dataGridViewTechnical.BackgroundColor = Color.White;
+            dataGridViewTechnical.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewTechnical.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6 });
+            dataGridViewTechnical.Location = new Point(517, 529);
+            dataGridViewTechnical.Margin = new Padding(3, 4, 3, 4);
+            dataGridViewTechnical.Name = "dataGridViewTechnical";
+            dataGridViewTechnical.ReadOnly = true;
+            dataGridViewTechnical.RowHeadersWidth = 62;
+            dataGridViewTechnical.RowTemplate.Height = 25;
+            dataGridViewTechnical.Size = new Size(294, 308);
+            dataGridViewTechnical.TabIndex = 35;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewTextBoxColumn5.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            dataGridViewTextBoxColumn5.HeaderText = "StatName";
+            dataGridViewTextBoxColumn5.MinimumWidth = 8;
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            dataGridViewTextBoxColumn5.ReadOnly = true;
+            dataGridViewTextBoxColumn5.Width = 8;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            dataGridViewTextBoxColumn6.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            dataGridViewTextBoxColumn6.HeaderText = "Value";
+            dataGridViewTextBoxColumn6.MinimumWidth = 8;
+            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            dataGridViewTextBoxColumn6.ReadOnly = true;
+            dataGridViewTextBoxColumn6.Width = 8;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            label9.Location = new Point(830, 491);
+            label9.Margin = new Padding(1, 0, 1, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(188, 28);
+            label9.TabIndex = 38;
+            label9.Text = "Inspection workers";
+            // 
+            // dataGridViewInspection
+            // 
+            dataGridViewInspection.AllowUserToAddRows = false;
+            dataGridViewInspection.AllowUserToDeleteRows = false;
+            dataGridViewInspection.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
+            dataGridViewInspection.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+            dataGridViewInspection.BackgroundColor = Color.White;
+            dataGridViewInspection.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewInspection.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn7, dataGridViewTextBoxColumn8 });
+            dataGridViewInspection.Location = new Point(906, 526);
+            dataGridViewInspection.Margin = new Padding(3, 4, 3, 4);
+            dataGridViewInspection.Name = "dataGridViewInspection";
+            dataGridViewInspection.ReadOnly = true;
+            dataGridViewInspection.RowHeadersWidth = 62;
+            dataGridViewInspection.RowTemplate.Height = 25;
+            dataGridViewInspection.Size = new Size(294, 308);
+            dataGridViewInspection.TabIndex = 37;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            dataGridViewTextBoxColumn7.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            dataGridViewTextBoxColumn7.HeaderText = "StatName";
+            dataGridViewTextBoxColumn7.MinimumWidth = 8;
+            dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            dataGridViewTextBoxColumn7.ReadOnly = true;
+            dataGridViewTextBoxColumn7.Width = 8;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            dataGridViewTextBoxColumn8.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            dataGridViewTextBoxColumn8.HeaderText = "Value";
+            dataGridViewTextBoxColumn8.MinimumWidth = 8;
+            dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            dataGridViewTextBoxColumn8.ReadOnly = true;
+            dataGridViewTextBoxColumn8.Width = 8;
+            // 
             // Application
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1635, 850);
+            Controls.Add(label9);
+            Controls.Add(dataGridViewInspection);
+            Controls.Add(label8);
+            Controls.Add(dataGridViewTechnical);
+            Controls.Add(label7);
+            Controls.Add(dataGridViewArrival);
             Controls.Add(trackBarSpeed);
             Controls.Add(label5);
             Controls.Add(dataGridViewLocal);
@@ -407,18 +489,10 @@
             Controls.Add(textBoxSpeed);
             Controls.Add(buttonRun);
             Controls.Add(buttonPause);
-            Controls.Add(label1);
-            Controls.Add(comboBoxProject);
             Controls.Add(textBoxActualRep);
-            Controls.Add(labelPercentage);
-            Controls.Add(labelIgnore);
-            Controls.Add(textBoxIgnore);
-            Controls.Add(cartesianChart1);
             Controls.Add(labelResults);
             Controls.Add(labelSett);
             Controls.Add(buttonStop);
-            Controls.Add(DataCount);
-            Controls.Add(textBoxDataCount);
             Controls.Add(labelRepCount);
             Controls.Add(textBoxRepCount);
             Margin = new Padding(3, 2, 3, 2);
@@ -427,6 +501,9 @@
             ((System.ComponentModel.ISupportInitialize)dataGridViewGlobal).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewLocal).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBarSpeed).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewArrival).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewTechnical).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewInspection).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -434,18 +511,10 @@
         #endregion
         private TextBox textBoxRepCount;
         private Label labelRepCount;
-        private Label DataCount;
-        private TextBox textBoxDataCount;
         private Button buttonStop;
         private Label labelSett;
         private Label labelResults;
-        private LiveChartsCore.SkiaSharpView.WinForms.CartesianChart cartesianChart1;
-        private Label labelIgnore;
-        private TextBox textBoxIgnore;
-        private Label labelPercentage;
         private TextBox textBoxActualRep;
-        private ComboBox comboBoxProject;
-        private Label label1;
         private Button buttonPause;
         private Button buttonRun;
         private Label label2;
@@ -464,5 +533,17 @@
         private TextBox textBoxActualTime;
         private Label label6;
         private TrackBar trackBarSpeed;
+        private DataGridView dataGridViewArrival;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private Label label7;
+        private Label label8;
+        private DataGridView dataGridViewTechnical;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private Label label9;
+        private DataGridView dataGridViewInspection;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
     }
 }
