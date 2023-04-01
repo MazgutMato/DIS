@@ -20,7 +20,7 @@ namespace DIS.Models.STKSimulation.Events
 
             //End of inspection
             var vehicle = _worker._vehicle;
-            double inspectionTime;
+            double inspectionTime = 0;
             switch (vehicle._vehicleType)
             {
                 case VehicleType.NONE:
@@ -33,16 +33,30 @@ namespace DIS.Models.STKSimulation.Events
                     inspectionTime = core._generators[5].Next();
                     break;
                 case VehicleType.TRUCK:
+                    inspectionTime = core._generators[6].Next();
                     break;
                 default:                    
                     break;
             }
 
+            if(inspectionTime != 0)
+            {
+                core.AddEvent(new EndInspectionEvent(core._actualTime + inspectionTime,
+                    core, _worker));
+            }
+            else
+            {
+                throw new Exception("Invalid inspection time!");
+            }
 
             //Start taking
-            if(core._technicWorkers.Count != 0)
+            if (core._technicWorkers.Count > 0 && core._takeCarsCount + core._inspectionParking.Count
+                < core._inspectionParkingCapacity && core._vehicleLine.Count > 0)
             {
-
+                core._takeCarsCount++;
+                var takingWorker = core._technicWorkers.Dequeue();
+                takingWorker._vehicle = core._vehicleLine.Dequeue();
+                core.AddEvent(new StartTakingEvent(core._actualTime, core, takingWorker));
             }
         }
     }
