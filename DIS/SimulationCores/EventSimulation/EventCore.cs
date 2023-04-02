@@ -19,7 +19,7 @@ namespace DIS.SimulationCores.EventSimulation
         public double _actualTime { get; set; }
         public double _maxTime { get; }
         public double _speed { get; set; }
-        public double _sleepTime { get; set; }
+        public double _refreshTime { get; set; }
         public Mode _mode { get; set; }
         public EventCore(int repCount, double maxTime) : base(repCount)
         {
@@ -28,7 +28,7 @@ namespace DIS.SimulationCores.EventSimulation
             _actualTime = 0;
             _maxTime = maxTime;
             _speed = 1;
-            _sleepTime = 1000;
+            _refreshTime = 1;
             _mode = Mode.NORMAL;
         }
 

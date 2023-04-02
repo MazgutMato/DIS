@@ -39,15 +39,19 @@ namespace DIS.Models.STKSimulation.Events
                 core._paymentParking.Enqueue(_worker._vehicle);
             }
 
-            //Start exeption
+            //Start inspection
             _worker._vehicle = null;
             if (core._inspectionParking.Count > 0)
             {
+                _worker._vehicle = core._inspectionParking.Dequeue();
                 core.AddEvent(new StartInspectionEvent(_eventTime, core, _worker));
             } else
             {
                 core._inspectionWorkers.Enqueue(_worker);
             }
+
+            //Set working type
+            _worker._working = Working.NONE;
         }
     }
 }

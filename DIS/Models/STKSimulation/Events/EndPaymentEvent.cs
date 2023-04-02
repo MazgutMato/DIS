@@ -18,6 +18,10 @@ namespace DIS.Models.STKSimulation.Events
 
             var core = (STKCore)_myCore;
 
+            //Statistic
+            core._localStatistic[0].AddValue(core._actualTime - _worker._vehicle._arrivalTime);
+            core._actualCarsInStk--;
+
             //Start of payment
             if(core._paymentParking.Count > 0)
             {
@@ -40,6 +44,9 @@ namespace DIS.Models.STKSimulation.Events
                     core._technicWorkers.Enqueue(_worker);
                 }
             }
+
+            //Set working type
+            _worker._working = Working.NONE;
         }
     }
 }

@@ -60,7 +60,7 @@ namespace DIS.SimulationCores
                 {
                     if(_globalStatistics.Count >= statNumber)
                     {
-                        _globalStatistics[statNumber].AddValue(stat.GetResult());
+                        _globalStatistics[statNumber - 1].AddValue(stat.GetResult());
                     }
                     else
                     {

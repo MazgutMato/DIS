@@ -22,6 +22,10 @@ namespace DIS.Models.STKSimulation
             _arrivalTime = arrivalTime;
             _vehicleType = VehicleType.NONE;
         }
+        public override string ToString()
+        {
+            return "ID: " + _id + " Type: " + _vehicleType;
+        }
     }
 
     public enum VehicleType

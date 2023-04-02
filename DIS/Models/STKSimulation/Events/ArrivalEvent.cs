@@ -20,17 +20,19 @@ namespace DIS.Models.STKSimulation.Events
             base.Execute();
             var core = (STKCore)_myCore;
 
+            //Statistic
+            core._actualCarsInStk++;
+
             //Arivaval next customer
             if (core._generators.Count > 0)
             {
                 var distributionArrival = core._generators[0];
                 var nextArrival = distributionArrival.Next();                                
                 
-                core.AddEvent(new ArrivalEvent(core._actualTime + nextArrival, core));             
-            }
-            else
-            {
-                throw new Exception("Distribution doesnt exists!");
+                if((core._actualTime + nextArrival) < 405 * 60)
+                {
+                    core.AddEvent(new ArrivalEvent(core._actualTime + nextArrival, core));
+                }                   
             }
 
             //Start of payment

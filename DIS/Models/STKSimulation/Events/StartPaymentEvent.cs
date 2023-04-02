@@ -16,6 +16,9 @@ namespace DIS.Models.STKSimulation.Events
         {
             base.Execute();
 
+            //Set working type
+            _worker._working = Working.PAYMENT;
+
             //End of payment
             if (_myCore._generators.Count > 3)
             {

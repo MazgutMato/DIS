@@ -27,14 +27,13 @@ namespace DIS.Models.STKSimulation.Events
                 var inspectionWorker = core._inspectionWorkers.Dequeue();
                 if (core._inspectionParking.Count > 0)
                 {
-                    var inspectionVehilce = _worker._vehicle;
-                    inspectionWorker._vehicle = inspectionVehilce;                    
+                    var inspectionVehilce = core._inspectionParking.Dequeue();
+                    inspectionWorker._vehicle = inspectionVehilce;
+                    core._inspectionParking.Enqueue(_worker._vehicle);                  
                 }
                 else
                 {
-                    var inspectionVehilce = core._inspectionParking.Dequeue();
-                    inspectionWorker._vehicle = inspectionVehilce;
-                    core._inspectionParking.Enqueue(_worker._vehicle);
+                    inspectionWorker._vehicle = _worker._vehicle;
                 }
                 core.AddEvent(new StartInspectionEvent(core._actualTime, core, inspectionWorker));
             }
@@ -53,7 +52,7 @@ namespace DIS.Models.STKSimulation.Events
             } else
             {
                 //Start new taking
-                if(core._vehicleLine.Count > 0 && core._inspectionParking.Count + core._takeCarsCount 
+                if(core._vehicleLine.Count > 0 && (core._inspectionParking.Count + core._takeCarsCount) 
                     < core._inspectionParkingCapacity)
                 {
                     _worker._vehicle = core._vehicleLine.Dequeue();
@@ -64,8 +63,10 @@ namespace DIS.Models.STKSimulation.Events
                     _worker._vehicle = null;
                     core._technicWorkers.Enqueue(_worker);
                 }
-            }            
+            }
 
+            //Set working type
+            _worker._working = Working.NONE;
         }
     }
 }

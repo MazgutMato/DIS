@@ -18,6 +18,9 @@ namespace DIS.Models.STKSimulation.Events
 
             var core = (STKCore)_myCore;
 
+            //Set working type
+            _worker._working = Working.INSPECT;
+
             //End of inspection
             var vehicle = _worker._vehicle;
             double inspectionTime = 0;
@@ -41,7 +44,7 @@ namespace DIS.Models.STKSimulation.Events
 
             if(inspectionTime != 0)
             {
-                core.AddEvent(new EndInspectionEvent(core._actualTime + inspectionTime,
+                core.AddEvent(new EndInspectionEvent(core._actualTime + inspectionTime * 60,
                     core, _worker));
             }
             else

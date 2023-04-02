@@ -17,6 +17,12 @@ namespace DIS.Models.STKSimulation.Events
         {
             base.Execute();
 
+            //Statistic
+            _myCore._localStatistic[1].AddValue(_myCore._actualTime - _worker._vehicle._arrivalTime);
+
+            //Set working type
+            _worker._working = Working.TAKING;
+
             //End taking event
             if (_myCore._generators.Count > 2)
             {
