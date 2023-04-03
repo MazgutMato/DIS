@@ -48,7 +48,7 @@ namespace DIS.SimulationCores
         {
             _actualRepCount++;
 
-            if (!_stopSimulation)
+            if (!_stopSimulation && (_actualRepCount % _dataGenerate == 0))
             {
                 this.OnDataUpdate(EventArgs.Empty);
             }

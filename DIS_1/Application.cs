@@ -15,6 +15,7 @@ namespace DIS_1
             InitializeComponent();
 
             textBoxRepCount.Text = "1000000";
+            textBoxRepRefresh.Text = "1000";
             trackBarSpeed.Value = 1;
             textBoxSpeed.Text = "1";
             trackBarRefresh.Value = 1;
@@ -56,7 +57,7 @@ namespace DIS_1
                     textBoxActualTime.Invoke((MethodInvoker)delegate ()
                     {
                         textBoxActualTime.Text = "" + actualTime.Hour + ":" + actualTime.Minute
-                        + ":" + actualTime.Second;
+                            + ":" + actualTime.Second;
                     });
 
                     dataGridViewLocal.Invoke((MethodInvoker)delegate ()
@@ -183,78 +184,12 @@ namespace DIS_1
                     var dataGridViewRowVehicle = new DataGridViewRow();
                     dataGridViewRowVehicle.CreateCells(dataGridViewGlobal, "Vehicles in system", core._vehicleInSystemGlobal.GetResult(), "vehicles");
                     dataGridViewGlobal.Rows.Add(dataGridViewRowVehicle);
+
+                    //Vehicle inspected
+                    var dataGridViewRowInspected = new DataGridViewRow();
+                    dataGridViewRowInspected.CreateCells(dataGridViewGlobal, "Count of vehicles", core._totalVehicleGlobal.GetResult(), "vehicles");
+                    dataGridViewGlobal.Rows.Add(dataGridViewRowInspected);
                 });
-            }
-        }
-
-        private void buttonPause_Click(object sender, EventArgs e)
-        {
-            _core._pause = true;
-            buttonRun.Enabled = true;
-            buttonPause.Enabled = false;
-        }
-
-        private void buttonStop_Click(object sender, EventArgs e)
-        {
-            if (_core != null)
-            {
-                _core._stopSimulation = true;
-            }
-
-            buttonRun.Enabled = true;
-            buttonStop.Enabled = false;
-            buttonPause.Enabled = false;
-            technicalWorkers.Enabled = true;
-            inspectionWorkers.Enabled = true;
-        }
-
-        private void trackBarSpeed_Scroll(object sender, EventArgs e)
-        {
-            if (_core != null && _core is EventCore)
-            {
-                var core = (EventCore)_core;
-
-                core._speed = trackBarSpeed.Value;
-                textBoxSpeed.Text = trackBarSpeed.Value.ToString();
-            }
-        }
-
-        private void buttonTurbo_Click(object sender, EventArgs e)
-        {
-            if (_core == null || _core is not EventCore)
-            {
-                return;
-            }
-
-            var core = (EventCore)_core;
-            core._mode = Mode.TURBO;
-
-            buttonNormal.Enabled = true;
-            buttonTurbo.Enabled = false;
-        }
-
-        private void buttonNormal_Click(object sender, EventArgs e)
-        {
-            if (_core == null || _core is not EventCore)
-            {
-                return;
-            }
-
-            var core = (EventCore)_core;
-            core._mode = Mode.NORMAL;
-
-            buttonNormal.Enabled = false;
-            buttonTurbo.Enabled = true;
-        }
-
-        private void trackBarRefresh_Scroll(object sender, EventArgs e)
-        {
-            if (_core != null && _core is EventCore)
-            {
-                var core = (EventCore)_core;
-
-                core._refreshTime = trackBarRefresh.Value;
-                textBoxRefresh.Text = trackBarRefresh.Value.ToString();
             }
         }
 
@@ -277,6 +212,7 @@ namespace DIS_1
             var core = (STKCore)_core;
             core._technicWorkersCount = Convert.ToInt32(technicalWorkers.Value);
             core._inspectionWorkersCount = Convert.ToInt32(inspectionWorkers.Value);
+            core._dataGenerate = Convert.ToInt32(textBoxRepRefresh.Text);
 
             buttonRun.Enabled = false;
             buttonStop.Enabled = true;
@@ -285,11 +221,84 @@ namespace DIS_1
             buttonTurbo.Enabled = true;
             textBoxSpeed.Text = "1";
             trackBarSpeed.Value = 1;
+            textBoxRefresh.Text = "1";
+            trackBarRefresh.Value = 1;
             technicalWorkers.Enabled = false;
             inspectionWorkers.Enabled = false;
 
 
             RunSimulation();
+        }
+
+        private void trackBarRefresh_Scroll(object sender, EventArgs e)
+        {
+            if (_core != null && _core is EventCore)
+            {
+                var core = (EventCore)_core;
+
+                core._refreshTime = trackBarRefresh.Value;
+                textBoxRefresh.Text = trackBarRefresh.Value.ToString();
+            }
+        }
+
+        private void buttonNormal_Click(object sender, EventArgs e)
+        {
+            if (_core == null || _core is not EventCore)
+            {
+                return;
+            }
+
+            var core = (EventCore)_core;
+            core._mode = Mode.NORMAL;
+
+            buttonNormal.Enabled = false;
+            buttonTurbo.Enabled = true;
+        }
+
+        private void buttonTurbo_Click(object sender, EventArgs e)
+        {
+            if (_core == null || _core is not EventCore)
+            {
+                return;
+            }
+
+            var core = (EventCore)_core;
+            core._mode = Mode.TURBO;
+
+            buttonNormal.Enabled = true;
+            buttonTurbo.Enabled = false;
+        }
+
+        private void trackBarSpeed_Scroll(object sender, EventArgs e)
+        {
+            if (_core != null && _core is EventCore)
+            {
+                var core = (EventCore)_core;
+
+                core._speed = trackBarSpeed.Value;
+                textBoxSpeed.Text = trackBarSpeed.Value.ToString();
+            }
+        }
+
+        private void buttonStop_Click(object sender, EventArgs e)
+        {
+            if (_core != null)
+            {
+                _core._stopSimulation = true;
+            }
+
+            buttonRun.Enabled = true;
+            buttonStop.Enabled = false;
+            buttonPause.Enabled = false;
+            technicalWorkers.Enabled = true;
+            inspectionWorkers.Enabled = true;
+        }
+
+        private void buttonPause_Click(object sender, EventArgs e)
+        {
+            _core._pause = true;
+            buttonRun.Enabled = true;
+            buttonPause.Enabled = false;
         }
     }
 }

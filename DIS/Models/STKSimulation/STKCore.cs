@@ -34,6 +34,7 @@ namespace DIS.Models.STKSimulation
         public NormalStatistic _waitingTimeLocal { get; set; }
         public NormalStatistic _timeInSystemGlobal { get; set; }
         public NormalStatistic _waitingTimeGlobal { get; set; }
+        public NormalStatistic _totalVehicleGlobal { get; set; }
         public NormalStatistic _vehicleInSystemGlobal { get; set; }
 
         public STKCore(int repCount, double maxTime) : base(repCount, maxTime)
@@ -119,6 +120,7 @@ namespace DIS.Models.STKSimulation
             this._vehicleInSystemGlobal = new NormalStatistic();
             this._timeInSystemGlobal = new NormalStatistic();
             this._waitingTimeGlobal = new NormalStatistic();
+            this._totalVehicleGlobal = new NormalStatistic();
         }
 
         protected override void AfterRep()
@@ -130,6 +132,7 @@ namespace DIS.Models.STKSimulation
                 this._waitingTimeGlobal.AddValue(_waitingTimeLocal.GetResult());
                 this._timeInSystemGlobal.AddValue(_timeInSystemLocal.GetResult());
                 this._vehicleInSystemGlobal.AddValue(_actualCarsInSystem);
+                this._totalVehicleGlobal.AddValue(_totalVehicleCount);
             }
         }
     }
