@@ -17,24 +17,17 @@ namespace DIS.Models.STKSimulation.Events
         {
             base.Execute();
 
+            var core = (STKCore)_myCore;
+
             //Statistic
-            _myCore._localStatistic[1].AddValue(_myCore._actualTime - _worker._vehicle._arrivalTime);
+            core._waitingTimeLocal.AddValue(_myCore._actualTime - _worker._vehicle._arrivalTime);
 
             //Set working type
             _worker._working = Working.TAKING;
 
-            //End taking event
-            if (_myCore._generators.Count > 2)
-            {
-                var distributionEndTaking = _myCore._generators[2];
-                var endOfTaking = distributionEndTaking.Next();
-
-                _myCore.AddEvent(new EndTakingEvent(_myCore._actualTime + endOfTaking, _myCore, _worker));
-            }
-            else
-            {
-                throw new Exception("Distribution doesnt exists!");
-            }            
+            //End taking event            
+            var endOfTaking = core._takingTime.Next();
+            _myCore.AddEvent(new EndTakingEvent(_myCore._actualTime + endOfTaking, _myCore, _worker));
         }
     }
 }

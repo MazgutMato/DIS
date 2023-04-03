@@ -61,29 +61,17 @@ namespace DIS_1
 
                     dataGridViewLocal.Invoke((MethodInvoker)delegate ()
                     {
-                        var statCount = 1;
-                        foreach (var item in _core._localStatistic)
-                        {
-                            var key = statCount;
-                            var stat = item;
+                        dataGridViewLocal.Rows.Clear();
 
-                            // Check if a row with the key already exists in the control
-                            DataGridViewRow dataGridViewRow = dataGridViewLocal.Rows.Cast<DataGridViewRow>().FirstOrDefault(x => x.Cells[0].Value.ToString() == key.ToString());
+                        //Time in system
+                        var dataGridViewRowSystem = new DataGridViewRow();
+                        dataGridViewRowSystem.CreateCells(dataGridViewLocal, "Time in system", core._timeInSystemLocal.GetResult() / 60, "minutes");
+                        dataGridViewLocal.Rows.Add(dataGridViewRowSystem);
 
-                            if (dataGridViewRow == null)
-                            {
-                                // Create a new row and add it to the control
-                                dataGridViewRow = new DataGridViewRow();
-                                dataGridViewRow.CreateCells(dataGridViewLocal, key, stat.GetResult());
-                                dataGridViewLocal.Rows.Add(dataGridViewRow);
-                            }
-                            else
-                            {
-                                // Update the value of the existing row
-                                dataGridViewRow.Cells[1].Value = stat.GetResult();
-                            }
-                            statCount++;
-                        }
+                        //Waiting time
+                        var dataGridViewRowWaiting = new DataGridViewRow();
+                        dataGridViewRowWaiting.CreateCells(dataGridViewLocal, "Waiting time", core._waitingTimeLocal.GetResult() / 60, "minutes");
+                        dataGridViewLocal.Rows.Add(dataGridViewRowWaiting);
                     });
 
                     //Arrival line
@@ -167,71 +155,36 @@ namespace DIS_1
                 }
             }
 
-            //GlobalUpdate
-            textBoxActualRep.Invoke((MethodInvoker)delegate ()
+            if (_core is STKCore)
             {
-                textBoxActualRep.Text = _core._actualRepCount.ToString();
-            });
-            dataGridViewGlobal.Invoke((MethodInvoker)delegate ()
-            {
-                var statCount = 1;
-                foreach (var item in _core._globalStatistics)
+                var core = (STKCore)_core;
+
+                //GlobalUpdate
+                textBoxActualRep.Invoke((MethodInvoker)delegate ()
                 {
-                    var key = statCount;
-                    var stat = item;
+                    textBoxActualRep.Text = _core._actualRepCount.ToString();
+                });
 
-                    // Check if a row with the key already exists in the control
-                    DataGridViewRow dataGridViewRow = dataGridViewGlobal.Rows.Cast<DataGridViewRow>().FirstOrDefault(x => x.Cells[0].Value.ToString() == key.ToString());
+                dataGridViewGlobal.Invoke((MethodInvoker)delegate ()
+                {
+                    dataGridViewGlobal.Rows.Clear();
 
-                    if (dataGridViewRow == null)
-                    {
-                        // Create a new row and add it to the control
-                        dataGridViewRow = new DataGridViewRow();
-                        dataGridViewRow.CreateCells(dataGridViewGlobal, key, stat.GetResult()/60);
-                        dataGridViewGlobal.Rows.Add(dataGridViewRow);
-                    }
-                    else
-                    {
-                        // Update the value of the existing row
-                        dataGridViewRow.Cells[1].Value = stat.GetResult();
-                    }
-                    statCount++;
-                }
-            });
-        }
+                    //Time in system
+                    var dataGridViewRowSystem = new DataGridViewRow();
+                    dataGridViewRowSystem.CreateCells(dataGridViewGlobal, "Time in system", core._timeInSystemGlobal.GetResult() / 60, "minutes");
+                    dataGridViewGlobal.Rows.Add(dataGridViewRowSystem);
 
-        private void buttonRun_Click(object sender, EventArgs e)
-        {
-            //Simulation is paused
-            if (_core != null && _core._pause == true)
-            {
-                _core._pause = false;
-                buttonRun.Enabled = false;
-                buttonPause.Enabled = true;
+                    //Waiting time
+                    var dataGridViewRowWaiting = new DataGridViewRow();
+                    dataGridViewRowWaiting.CreateCells(dataGridViewGlobal, "Waiting time", core._waitingTimeGlobal.GetResult() / 60, "minutes");
+                    dataGridViewGlobal.Rows.Add(dataGridViewRowWaiting);
 
-                return;
+                    //Vehicle in system
+                    var dataGridViewRowVehicle = new DataGridViewRow();
+                    dataGridViewRowVehicle.CreateCells(dataGridViewGlobal, "Vehicles in system", core._vehicleInSystemGlobal.GetResult(), "vehicles");
+                    dataGridViewGlobal.Rows.Add(dataGridViewRowVehicle);
+                });
             }
-
-            //New simulation
-            var repCount = Convert.ToInt32(textBoxRepCount.Text);
-
-            _core = new STKCore(repCount, 8 * 60 * 60);
-            var core = (STKCore)_core;
-            core._technicWorkersCount = Convert.ToInt32(technicalWorkers.Value);
-            core._inspectionWorkersCount = Convert.ToInt32(inspectionWorkers.Value);
-
-            buttonRun.Enabled = false;
-            buttonStop.Enabled = true;
-            buttonPause.Enabled = true;
-            buttonNormal.Enabled = false;
-            buttonTurbo.Enabled = true;
-            textBoxSpeed.Text = "1";
-            trackBarSpeed.Value = 1;
-            technicalWorkers.Enabled = false;
-            inspectionWorkers.Enabled = false;
-
-
-            RunSimulation();
         }
 
         private void buttonPause_Click(object sender, EventArgs e)
@@ -303,6 +256,40 @@ namespace DIS_1
                 core._refreshTime = trackBarRefresh.Value;
                 textBoxRefresh.Text = trackBarRefresh.Value.ToString();
             }
+        }
+
+        private void buttonRun_Click(object sender, EventArgs e)
+        {
+            //Simulation is paused
+            if (_core != null && _core._pause == true)
+            {
+                _core._pause = false;
+                buttonRun.Enabled = false;
+                buttonPause.Enabled = true;
+
+                return;
+            }
+
+            //New simulation
+            var repCount = Convert.ToInt32(textBoxRepCount.Text);
+
+            _core = new STKCore(repCount, 8 * 60 * 60);
+            var core = (STKCore)_core;
+            core._technicWorkersCount = Convert.ToInt32(technicalWorkers.Value);
+            core._inspectionWorkersCount = Convert.ToInt32(inspectionWorkers.Value);
+
+            buttonRun.Enabled = false;
+            buttonStop.Enabled = true;
+            buttonPause.Enabled = true;
+            buttonNormal.Enabled = false;
+            buttonTurbo.Enabled = true;
+            textBoxSpeed.Text = "1";
+            trackBarSpeed.Value = 1;
+            technicalWorkers.Enabled = false;
+            inspectionWorkers.Enabled = false;
+
+
+            RunSimulation();
         }
     }
 }

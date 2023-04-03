@@ -30,13 +30,13 @@ namespace DIS.Models.STKSimulation.Events
                     throw new Exception("Vehicle type is not set!");
                     break;
                 case VehicleType.CAR:
-                    inspectionTime = core._generators[4].Next();
+                    inspectionTime = core._inspectionCar.Next();
                     break;
                 case VehicleType.VAN:
-                    inspectionTime = core._generators[5].Next();
+                    inspectionTime = core._inspectionVan.Next();
                     break;
                 case VehicleType.TRUCK:
-                    inspectionTime = core._generators[6].Next();
+                    inspectionTime = core._inspectionTruck.Next();
                     break;
                 default:                    
                     break;

@@ -22,7 +22,20 @@ namespace DIS.Models.STKSimulation
         public List<Worker> _workers { get; set; }
         public int _technicWorkersCount { get; set; }
         public int _totalVehicleCount { get; set; }
-        public int _actualCarsInStk { get; set; }
+        public int _actualCarsInSystem { get; set; }
+        public Exponential _arrival { get; set; }
+        public ContinuosUniform _vehicleType { get; set; }
+        public TriangularDistribution _takingTime { get; set; }
+        public ContinuosUniform _paymentTime { get; set; }
+        public DiscreteUniform _inspectionCar { get; set; }
+        public DiscreteEmpirical _inspectionVan { get; set; }
+        public DiscreteEmpirical _inspectionTruck { get; set; }
+        public NormalStatistic _timeInSystemLocal { get; set; }
+        public NormalStatistic _waitingTimeLocal { get; set; }
+        public NormalStatistic _timeInSystemGlobal { get; set; }
+        public NormalStatistic _waitingTimeGlobal { get; set; }
+        public NormalStatistic _vehicleInSystemGlobal { get; set; }
+
         public STKCore(int repCount, double maxTime) : base(repCount, maxTime)
         {
             this._vehicleLine = new Queue<Vehicle>();    
@@ -35,7 +48,7 @@ namespace DIS.Models.STKSimulation
             this._technicWorkersCount = 1;
             this._inspectionWorkersCount = 1;
             this._totalVehicleCount = 0;
-            this._actualCarsInStk = 0;
+            this._actualCarsInSystem = 0;
         }
 
         protected override void BeforeRep()
@@ -61,19 +74,18 @@ namespace DIS.Models.STKSimulation
 
             this._takeCarsCount = 0;
             this._totalVehicleCount = 0;
-            this._actualCarsInStk = 0;
+            this._actualCarsInSystem = 0;
 
-            this._generators = new List<Distribution>();
             //Arrival[0]
-            this._generators.Add(new Exponential( ((double)3600)/23 ) );
+            this._arrival = new Exponential(((double)3600) / 23);
             //Vehicle type[1]
-            this._generators.Add(new ContinuosUniform(0,1));
+            this._vehicleType = new ContinuosUniform(0,1);
             //Taking time[2]
-            this._generators.Add(new TriangularDistribution(180,695,431));
+            this._takingTime = new TriangularDistribution(180,695,431);
             //Payment time[3]
-            this._generators.Add(new ContinuosUniform(65,177));
+            this._paymentTime = new ContinuosUniform(65,177);
             //Ispection time in minutes car[4]
-            this._generators.Add(new DiscreteUniform(31, 45));
+            this._inspectionCar = new DiscreteUniform(31, 45);
             //Ispection time in minutes van[5]
             var vanParams = new List<EmpiricalParam>();
             vanParams.AddRange(new[] {
@@ -82,7 +94,7 @@ namespace DIS.Models.STKSimulation
                 new EmpiricalParam(41, 47, 0.3),
                 new EmpiricalParam(48, 52, 0.15)
             });
-            this._generators.Add(new DiscreteEmpirical(vanParams));
+            this._inspectionVan = new DiscreteEmpirical(vanParams);
             //Ispection time in minutes truck[6]
             var truckParams = new List<EmpiricalParam>();
             truckParams.AddRange(new[] {
@@ -93,12 +105,32 @@ namespace DIS.Models.STKSimulation
                 new EmpiricalParam(52, 55, 0.25),
                 new EmpiricalParam(56, 65, 0.05)
             });
-            this._generators.Add(new DiscreteEmpirical(truckParams));
+            this._inspectionTruck = new DiscreteEmpirical(truckParams);
 
             //Statistics
-            this._localStatistic.Add(new NormalStatistic());
-            this._localStatistic.Add(new NormalStatistic());
-            this._localStatistic.Add(new NormalStatistic());
+            this._timeInSystemLocal = new NormalStatistic();            
+            this._waitingTimeLocal = new NormalStatistic();            
+        }
+
+        protected override void BeforeSimulation()
+        {
+            base.BeforeSimulation();
+
+            this._vehicleInSystemGlobal = new NormalStatistic();
+            this._timeInSystemGlobal = new NormalStatistic();
+            this._waitingTimeGlobal = new NormalStatistic();
+        }
+
+        protected override void AfterRep()
+        {
+            base.AfterRep();
+
+            if (!_stopSimulation)
+            {
+                this._waitingTimeGlobal.AddValue(_waitingTimeLocal.GetResult());
+                this._timeInSystemGlobal.AddValue(_timeInSystemLocal.GetResult());
+                this._vehicleInSystemGlobal.AddValue(_actualCarsInSystem);
+            }
         }
     }
 }

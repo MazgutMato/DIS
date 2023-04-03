@@ -16,21 +16,15 @@ namespace DIS.Models.STKSimulation.Events
         {
             base.Execute();
 
+            var core = (STKCore)_myCore;
+
             //Set working type
             _worker._working = Working.PAYMENT;
 
-            //End of payment
-            if (_myCore._generators.Count > 3)
-            {
-                var distributionEndPayment = _myCore._generators[3];
-                var endOfPayment = distributionEndPayment.Next();
+            //End of payment            
+            var endOfPayment = core._paymentTime.Next();
 
-                _myCore.AddEvent(new EndPaymentEvent(_myCore._actualTime + endOfPayment, _myCore, _worker));
-            }
-            else
-            {
-                throw new Exception("Distribution doesnt exists!");
-            }
+            _myCore.AddEvent(new EndPaymentEvent(_myCore._actualTime + endOfPayment, _myCore, _worker));
         }
     }
 }

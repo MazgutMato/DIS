@@ -21,18 +21,14 @@ namespace DIS.Models.STKSimulation.Events
             var core = (STKCore)_myCore;
 
             //Statistic
-            core._actualCarsInStk++;
+            core._actualCarsInSystem++;
 
-            //Arivaval next customer
-            if (core._generators.Count > 0)
+            //Arivaval next customer            
+            var nextArrival = core._arrival.Next();
+
+            if ((core._actualTime + nextArrival) < 405 * 60)
             {
-                var distributionArrival = core._generators[0];
-                var nextArrival = distributionArrival.Next();                                
-                
-                if((core._actualTime + nextArrival) < 405 * 60)
-                {
-                    core.AddEvent(new ArrivalEvent(core._actualTime + nextArrival, core));
-                }                   
+                core.AddEvent(new ArrivalEvent(core._actualTime + nextArrival, core));
             }
 
             //Start of payment
@@ -47,29 +43,23 @@ namespace DIS.Models.STKSimulation.Events
             //Arrival vehicle
             core._totalVehicleCount++;
             var arrivalVehicle = new Vehicle(core._totalVehicleCount, core._actualTime);
-            //Set a type of vehicle
-            if (core._generators.Count > 1)
-            {
-                var distributionType = core._generators[1];
-                var type = distributionType.Next();
 
-                if (type < 0.14)
-                {
-                    arrivalVehicle._vehicleType = VehicleType.TRUCK;
-                }
-                else if (type < 0.35)
-                {
-                    arrivalVehicle._vehicleType = VehicleType.VAN;
-                }
-                else
-                {
-                    arrivalVehicle._vehicleType = VehicleType.CAR;
-                }
+            //Set a type of vehicle
+            var type = core._vehicleType.Next();
+
+            if (type < 0.14)
+            {
+                arrivalVehicle._vehicleType = VehicleType.TRUCK;
+            }
+            else if (type < 0.35)
+            {
+                arrivalVehicle._vehicleType = VehicleType.VAN;
             }
             else
             {
-                throw new Exception("Distribution doesnt exists!");
+                arrivalVehicle._vehicleType = VehicleType.CAR;
             }
+
             //Start taking
             if (core._technicWorkers.Count > 0 && core._takeCarsCount + core._inspectionParking.Count 
                 < core._inspectionParkingCapacity)

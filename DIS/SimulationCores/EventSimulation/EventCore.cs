@@ -24,7 +24,6 @@ namespace DIS.SimulationCores.EventSimulation
         public EventCore(int repCount, double maxTime) : base(repCount)
         {
             _eventQueue = new PriorityQueue<Event, double>();
-            _localStatistic = new List<Statistic>();
             _actualTime = 0;
             _maxTime = maxTime;
             _speed = 1;
@@ -41,8 +40,7 @@ namespace DIS.SimulationCores.EventSimulation
             if (_mode == Mode.NORMAL)
             {
                 AddEvent(new SystemEvent(0, this));
-            }
-            _localStatistic = new List<Statistic>();                        
+            }                      
             _actualTime = 0;
         }
 

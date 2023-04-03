@@ -41,7 +41,14 @@ namespace DIS.SimulationCores.Statistics
         }
         public double GetResult()
         {
-            return _sum / _count;
+            if(_count > 0)
+            {
+                return _sum / _count;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

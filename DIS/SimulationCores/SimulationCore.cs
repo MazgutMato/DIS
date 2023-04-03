@@ -16,9 +16,6 @@ namespace DIS.SimulationCores
         public bool _pause { get; set; }
         public bool _stopSimulation { get; set; }
         public int _ignore { get; set; }
-        public List<Distribution>? _generators { get; set; }
-        public List<Statistic> _globalStatistics { get; set; }
-        public List<Statistic> _localStatistic { get; set; }
         public event EventHandler _dataUpdate;
         protected SimulationCore(int repCount)
         {
@@ -27,14 +24,12 @@ namespace DIS.SimulationCores
             _ignore = 30;
             _actualRepCount = 0;
             _stopSimulation = false;
-            _globalStatistics = new List<Statistic>();
             _pause = false;
         }
         protected virtual void BeforeSimulation()
         {
             _actualRepCount = 0;
             _stopSimulation = false;
-            _globalStatistics = new List<Statistic>();
         }
         protected virtual void BeforeRep() { }
         public void RunSimulation()
@@ -55,23 +50,6 @@ namespace DIS.SimulationCores
 
             if (!_stopSimulation)
             {
-                var statNumber = 1;
-                foreach (var stat in _localStatistic)
-                {
-                    if(_globalStatistics.Count >= statNumber)
-                    {
-                        _globalStatistics[statNumber - 1].AddValue(stat.GetResult());
-                    }
-                    else
-                    {
-                        var newStat = new NormalStatistic();
-                        newStat.AddValue(stat.GetResult());
-                        _globalStatistics.Add(newStat);
-                    }                                        
-                    
-                    statNumber++;
-                }
-
                 this.OnDataUpdate(EventArgs.Empty);
             }
         }

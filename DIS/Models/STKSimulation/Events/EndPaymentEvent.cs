@@ -19,8 +19,8 @@ namespace DIS.Models.STKSimulation.Events
             var core = (STKCore)_myCore;
 
             //Statistic
-            core._localStatistic[0].AddValue(core._actualTime - _worker._vehicle._arrivalTime);
-            core._actualCarsInStk--;
+            core._timeInSystemLocal.AddValue(core._actualTime - _worker._vehicle._arrivalTime);
+            core._actualCarsInSystem--;
 
             //Start of payment
             if(core._paymentParking.Count > 0)
