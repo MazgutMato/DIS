@@ -47,6 +47,8 @@ namespace DIS_1
 
         private void UpdateData(object sender, EventArgs e)
         {
+            Invoke((Action)(()=>
+            {
             //Local update
             if (_core is STKCore)
             {
@@ -54,105 +56,84 @@ namespace DIS_1
                 if (core._mode == Mode.NORMAL)
                 {
                     var actualTime = _startTime.AddSeconds(core._actualTime);
-                    textBoxActualTime.Invoke((MethodInvoker)delegate ()
-                    {
-                        textBoxActualTime.Text = "" + actualTime.Hour + ":" + actualTime.Minute
-                            + ":" + actualTime.Second;
-                    });
+                    textBoxActualTime.Text = "" + actualTime.Hour + ":" + actualTime.Minute
+                        + ":" + actualTime.Second;
 
-                    dataGridViewLocal.Invoke((MethodInvoker)delegate ()
-                    {
-                        dataGridViewLocal.Rows.Clear();
+                    dataGridViewLocal.Rows.Clear();
 
-                        //Time in system
-                        var dataGridViewRowSystem = new DataGridViewRow();
-                        dataGridViewRowSystem.CreateCells(dataGridViewLocal, "Time in system", core._timeInSystemLocal.GetResult() / 60, "minutes");
-                        dataGridViewLocal.Rows.Add(dataGridViewRowSystem);
+                    //Time in system
+                    var dataGridViewRowSystem = new DataGridViewRow();
+                    dataGridViewRowSystem.CreateCells(dataGridViewLocal, "Time in system", core._timeInSystemLocal.GetResult() / 60, "minutes");
+                    dataGridViewLocal.Rows.Add(dataGridViewRowSystem);
 
-                        //Waiting time
-                        var dataGridViewRowWaiting = new DataGridViewRow();
-                        dataGridViewRowWaiting.CreateCells(dataGridViewLocal, "Waiting time", core._waitingTimeLocal.GetResult() / 60, "minutes");
-                        dataGridViewLocal.Rows.Add(dataGridViewRowWaiting);
-                    });
+                    //Waiting time
+                    var dataGridViewRowWaiting = new DataGridViewRow();
+                    dataGridViewRowWaiting.CreateCells(dataGridViewLocal, "Waiting time", core._waitingTimeLocal.GetResult() / 60, "minutes");
+                    dataGridViewLocal.Rows.Add(dataGridViewRowWaiting);
 
                     //Arrival line
-                    dataGridViewArrivalQueue.Invoke((MethodInvoker)delegate ()
-                    {
-                        dataGridViewArrivalQueue.Rows.Clear();
+                    dataGridViewArrivalQueue.Rows.Clear();
 
-                        foreach (var vehicle in core._vehicleLine)
+                    foreach (var vehicle in core._vehicleLine)
+                    {
+                        var arrivalTime = _startTime.AddSeconds(vehicle._arrivalTime);
+                        var outTime = "" + arrivalTime.Hour + ":" + arrivalTime.Minute
+                        + ":" + arrivalTime.Second;
+                        // Create a new row and add it to the control
+                        var dataGridViewRow = new DataGridViewRow();
+                        dataGridViewRow.CreateCells(dataGridViewArrivalQueue, vehicle._id, vehicle._vehicleType,
+                            outTime);
+                        dataGridViewArrivalQueue.Rows.Add(dataGridViewRow);
+                    }
+
+                    //Workers
+                    dataGridViewWorkersIns.Rows.Clear();
+
+                    foreach (var worker in core._workers)
+                    {
+                        if (worker._type == WorkerType.INSPECTION)
                         {
-                            var arrivalTime = _startTime.AddSeconds(vehicle._arrivalTime);
-                            var outTime = "" + arrivalTime.Hour + ":" + arrivalTime.Minute
-                            + ":" + arrivalTime.Second;
-                            // Create a new row and add it to the control
                             var dataGridViewRow = new DataGridViewRow();
-                            dataGridViewRow.CreateCells(dataGridViewArrivalQueue, vehicle._id, vehicle._vehicleType,
-                                outTime);
-                            dataGridViewArrivalQueue.Rows.Add(dataGridViewRow);
+                            dataGridViewRow.CreateCells(dataGridViewWorkersIns, worker._id, worker._type, worker._working, worker._vehicle);
+                            dataGridViewWorkersIns.Rows.Add(dataGridViewRow);
                         }
-                    });
+                    }
 
                     //Workers
-                    dataGridViewWorkersIns.Invoke((MethodInvoker)delegate ()
+                    dataGridViewWorkersTech.Rows.Clear();
+
+                    foreach (var worker in core._workers)
                     {
-                        dataGridViewWorkersIns.Rows.Clear();
-
-                        foreach (var worker in core._workers)
+                        if (worker._type == WorkerType.TECHNICAL)
                         {
-                            if (worker._type == WorkerType.INSPECTION)
-                            {
-                                var dataGridViewRow = new DataGridViewRow();
-                                dataGridViewRow.CreateCells(dataGridViewWorkersIns, worker._id, worker._type, worker._working, worker._vehicle);
-                                dataGridViewWorkersIns.Rows.Add(dataGridViewRow);
-                            }
+                            var dataGridViewRow = new DataGridViewRow();
+                            dataGridViewRow.CreateCells(dataGridViewWorkersTech, worker._id, worker._type, worker._working, worker._vehicle);
+                            dataGridViewWorkersTech.Rows.Add(dataGridViewRow);
                         }
-                    });
-
-                    //Workers
-                    dataGridViewWorkersTech.Invoke((MethodInvoker)delegate ()
-                    {
-                        dataGridViewWorkersTech.Rows.Clear();
-
-                        foreach (var worker in core._workers)
-                        {
-                            if (worker._type == WorkerType.TECHNICAL)
-                            {
-                                var dataGridViewRow = new DataGridViewRow();
-                                dataGridViewRow.CreateCells(dataGridViewWorkersTech, worker._id, worker._type, worker._working, worker._vehicle);
-                                dataGridViewWorkersTech.Rows.Add(dataGridViewRow);
-                            }
-                        }
-                    });
+                    }
 
 
                     //Inpsection parking
-                    dataGridViewInspectionParking.Invoke((MethodInvoker)delegate ()
-                    {
-                        dataGridViewInspectionParking.Rows.Clear();
+                    dataGridViewInspectionParking.Rows.Clear();
 
-                        foreach (var vehicle in core._inspectionParking)
-                        {
-                            // Create a new row and add it to the control
-                            var dataGridViewRow = new DataGridViewRow();
-                            dataGridViewRow.CreateCells(dataGridViewInspectionParking, vehicle._id, vehicle._vehicleType);
-                            dataGridViewInspectionParking.Rows.Add(dataGridViewRow);
-                        }
-                    });
+                    foreach (var vehicle in core._inspectionParking)
+                    {
+                        // Create a new row and add it to the control
+                        var dataGridViewRow = new DataGridViewRow();
+                        dataGridViewRow.CreateCells(dataGridViewInspectionParking, vehicle._id, vehicle._vehicleType);
+                        dataGridViewInspectionParking.Rows.Add(dataGridViewRow);
+                    }
 
                     //Payment parking
-                    dataGridViewPaymentParking.Invoke((MethodInvoker)delegate ()
-                    {
-                        dataGridViewPaymentParking.Rows.Clear();
+                    dataGridViewPaymentParking.Rows.Clear();
 
-                        foreach (var vehicle in core._paymentParking)
-                        {
-                            // Create a new row and add it to the control
-                            var dataGridViewRow = new DataGridViewRow();
-                            dataGridViewRow.CreateCells(dataGridViewPaymentParking, vehicle._id, vehicle._vehicleType);
-                            dataGridViewPaymentParking.Rows.Add(dataGridViewRow);
-                        }
-                    });
+                    foreach (var vehicle in core._paymentParking)
+                    {
+                        // Create a new row and add it to the control
+                        var dataGridViewRow = new DataGridViewRow();
+                        dataGridViewRow.CreateCells(dataGridViewPaymentParking, vehicle._id, vehicle._vehicleType);
+                        dataGridViewPaymentParking.Rows.Add(dataGridViewRow);
+                    }
                 }
             }
 
@@ -161,36 +142,31 @@ namespace DIS_1
                 var core = (STKCore)_core;
 
                 //GlobalUpdate
-                textBoxActualRep.Invoke((MethodInvoker)delegate ()
-                {
-                    textBoxActualRep.Text = _core._actualRepCount.ToString();
-                });
+                textBoxActualRep.Text = _core._actualRepCount.ToString();
 
-                dataGridViewGlobal.Invoke((MethodInvoker)delegate ()
-                {
-                    dataGridViewGlobal.Rows.Clear();
+                dataGridViewGlobal.Rows.Clear();
 
-                    //Time in system
-                    var dataGridViewRowSystem = new DataGridViewRow();
-                    dataGridViewRowSystem.CreateCells(dataGridViewGlobal, "Time in system", core._timeInSystemGlobal.GetResult() / 60, "minutes");
-                    dataGridViewGlobal.Rows.Add(dataGridViewRowSystem);
+                //Time in system
+                var dataGridViewRowSystem = new DataGridViewRow();
+                dataGridViewRowSystem.CreateCells(dataGridViewGlobal, "Time in system", core._timeInSystemGlobal.GetResult() / 60, "minutes");
+                dataGridViewGlobal.Rows.Add(dataGridViewRowSystem);
 
-                    //Waiting time
-                    var dataGridViewRowWaiting = new DataGridViewRow();
-                    dataGridViewRowWaiting.CreateCells(dataGridViewGlobal, "Waiting time", core._waitingTimeGlobal.GetResult() / 60, "minutes");
-                    dataGridViewGlobal.Rows.Add(dataGridViewRowWaiting);
+                //Waiting time
+                var dataGridViewRowWaiting = new DataGridViewRow();
+                dataGridViewRowWaiting.CreateCells(dataGridViewGlobal, "Waiting time", core._waitingTimeGlobal.GetResult() / 60, "minutes");
+                dataGridViewGlobal.Rows.Add(dataGridViewRowWaiting);
 
-                    //Vehicle in system
-                    var dataGridViewRowVehicle = new DataGridViewRow();
-                    dataGridViewRowVehicle.CreateCells(dataGridViewGlobal, "Vehicles in system", core._vehicleInSystemGlobal.GetResult(), "vehicles");
-                    dataGridViewGlobal.Rows.Add(dataGridViewRowVehicle);
+                //Vehicle in system
+                var dataGridViewRowVehicle = new DataGridViewRow();
+                dataGridViewRowVehicle.CreateCells(dataGridViewGlobal, "Vehicles in system", core._vehicleInSystemGlobal.GetResult(), "vehicles");
+                dataGridViewGlobal.Rows.Add(dataGridViewRowVehicle);
 
-                    //Vehicle inspected
-                    var dataGridViewRowInspected = new DataGridViewRow();
-                    dataGridViewRowInspected.CreateCells(dataGridViewGlobal, "Count of vehicles", core._totalVehicleGlobal.GetResult(), "vehicles");
-                    dataGridViewGlobal.Rows.Add(dataGridViewRowInspected);
-                });
+                //Vehicle inspected
+                var dataGridViewRowInspected = new DataGridViewRow();
+                dataGridViewRowInspected.CreateCells(dataGridViewGlobal, "Count of vehicles", core._totalVehicleGlobal.GetResult(), "vehicles");
+                dataGridViewGlobal.Rows.Add(dataGridViewRowInspected);
             }
+        }));
         }
 
         private void buttonRun_Click(object sender, EventArgs e)
@@ -247,8 +223,15 @@ namespace DIS_1
             {
                 return;
             }
-
+            
             var core = (EventCore)_core;
+
+            if(core._mode == Mode.TURBO)
+            {
+                core._pause = true;
+                core.AddEvent(new SystemEvent(core._actualTime, core));
+                core._pause = false;
+            }
             core._mode = Mode.NORMAL;
 
             buttonNormal.Enabled = false;

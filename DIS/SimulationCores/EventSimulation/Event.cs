@@ -19,7 +19,13 @@ namespace DIS.SimulationCores.EventSimulation
         {
             if (_myCore._actualTime > _eventTime)
             {
-                throw new Exception("Invalid event time!");
+                if(this is SystemEvent)
+                {
+                    _eventTime = _myCore._actualTime;
+                } else
+                {
+                    throw new Exception("Invalid event time!");
+                }                
             }
             _myCore._actualTime = _eventTime;
             if (_myCore._mode == Mode.NORMAL )

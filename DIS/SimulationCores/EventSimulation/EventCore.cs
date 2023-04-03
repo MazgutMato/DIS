@@ -56,6 +56,7 @@ namespace DIS.SimulationCores.EventSimulation
                     }
                     Thread.Sleep(100);
                 }
+
                 var actualEvent = _eventQueue.Dequeue();
 
                 if (actualEvent._eventTime < _maxTime)
