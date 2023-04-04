@@ -21,6 +21,7 @@ namespace DIS.Models.STKSimulation.Events
             var core = (STKCore)_myCore;
 
             //Statistic
+            core._vehicleInSystemLocal.AddValue(core._actualCarsInSystem);
             core._actualCarsInSystem++;
 
             //Arivaval next customer            
@@ -34,6 +35,9 @@ namespace DIS.Models.STKSimulation.Events
             //Start of payment
             if (core._paymentParking.Count > 0 && core._technicWorkers.Count > 0)
             {
+                //Statistic
+                core._freeTechnicalLocal.AddValue(core._technicWorkers.Count);
+                //Code
                 var paymentVehicle = core._paymentParking.Dequeue();
                 var paymentWorker = core._technicWorkers.Dequeue();
                 paymentWorker._vehicle = paymentVehicle;
@@ -61,16 +65,32 @@ namespace DIS.Models.STKSimulation.Events
             }
 
             //Start taking
-            if (core._technicWorkers.Count > 0 && core._takeCarsCount + core._inspectionParking.Count 
-                < core._inspectionParkingCapacity)
+            if (core._technicWorkers.Count > 0 && ((core._takeCarsCount + core._inspectionParking.Count) 
+                < core._inspectionParkingCapacity))
             {
+                //Statistic
+                core._freeTechnicalLocal.AddValue(core._technicWorkers.Count);
+                //Code
                 core._takeCarsCount++;
                 var takingWorker = core._technicWorkers.Dequeue();
-                takingWorker._vehicle = arrivalVehicle;
+                if (core._vehicleLine.Count > 0)
+                {
+                    ////Statistic
+                    //core._lineLengthLocal.AddValue(core._vehicleLine.Count);
+                    ////Code
+                    core._vehicleLine.Enqueue(arrivalVehicle);
+                    takingWorker._vehicle = core._vehicleLine.Dequeue();
+                }
+                else
+                {
+                    takingWorker._vehicle = arrivalVehicle;                    
+                }
                 core.AddEvent(new StartTakingEvent(core._actualTime, core, takingWorker));
             }
             else
             {
+                //Statistic
+                core._lineLengthLocal.AddValue(core._vehicleLine.Count);
                 core._vehicleLine.Enqueue(arrivalVehicle);
             }
         }

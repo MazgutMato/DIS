@@ -22,6 +22,9 @@ namespace DIS.Models.STKSimulation.Events
             //Start payment
             if(core._technicWorkers.Count > 0)
             {
+                //Statistic
+                core._freeTechnicalLocal.AddValue(core._technicWorkers.Count);
+                //Code
                 var paymentWorker = core._technicWorkers.Dequeue();
                 if(core._paymentParking.Count > 0)
                 {
@@ -47,6 +50,9 @@ namespace DIS.Models.STKSimulation.Events
                 core.AddEvent(new StartInspectionEvent(_eventTime, core, _worker));
             } else
             {
+                //Statisitc
+                core._freeInspectionLocal.AddValue(core._inspectionWorkers.Count);
+                //Code
                 core._inspectionWorkers.Enqueue(_worker);
             }
 

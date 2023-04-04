@@ -12,13 +12,13 @@ namespace DIS.Distributions
 
         public Exponential(double mean) : base()
         {
-            _lambda = 1/mean;
+            _lambda = 1.0 / mean;
         }
 
         public override double Next()
         {
             double u = _random.NextDouble();
-            return -Math.Log(1 - u) / _lambda;
+            return -(Math.Log(1 - u)) / _lambda;
         }
     }
 }

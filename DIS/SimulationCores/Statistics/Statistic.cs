@@ -9,7 +9,8 @@ namespace DIS.SimulationCores.Statistics
 {
     public abstract class Statistic
     {
-        private const double _ta = 1.96;
+        private const double _ta_95 = 1.96;
+        private const double _ta_90 = 1.64;
         protected double _sum { get; set; }
         protected double _sum2{ get; set; }
         protected double _count { get; set; }
@@ -22,13 +23,27 @@ namespace DIS.SimulationCores.Statistics
         public double StandardDeviation()
         {
             var _const = 1 / (_count - 1);
-            return Math.Sqrt( (_const*_sum2) - Math.Pow((_const * _sum),2) );
+            return Math.Sqrt( (_sum2 - (Math.Pow(_sum,2)/_count)) / _count - 1 );
         }
-        public Tuple<double, double> ConfidenceInterval()
+        public Tuple<double, double> ConfidenceInterval(int percentage)
         {
             if(_count < 30)
             {
-                throw new Exception("Count is less then 30!");
+                return new Tuple<double, double>(0, 0);
+            }
+
+            double _ta;
+
+            switch (percentage)
+            {
+                case 90:
+                    _ta = _ta_90;
+                    break;
+                case 95:
+                    _ta = _ta_95;
+                    break;
+                default:
+                    throw new Exception("Unknow percentage!");
             }
 
             var s = this.StandardDeviation();

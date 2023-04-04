@@ -34,9 +34,15 @@ namespace DIS.Models.STKSimulation
         public NormalStatistic _waitingTimeLocal { get; set; }
         public NormalStatistic _timeInSystemGlobal { get; set; }
         public NormalStatistic _waitingTimeGlobal { get; set; }
-        public NormalStatistic _totalVehicleGlobal { get; set; }
+        public WeightStatistic _vehicleInSystemLocal { get; set; }
         public NormalStatistic _vehicleInSystemGlobal { get; set; }
-
+        public WeightStatistic _lineLengthLocal { get; set; }
+        public NormalStatistic _lineLengthGlobal { get; set; }
+        public WeightStatistic _freeTechnicalLocal { get; set; }
+        public WeightStatistic _freeInspectionLocal { get; set; }
+        public NormalStatistic _freeTechnicalGlobal { get; set; }
+        public NormalStatistic _freeInspectionGlobal { get; set; }
+        public NormalStatistic _vehiclesAtTheEnd { get; set; }
         public STKCore(int repCount, double maxTime) : base(repCount, maxTime)
         {
             this._vehicleLine = new Queue<Vehicle>();    
@@ -110,17 +116,24 @@ namespace DIS.Models.STKSimulation
 
             //Statistics
             this._timeInSystemLocal = new NormalStatistic();            
-            this._waitingTimeLocal = new NormalStatistic();            
+            this._waitingTimeLocal = new NormalStatistic();
+            this._lineLengthLocal = new WeightStatistic(this);
+            this._freeInspectionLocal = new WeightStatistic(this);
+            this._freeTechnicalLocal = new WeightStatistic(this);
+            this._vehicleInSystemLocal = new WeightStatistic(this);
         }
 
         protected override void BeforeSimulation()
         {
             base.BeforeSimulation();
 
-            this._vehicleInSystemGlobal = new NormalStatistic();
             this._timeInSystemGlobal = new NormalStatistic();
             this._waitingTimeGlobal = new NormalStatistic();
-            this._totalVehicleGlobal = new NormalStatistic();
+            this._lineLengthGlobal = new NormalStatistic();
+            this._freeTechnicalGlobal = new NormalStatistic();
+            this._freeInspectionGlobal = new NormalStatistic();
+            this._vehicleInSystemGlobal = new NormalStatistic();
+            this._vehiclesAtTheEnd = new NormalStatistic();
         }
 
         protected override void AfterRep()
@@ -131,8 +144,11 @@ namespace DIS.Models.STKSimulation
             {
                 this._waitingTimeGlobal.AddValue(_waitingTimeLocal.GetResult());
                 this._timeInSystemGlobal.AddValue(_timeInSystemLocal.GetResult());
-                this._vehicleInSystemGlobal.AddValue(_actualCarsInSystem);
-                this._totalVehicleGlobal.AddValue(_totalVehicleCount);
+                this._lineLengthGlobal.AddValue(_lineLengthLocal.GetResult());
+                this._freeInspectionGlobal.AddValue(_freeInspectionLocal.GetResult());
+                this._freeTechnicalGlobal.AddValue(_freeTechnicalLocal.GetResult());
+                this._vehicleInSystemGlobal.AddValue(_vehicleInSystemLocal.GetResult());
+                this._vehiclesAtTheEnd.AddValue(_actualCarsInSystem);
             }
         }
     }

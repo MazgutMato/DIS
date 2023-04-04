@@ -20,6 +20,7 @@ namespace DIS.Models.STKSimulation.Events
 
             //Statistic
             core._timeInSystemLocal.AddValue(core._actualTime - _worker._vehicle._arrivalTime);
+            core._vehicleInSystemLocal.AddValue(core._actualCarsInSystem);
             core._actualCarsInSystem--;
 
             //Start of payment
@@ -34,12 +35,17 @@ namespace DIS.Models.STKSimulation.Events
                 if (core._vehicleLine.Count > 0 && core._inspectionParking.Count + core._takeCarsCount
                     < core._inspectionParkingCapacity)
                 {
+                    //Statistic
+                    core._lineLengthLocal.AddValue(core._vehicleLine.Count);
                     _worker._vehicle = core._vehicleLine.Dequeue();
                     core._takeCarsCount++;
                     core.AddEvent(new StartTakingEvent(_eventTime, core, _worker));
                 }
                 else
                 {
+                    //Statistic
+                    core._freeTechnicalLocal.AddValue(core._technicWorkers.Count);
+                    //Code
                     _worker._vehicle = null;
                     core._technicWorkers.Enqueue(_worker);
                 }
