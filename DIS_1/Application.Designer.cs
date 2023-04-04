@@ -857,7 +857,7 @@
             tabPageChart1.Padding = new Padding(3);
             tabPageChart1.Size = new Size(1512, 644);
             tabPageChart1.TabIndex = 1;
-            tabPageChart1.Text = "Chart1";
+            tabPageChart1.Text = "AverageLineChart";
             tabPageChart1.UseVisualStyleBackColor = true;
             // 
             // cartesianChart1
@@ -939,7 +939,7 @@
             tabPageChart2.Name = "tabPageChart2";
             tabPageChart2.Size = new Size(1512, 644);
             tabPageChart2.TabIndex = 2;
-            tabPageChart2.Text = "Chart2";
+            tabPageChart2.Text = "TimeInSystemChart";
             tabPageChart2.UseVisualStyleBackColor = true;
             // 
             // cartesianChart2
