@@ -44,15 +44,14 @@ namespace DIS.Models.STKSimulation.Events
 
             //Start inspection
             _worker._vehicle = null;
+            //Statisitc
+            core._freeInspectionLocal.AddValue(core._inspectionWorkers.Count);
             if (core._inspectionParking.Count > 0)
             {
                 _worker._vehicle = core._inspectionParking.Dequeue();
                 core.AddEvent(new StartInspectionEvent(_eventTime, core, _worker));
             } else
-            {
-                //Statisitc
-                core._freeInspectionLocal.AddValue(core._inspectionWorkers.Count);
-                //Code
+            {                               
                 core._inspectionWorkers.Enqueue(_worker);
             }
 

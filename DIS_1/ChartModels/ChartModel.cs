@@ -33,8 +33,10 @@ namespace DIS_1.ChartModels
                 {
                     Values = _values,
                     Fill = null,
-                    GeometrySize = 0,
-                    LineSmoothness = 0
+                    //GeometrySize = 0,
+                    LineSmoothness = 0,
+                    TooltipLabelFormatter =
+                        (chartPoint) => $"{chartPoint.PrimaryValue}"
                 }
             };
             _xAxes = new Axis[]

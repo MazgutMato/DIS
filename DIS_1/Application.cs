@@ -8,7 +8,10 @@ namespace DIS_1
     public partial class Application : Form
     {
         public SimulationCore? _core { get; set; }
-        public ChartModel _chartModel { get; set; }
+        public STKCore? _coreChart1 { get; set; }
+        public STKCore? _coreChart2 { get; set; }
+        public ChartModel _chartModel1 { get; set; }
+        public ChartModel _chartModel2 { get; set; }
         private DateTime _startTime = new DateTime(2022, 1, 1, 9, 0, 0);
         public Application()
         {
@@ -18,6 +21,22 @@ namespace DIS_1
             buttonNormal.Enabled = false;
             buttonStop.Enabled = false;
             buttonPause.Enabled = false;
+
+            buttonStopChart1.Enabled = false;
+            _chartModel1 = new ChartModel();
+            cartesianChart1.Series = _chartModel1._series;
+            cartesianChart1.XAxes = _chartModel1._xAxes;
+            cartesianChart1.YAxes = _chartModel1._yAxes;
+            _chartModel1.RenameX("Count of technical workers");
+            _chartModel1.RenameY("Average of waiting vehicles");
+
+            buttonStopChart2.Enabled = false;
+            _chartModel2 = new ChartModel();
+            cartesianChart2.Series = _chartModel2._series;
+            cartesianChart2.XAxes = _chartModel2._xAxes;
+            cartesianChart2.YAxes = _chartModel2._yAxes;
+            _chartModel2.RenameX("Count of inspection workers");
+            _chartModel2.RenameY("Average time in system / min");
         }
         private async void RunSimulation()
         {
@@ -37,6 +56,12 @@ namespace DIS_1
             buttonRun.Enabled = true;
             buttonStop.Enabled = false;
             buttonPause.Enabled = false;
+            technicalWorkers.Enabled = true;
+            inspectionWorkers.Enabled = true;
+            UpDownRepRefresh.Enabled = true;
+            UpDownRepCount.Enabled = true;
+            buttonTurbo.Enabled = false;
+            buttonNormal.Enabled = false;
         }
 
         private void UpdateData(object sender, EventArgs e)
@@ -257,6 +282,8 @@ namespace DIS_1
             buttonPause.Enabled = true;
             buttonNormal.Enabled = false;
             buttonTurbo.Enabled = true;
+            UpDownSpeed.Enabled = true;
+            UpDownRefresh.Enabled = true;
             UpDownSpeed.Value = 1;
             UpDownRefresh.Value = 1;
             technicalWorkers.Enabled = false;
@@ -364,6 +391,116 @@ namespace DIS_1
 
                 core._refreshTime = Convert.ToDouble(UpDownRefresh.Value);
             }
+        }
+
+        private void buttonRunChart1_Click(object sender, EventArgs e)
+        {
+            buttonStopChart1.Enabled = true;
+            buttonRunChart1.Enabled = false;
+            UpDownRepCountCH1.Enabled = false;
+            UpDownInspCH1.Enabled = false;
+            _chartModel1.Clear();
+
+            RunChart1();
+        }
+
+        private async void RunChart1()
+        {
+
+            for (int i = 1; i < 16; i++)
+            {
+                var repCount = Convert.ToInt32(UpDownRepCountCH1.Value);
+                _coreChart1 = new STKCore(repCount, 8 * 60 * 60);
+                _coreChart1._mode = Mode.TURBO;
+                _coreChart1._inspectionWorkersCount = Convert.ToInt32(UpDownInspCH1.Value);
+                _coreChart1._technicWorkersCount = i;
+                await Task.Run(() =>
+                {
+                    _coreChart1?.RunSimulation();
+                });
+                if (!_coreChart1._stopSimulation)
+                {
+                    _chartModel1.Add(new(i, _coreChart1._lineLengthGlobal.GetResult()));
+                }
+                else
+                {
+                    _coreChart1 = null;
+                    break;
+                }
+            }
+
+            _coreChart1 = null;
+            buttonStopChart1.Enabled = false;
+            buttonRunChart1.Enabled = true;
+            UpDownRepCountCH1.Enabled = true;
+            UpDownInspCH1.Enabled = true;
+        }
+
+        private void buttonStopChart1_Click(object sender, EventArgs e)
+        {
+            if (_coreChart1 != null)
+            {
+                _coreChart1._stopSimulation = true;
+            }
+            buttonStopChart1.Enabled = false;
+            buttonRunChart1.Enabled = true;
+            UpDownRepCountCH1.Enabled = true;
+            UpDownInspCH1.Enabled = true;
+        }
+
+        private void buttonRunChart2_Click(object sender, EventArgs e)
+        {
+            buttonStopChart2.Enabled = true;
+            buttonRunChart2.Enabled = false;
+            UpDownTechCH2.Enabled = false;
+            UpDownRepCountCH2.Enabled = false;
+            _chartModel2.Clear();
+
+            RunChart2();
+        }
+
+        private async void RunChart2()
+        {
+
+            for (int i = 10; i < 26; i++)
+            {
+                var repCount = Convert.ToInt32(UpDownRepCountCH2.Value);
+                _coreChart2 = new STKCore(repCount, 8 * 60 * 60);
+                _coreChart2._mode = Mode.TURBO;
+                _coreChart2._technicWorkersCount = Convert.ToInt32(UpDownTechCH2.Value);
+                _coreChart2._inspectionWorkersCount = i;
+                await Task.Run(() =>
+                {
+                    _coreChart2?.RunSimulation();
+                });
+                if (!_coreChart2._stopSimulation)
+                {
+                    _chartModel2.Add(new(i, _coreChart2._timeInSystemGlobal.GetResult() / 60));
+                }
+                else
+                {
+                    _coreChart2 = null;
+                    break;
+                }
+            }
+
+            _coreChart2 = null;
+            buttonStopChart2.Enabled = false;
+            buttonRunChart2.Enabled = true;
+            UpDownTechCH2.Enabled = true;
+            UpDownRepCountCH2.Enabled = true;
+        }
+
+        private void buttonStopChart2_Click(object sender, EventArgs e)
+        {
+            if (_coreChart2 != null)
+            {
+                _coreChart2._stopSimulation = true;
+            }
+            buttonStopChart2.Enabled = false;
+            buttonRunChart2.Enabled = true;
+            UpDownRepCountCH2.Enabled = true;
+            UpDownTechCH2.Enabled = true;
         }
     }
 }

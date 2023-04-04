@@ -75,9 +75,9 @@ namespace DIS.Models.STKSimulation.Events
                 var takingWorker = core._technicWorkers.Dequeue();
                 if (core._vehicleLine.Count > 0)
                 {
-                    ////Statistic
-                    //core._lineLengthLocal.AddValue(core._vehicleLine.Count);
-                    ////Code
+                    //Statistic
+                    core._lineLengthLocal.AddValue(core._vehicleLine.Count);
+                    //Code
                     core._vehicleLine.Enqueue(arrivalVehicle);
                     takingWorker._vehicle = core._vehicleLine.Dequeue();
                 }

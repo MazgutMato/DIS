@@ -46,7 +46,7 @@ namespace DIS.Models.STKSimulation.Events
             }
 
             //Start payment
-            if(core._paymentParking.Count > 0)
+            if (core._paymentParking.Count > 0)
             {
                 var paymentVehicle = core._paymentParking.Dequeue();
                 var paymentWorker = _worker;
