@@ -179,6 +179,9 @@ namespace DIS_1
                             dataGridViewRow.CreateCells(dataGridViewPaymentParking, vehicle._id, vehicle._vehicleType);
                             dataGridViewPaymentParking.Rows.Add(dataGridViewRow);
                         }
+
+                        //Ending
+                        textBoxEnding.Text = core._endingVehicles.ToString();
                     }
                 }
 
@@ -501,6 +504,11 @@ namespace DIS_1
             buttonRunChart2.Enabled = true;
             UpDownRepCountCH2.Enabled = true;
             UpDownTechCH2.Enabled = true;
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

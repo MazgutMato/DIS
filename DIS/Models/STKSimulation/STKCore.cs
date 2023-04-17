@@ -26,6 +26,7 @@ namespace DIS.Models.STKSimulation
         public Exponential _arrival { get; set; }
         public ContinuosUniform _vehicleType { get; set; }
         public TriangularDistribution _takingTime { get; set; }
+        public TriangularDistribution _ending { get; set; }
         public ContinuosUniform _paymentTime { get; set; }
         public DiscreteUniform _inspectionCar { get; set; }
         public DiscreteEmpirical _inspectionVan { get; set; }
@@ -43,6 +44,7 @@ namespace DIS.Models.STKSimulation
         public NormalStatistic _freeTechnicalGlobal { get; set; }
         public NormalStatistic _freeInspectionGlobal { get; set; }
         public NormalStatistic _vehiclesAtTheEnd { get; set; }
+        public int _endingVehicles { get; set; }
         public STKCore(int repCount, double maxTime) : base(repCount, maxTime)
         {
             this._vehicleLine = new Queue<Vehicle>();    
@@ -113,6 +115,10 @@ namespace DIS.Models.STKSimulation
                 new EmpiricalParam(56, 65, 0.05)
             });
             this._inspectionTruck = new DiscreteEmpirical(truckParams);
+            //Ending
+            this._endingVehicles = 0;
+            this._ending = new TriangularDistribution(10, 35, 30);
+
 
             //Statistics
             this._timeInSystemLocal = new NormalStatistic();            

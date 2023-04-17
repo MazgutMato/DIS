@@ -53,6 +53,11 @@ namespace DIS.Models.STKSimulation.Events
 
             //Set working type
             _worker._working = Working.NONE;
+
+            //Ending vehicle
+            core._endingVehicles++;
+            var endTime = core._ending.Next();
+            core.AddEvent(new EndEvent(core._actualTime + endTime, core));
         }
     }
 }
