@@ -1,4 +1,4 @@
-﻿using DIS.Models.STKSimulation.Events;
+﻿using DIS.Models.EventSimulation.STKSimulation.Events;
 using DIS.SimulationCores.Statistics;
 using System;
 using System.Collections.Generic;

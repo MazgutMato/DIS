@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.Models.STKSimulation
+namespace DIS.Models.EventSimulation.STKSimulation
 {
     public enum WorkerType
     {

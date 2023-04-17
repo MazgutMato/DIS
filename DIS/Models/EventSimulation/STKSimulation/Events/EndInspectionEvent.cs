@@ -1,11 +1,12 @@
-﻿using DIS.SimulationCores.EventSimulation;
+﻿using DIS.Models.EventSimulation.STKSimulation;
+using DIS.SimulationCores.EventSimulation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.Models.STKSimulation.Events
+namespace DIS.Models.EventSimulation.STKSimulation.Events
 {
     public class EndInspectionEvent : STKEvent
     {
@@ -20,13 +21,13 @@ namespace DIS.Models.STKSimulation.Events
             var core = (STKCore)_myCore;
 
             //Start payment
-            if(core._technicWorkers.Count > 0)
+            if (core._technicWorkers.Count > 0)
             {
                 //Statistic
                 core._freeTechnicalLocal.AddValue(core._technicWorkers.Count);
                 //Code
                 var paymentWorker = core._technicWorkers.Dequeue();
-                if(core._paymentParking.Count > 0)
+                if (core._paymentParking.Count > 0)
                 {
                     paymentWorker._vehicle = core._paymentParking.Dequeue();
                     core._paymentParking.Enqueue(_worker._vehicle);
@@ -50,8 +51,9 @@ namespace DIS.Models.STKSimulation.Events
             {
                 _worker._vehicle = core._inspectionParking.Dequeue();
                 core.AddEvent(new StartInspectionEvent(_eventTime, core, _worker));
-            } else
-            {                               
+            }
+            else
+            {
                 core._inspectionWorkers.Enqueue(_worker);
             }
 

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.Models.STKSimulation.Events
+namespace DIS.Models.EventSimulation.STKSimulation.Events
 {
     public class StartTakingEvent : STKEvent
     {

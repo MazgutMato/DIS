@@ -1,17 +1,18 @@
-﻿using DIS.SimulationCores.EventSimulation;
+﻿using DIS.Models.EventSimulation.STKSimulation;
+using DIS.SimulationCores.EventSimulation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.Models.STKSimulation.Events
+namespace DIS.Models.EventSimulation.STKSimulation.Events
 {
     public class STKEvent : Event
     {
-        public Worker _worker { get; set; }        
+        public Worker _worker { get; set; }
         public STKEvent(double eventTime, EventCore core, Worker worker) : base(eventTime, core)
-        {            
+        {
             _worker = worker;
         }
     }

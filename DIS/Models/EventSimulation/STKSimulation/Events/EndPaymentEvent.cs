@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.Models.STKSimulation.Events
+namespace DIS.Models.EventSimulation.STKSimulation.Events
 {
     public class EndPaymentEvent : STKEvent
     {
@@ -24,12 +24,13 @@ namespace DIS.Models.STKSimulation.Events
             core._actualCarsInSystem--;
 
             //Start of payment
-            if(core._paymentParking.Count > 0)
+            if (core._paymentParking.Count > 0)
             {
                 var paymentVehicle = core._paymentParking.Dequeue();
                 _worker._vehicle = paymentVehicle;
                 core.AddEvent(new StartPaymentEvent(core._actualTime, core, _worker));
-            } else
+            }
+            else
             {
                 //Start new taking
                 if (core._vehicleLine.Count > 0 && core._inspectionParking.Count + core._takeCarsCount

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.Models.STKSimulation
+namespace DIS.Models.EventSimulation.STKSimulation
 {
     public class STKCore : EventCore
     {
@@ -47,54 +47,54 @@ namespace DIS.Models.STKSimulation
         public int _endingVehicles { get; set; }
         public STKCore(int repCount, double maxTime) : base(repCount, maxTime)
         {
-            this._vehicleLine = new Queue<Vehicle>();    
-            this._paymentParking = new Queue<Vehicle>();
-            this._inspectionParkingCapacity = 5;
-            this._inspectionParking = new Queue<Vehicle>(_inspectionParkingCapacity);
-            this._technicWorkers = new Queue<Worker>();
-            this._inspectionWorkers = new Queue<Worker>();
-            this._takeCarsCount = 0;
-            this._technicWorkersCount = 1;
-            this._inspectionWorkersCount = 1;
-            this._totalVehicleCount = 0;
-            this._actualCarsInSystem = 0;
+            _vehicleLine = new Queue<Vehicle>();
+            _paymentParking = new Queue<Vehicle>();
+            _inspectionParkingCapacity = 5;
+            _inspectionParking = new Queue<Vehicle>(_inspectionParkingCapacity);
+            _technicWorkers = new Queue<Worker>();
+            _inspectionWorkers = new Queue<Worker>();
+            _takeCarsCount = 0;
+            _technicWorkersCount = 1;
+            _inspectionWorkersCount = 1;
+            _totalVehicleCount = 0;
+            _actualCarsInSystem = 0;
         }
 
         protected override void BeforeRep()
         {
             base.BeforeRep();
 
-            this._vehicleLine = new Queue<Vehicle>();
-            this._paymentParking = new Queue<Vehicle>();
-            this._inspectionParking = new Queue<Vehicle>(_inspectionParkingCapacity);
-            this._technicWorkers = new Queue<Worker>();
+            _vehicleLine = new Queue<Vehicle>();
+            _paymentParking = new Queue<Vehicle>();
+            _inspectionParking = new Queue<Vehicle>(_inspectionParkingCapacity);
+            _technicWorkers = new Queue<Worker>();
             for (int i = 0; i < _technicWorkersCount; i++)
             {
-                this._technicWorkers.Enqueue(new Worker(i+1, WorkerType.TECHNICAL));
+                _technicWorkers.Enqueue(new Worker(i + 1, WorkerType.TECHNICAL));
             }
-            this._inspectionWorkers = new Queue<Worker>();
+            _inspectionWorkers = new Queue<Worker>();
             for (int i = 0; i < _inspectionWorkersCount; i++)
             {
-                this._inspectionWorkers.Enqueue(new Worker(i+1, WorkerType.INSPECTION));
+                _inspectionWorkers.Enqueue(new Worker(i + 1, WorkerType.INSPECTION));
             }
-            this._workers = new List<Worker>();
-            this._workers.AddRange(this._inspectionWorkers);
-            this._workers.AddRange(this._technicWorkers);
+            _workers = new List<Worker>();
+            _workers.AddRange(_inspectionWorkers);
+            _workers.AddRange(_technicWorkers);
 
-            this._takeCarsCount = 0;
-            this._totalVehicleCount = 0;
-            this._actualCarsInSystem = 0;
+            _takeCarsCount = 0;
+            _totalVehicleCount = 0;
+            _actualCarsInSystem = 0;
 
             //Arrival[0]
-            this._arrival = new Exponential(((double)3600) / 23);
+            _arrival = new Exponential((double)3600 / 23);
             //Vehicle type[1]
-            this._vehicleType = new ContinuosUniform(0,1);
+            _vehicleType = new ContinuosUniform(0, 1);
             //Taking time[2]
-            this._takingTime = new TriangularDistribution(180,695,431);
+            _takingTime = new TriangularDistribution(180, 695, 431);
             //Payment time[3]
-            this._paymentTime = new ContinuosUniform(65,177);
+            _paymentTime = new ContinuosUniform(65, 177);
             //Ispection time in minutes car[4]
-            this._inspectionCar = new DiscreteUniform(31, 45);
+            _inspectionCar = new DiscreteUniform(31, 45);
             //Ispection time in minutes van[5]
             var vanParams = new List<EmpiricalParam>();
             vanParams.AddRange(new[] {
@@ -103,7 +103,7 @@ namespace DIS.Models.STKSimulation
                 new EmpiricalParam(41, 47, 0.3),
                 new EmpiricalParam(48, 52, 0.15)
             });
-            this._inspectionVan = new DiscreteEmpirical(vanParams);
+            _inspectionVan = new DiscreteEmpirical(vanParams);
             //Ispection time in minutes truck[6]
             var truckParams = new List<EmpiricalParam>();
             truckParams.AddRange(new[] {
@@ -114,32 +114,32 @@ namespace DIS.Models.STKSimulation
                 new EmpiricalParam(52, 55, 0.25),
                 new EmpiricalParam(56, 65, 0.05)
             });
-            this._inspectionTruck = new DiscreteEmpirical(truckParams);
+            _inspectionTruck = new DiscreteEmpirical(truckParams);
             //Ending
-            this._endingVehicles = 0;
-            this._ending = new TriangularDistribution(10, 35, 30);
+            _endingVehicles = 0;
+            _ending = new TriangularDistribution(10, 35, 30);
 
 
             //Statistics
-            this._timeInSystemLocal = new NormalStatistic();            
-            this._waitingTimeLocal = new NormalStatistic();
-            this._lineLengthLocal = new WeightStatistic(this);
-            this._freeInspectionLocal = new WeightStatistic(this);
-            this._freeTechnicalLocal = new WeightStatistic(this);
-            this._vehicleInSystemLocal = new WeightStatistic(this);
+            _timeInSystemLocal = new NormalStatistic();
+            _waitingTimeLocal = new NormalStatistic();
+            _lineLengthLocal = new WeightStatistic(this);
+            _freeInspectionLocal = new WeightStatistic(this);
+            _freeTechnicalLocal = new WeightStatistic(this);
+            _vehicleInSystemLocal = new WeightStatistic(this);
         }
 
         protected override void BeforeSimulation()
         {
             base.BeforeSimulation();
 
-            this._timeInSystemGlobal = new NormalStatistic();
-            this._waitingTimeGlobal = new NormalStatistic();
-            this._lineLengthGlobal = new NormalStatistic();
-            this._freeTechnicalGlobal = new NormalStatistic();
-            this._freeInspectionGlobal = new NormalStatistic();
-            this._vehicleInSystemGlobal = new NormalStatistic();
-            this._vehiclesAtTheEnd = new NormalStatistic();
+            _timeInSystemGlobal = new NormalStatistic();
+            _waitingTimeGlobal = new NormalStatistic();
+            _lineLengthGlobal = new NormalStatistic();
+            _freeTechnicalGlobal = new NormalStatistic();
+            _freeInspectionGlobal = new NormalStatistic();
+            _vehicleInSystemGlobal = new NormalStatistic();
+            _vehiclesAtTheEnd = new NormalStatistic();
         }
 
         protected override void AfterRep()
@@ -148,18 +148,18 @@ namespace DIS.Models.STKSimulation
 
             if (!_stopSimulation)
             {
-                this._lineLengthLocal.AddValue(this._vehicleLine.Count);
-                this._vehicleInSystemLocal.AddValue(this._actualCarsInSystem);
-                this._freeTechnicalLocal.AddValue(this._technicWorkers.Count);
-                this._freeInspectionLocal.AddValue(this._inspectionWorkers.Count);
+                _lineLengthLocal.AddValue(_vehicleLine.Count);
+                _vehicleInSystemLocal.AddValue(_actualCarsInSystem);
+                _freeTechnicalLocal.AddValue(_technicWorkers.Count);
+                _freeInspectionLocal.AddValue(_inspectionWorkers.Count);
 
-                this._waitingTimeGlobal.AddValue(_waitingTimeLocal.GetResult());
-                this._timeInSystemGlobal.AddValue(_timeInSystemLocal.GetResult());
-                this._lineLengthGlobal.AddValue(_lineLengthLocal.GetResult());
-                this._freeInspectionGlobal.AddValue(_freeInspectionLocal.GetResult());
-                this._freeTechnicalGlobal.AddValue(_freeTechnicalLocal.GetResult());
-                this._vehicleInSystemGlobal.AddValue(_vehicleInSystemLocal.GetResult());
-                this._vehiclesAtTheEnd.AddValue(_actualCarsInSystem);
+                _waitingTimeGlobal.AddValue(_waitingTimeLocal.GetResult());
+                _timeInSystemGlobal.AddValue(_timeInSystemLocal.GetResult());
+                _lineLengthGlobal.AddValue(_lineLengthLocal.GetResult());
+                _freeInspectionGlobal.AddValue(_freeInspectionLocal.GetResult());
+                _freeTechnicalGlobal.AddValue(_freeTechnicalLocal.GetResult());
+                _vehicleInSystemGlobal.AddValue(_vehicleInSystemLocal.GetResult());
+                _vehiclesAtTheEnd.AddValue(_actualCarsInSystem);
             }
         }
     }

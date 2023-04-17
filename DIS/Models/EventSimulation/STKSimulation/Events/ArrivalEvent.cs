@@ -1,4 +1,5 @@
 ﻿using DIS.Distributions;
+using DIS.Models.EventSimulation.STKSimulation;
 using DIS.SimulationCores.EventSimulation;
 using DIS.SimulationCores.Statistics;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.Models.STKSimulation.Events
+namespace DIS.Models.EventSimulation.STKSimulation.Events
 {
     public class ArrivalEvent : Event
     {
@@ -27,7 +28,7 @@ namespace DIS.Models.STKSimulation.Events
             //Arivaval next customer            
             var nextArrival = core._arrival.Next();
 
-            if ((core._actualTime + nextArrival) < 405 * 60)
+            if (core._actualTime + nextArrival < 405 * 60)
             {
                 core.AddEvent(new ArrivalEvent(core._actualTime + nextArrival, core));
             }
@@ -65,8 +66,8 @@ namespace DIS.Models.STKSimulation.Events
             }
 
             //Start taking
-            if (core._technicWorkers.Count > 0 && ((core._takeCarsCount + core._inspectionParking.Count) 
-                < core._inspectionParkingCapacity))
+            if (core._technicWorkers.Count > 0 && core._takeCarsCount + core._inspectionParking.Count
+                < core._inspectionParkingCapacity)
             {
                 //Statistic
                 core._freeTechnicalLocal.AddValue(core._technicWorkers.Count);
@@ -83,7 +84,7 @@ namespace DIS.Models.STKSimulation.Events
                 }
                 else
                 {
-                    takingWorker._vehicle = arrivalVehicle;                    
+                    takingWorker._vehicle = arrivalVehicle;
                 }
                 core.AddEvent(new StartTakingEvent(core._actualTime, core, takingWorker));
             }

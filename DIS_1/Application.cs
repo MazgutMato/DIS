@@ -1,7 +1,7 @@
 using DIS.SimulationCores;
 using DIS_1.ChartModels;
-using DIS.Models.STKSimulation;
 using DIS.SimulationCores.EventSimulation;
+using DIS.Models.EventSimulation.STKSimulation;
 
 namespace DIS_1
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIS.Models.STKSimulation.Events
+namespace DIS.Models.EventSimulation.STKSimulation.Events
 {
     public class EndTakingEvent : STKEvent
     {
@@ -32,7 +32,7 @@ namespace DIS.Models.STKSimulation.Events
                 {
                     var inspectionVehilce = core._inspectionParking.Dequeue();
                     inspectionWorker._vehicle = inspectionVehilce;
-                    core._inspectionParking.Enqueue(_worker._vehicle);                  
+                    core._inspectionParking.Enqueue(_worker._vehicle);
                 }
                 else
                 {
@@ -52,10 +52,11 @@ namespace DIS.Models.STKSimulation.Events
                 var paymentWorker = _worker;
                 paymentWorker._vehicle = paymentVehicle;
                 core.AddEvent(new StartPaymentEvent(core._actualTime, core, paymentWorker));
-            } else
+            }
+            else
             {
                 //Start new taking
-                if(core._vehicleLine.Count > 0 && (core._inspectionParking.Count + core._takeCarsCount) 
+                if (core._vehicleLine.Count > 0 && core._inspectionParking.Count + core._takeCarsCount
                     < core._inspectionParkingCapacity)
                 {
                     //Statistic
@@ -63,7 +64,8 @@ namespace DIS.Models.STKSimulation.Events
                     _worker._vehicle = core._vehicleLine.Dequeue();
                     core._takeCarsCount++;
                     core.AddEvent(new StartTakingEvent(_eventTime, core, _worker));
-                }else
+                }
+                else
                 {
                     //Statistic
                     core._freeTechnicalLocal.AddValue(core._technicWorkers.Count);
