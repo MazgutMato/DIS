@@ -1,9 +1,12 @@
+using DIS.Distributions;
 using DIS.Models.AgentSimulation.NewsStandSimulation.Agents;
 
 namespace DIS.Models.AgentSimulation.NewsStandSimulation.Simulation
 {
     public class MySimulation : OSPABA.Simulation
     {
+        public Exponential GeneratorPrichodov { get; set; }
+        public Exponential GeneratorObluhy { get; set; }
         public MySimulation()
         {
             Init();
@@ -19,6 +22,10 @@ namespace DIS.Models.AgentSimulation.NewsStandSimulation.Simulation
         {
             base.PrepareReplication();
             // Reset entities, queues, local statistics, etc...
+
+            //Generatory
+            GeneratorObluhy = new Exponential(4 * 60);
+            GeneratorPrichodov = new Exponential(5 * 60);
         }
 
         override protected void ReplicationFinished()
@@ -38,7 +45,7 @@ namespace DIS.Models.AgentSimulation.NewsStandSimulation.Simulation
         {
             AgentModel = new AgentModel(SimId.AgentModel, this, null);
             AgentOkolie = new AgentOkolie(SimId.AgentOkolie, this, AgentModel);
-            AgentStanok = new AgentStanok(SimId.AgentStanok, this, AgentModel);
+            AgentStanok = new AgentStanok(SimId.AgentStanok, this, AgentModel);         
         }
         public AgentModel AgentModel
         { get; set; }

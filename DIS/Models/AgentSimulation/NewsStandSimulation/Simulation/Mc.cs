@@ -9,6 +9,7 @@ namespace DIS.Models.AgentSimulation.NewsStandSimulation.Simulation
         public const int OdchodZakaznika = 1004;
         public const int ZaciatokObsluhy = 1005;
         public const int KoniecObsluhy = 1006;
+        public const int ZakaznikPrisiel = 1007;
         //meta! tag="end"
 
         // 1..1000 range reserved for user

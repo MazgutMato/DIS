@@ -2,20 +2,21 @@
 <ABAsim>
   <Agents>
     <Agent>
-      <SimId>3</SimId>
-      <InternalId>3</InternalId>
-      <Name>AgentStanok</Name>
-      <Bounds>1492,642,180,180</Bounds>
-      <Reasoner>ManagerStanok</Reasoner>
-      <UsePetriNet>false</UsePetriNet>
-    </Agent>
-    <Agent>
       <SimId>2</SimId>
       <InternalId>2</InternalId>
       <Name>AgentOkolie</Name>
-      <Bounds>914,658,180,180</Bounds>
+      <Bounds>816,757,180,180</Bounds>
       <Reasoner>ManagerOkolie</Reasoner>
+      <ReasonerBounds>74,25,32,25</ReasonerBounds>
       <UsePetriNet>false</UsePetriNet>
+      <Components>
+        <Scheduler>
+          <SimId>1002</SimId>
+          <InternalId>19</InternalId>
+          <Name>Scheduler1</Name>
+          <Bounds>7,86,35,13</Bounds>
+        </Scheduler>
+      </Components>
     </Agent>
     <Agent>
       <SimId>1</SimId>
@@ -25,8 +26,53 @@
       <Reasoner>ManagerModel</Reasoner>
       <UsePetriNet>false</UsePetriNet>
     </Agent>
+    <Agent>
+      <SimId>3</SimId>
+      <InternalId>3</InternalId>
+      <Name>AgentStanok</Name>
+      <Bounds>1577,725,180,180</Bounds>
+      <Reasoner>ManagerStanok</Reasoner>
+      <ReasonerBounds>74,25,32,25</ReasonerBounds>
+      <UsePetriNet>false</UsePetriNet>
+      <Components>
+        <Process>
+          <SimId>1001</SimId>
+          <InternalId>15</InternalId>
+          <Name>Obsluha</Name>
+          <Bounds>14,95,35,18</Bounds>
+        </Process>
+      </Components>
+    </Agent>
   </Agents>
   <Messages>
+    <Message>
+      <InternalId>16</InternalId>
+      <Type>StartFinish</Type>
+      <Source>3</Source>
+      <Destination>15</Destination>
+    </Message>
+    <Message>
+      <SimId>1008</SimId>
+      <InternalId>18</InternalId>
+      <Name>ObsluhaUkoncena</Name>
+      <Type>Notice</Type>
+      <Source>15</Source>
+      <Destination>3</Destination>
+    </Message>
+    <Message>
+      <InternalId>20</InternalId>
+      <Type>StartFinish</Type>
+      <Source>2</Source>
+      <Destination>19</Destination>
+    </Message>
+    <Message>
+      <SimId>1009</SimId>
+      <InternalId>21</InternalId>
+      <Name>ZakaznikPrisiel</Name>
+      <Type>Notice</Type>
+      <Source>19</Source>
+      <Destination>2</Destination>
+    </Message>
     <Message>
       <InternalId>6</InternalId>
       <Type>Parent</Type>
@@ -72,5 +118,5 @@
       <Destination>1</Destination>
     </Message>
   </Messages>
-  <IID>12</IID>
+  <IID>23</IID>
 </ABAsim>

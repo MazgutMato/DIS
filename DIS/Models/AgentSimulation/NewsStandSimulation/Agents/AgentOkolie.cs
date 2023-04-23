@@ -16,8 +16,12 @@ namespace DIS.Models.AgentSimulation.NewsStandSimulation.Agents
 
         override public void PrepareReplication()
         {
-            base.PrepareReplication();
-            // Setup component for the next replication
+            base.PrepareReplication();            
+
+            //Zaciatok prichodu zakaznikov
+            var message = new MyMessage(MySim);
+            message.Addressee = FindAssistant(SimId.PrichodZakaznikov);
+            MyManager.StartContinualAssistant(message);
         }
 
         //meta! userInfo="Generated code: do not modify", tag="begin"

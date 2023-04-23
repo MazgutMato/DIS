@@ -1,5 +1,6 @@
 using OSPABA;
 using DIS.Models.AgentSimulation.NewsStandSimulation.Agents;
+using DIS.Models.AgentSimulation.NewsStandSimulation.Simulation;
 
 namespace DIS.Models.AgentSimulation.NewsStandSimulation.ContinualAssistants
 {
@@ -20,6 +21,8 @@ namespace DIS.Models.AgentSimulation.NewsStandSimulation.ContinualAssistants
         //meta! sender="AgentOkolie", id="30", type="Start"
         public void ProcessStart(MessageForm message)
         {
+            message.Code = Mc.ZakaznikPrisiel;
+            Hold(((MySimulation)MySim).GeneratorPrichodov.Next(), message);
         }
 
         //meta! userInfo="Process messages defined in code", id="0"
@@ -27,6 +30,13 @@ namespace DIS.Models.AgentSimulation.NewsStandSimulation.ContinualAssistants
         {
             switch (message.Code)
             {
+                case Mc.ZakaznikPrisiel:
+                    var copy = message.CreateCopy();
+                    Hold(((MySimulation)MySim).GeneratorPrichodov.Next(), message);
+
+                    message.Addressee = MyAgent;
+                    message.Code = 
+                    break;
             }
         }
 
