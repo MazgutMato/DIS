@@ -28,8 +28,9 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		//meta! sender="AgentOkolia", id="5", type="Notice"
 		public void ProcessPrichodZakaznika(MessageForm message)
         {
-            var sprava = (MyMessage)message;
-            Console.WriteLine("New customer arrived(" + MySim.CurrentTime + "): " + sprava.Vozidlo?.ToString());
+            message.Code = Mc.ObsluhaZakaznika;
+            message.Addressee = MySim.FindAgent(SimId.AgentSTK);
+            Request(message);
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -39,6 +40,11 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             {
             }
         }
+
+		//meta! sender="AgentSTK", id="22", type="Response"
+		public void ProcessObsluhaZakaznika(MessageForm message)
+		{
+		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()
@@ -51,6 +57,10 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 			{
 			case Mc.PrichodZakaznika:
 				ProcessPrichodZakaznika(message);
+			break;
+
+			case Mc.ObsluhaZakaznika:
+				ProcessObsluhaZakaznika(message);
 			break;
 
 			default:

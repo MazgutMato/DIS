@@ -25,6 +25,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
 		{
 			new ManagerModelu(SimId.ManagerModelu, MySim, this);
 			AddOwnMessage(Mc.PrichodZakaznika);
+			AddOwnMessage(Mc.ObsluhaZakaznika);
 		}
 		//meta! tag="end"
     }
