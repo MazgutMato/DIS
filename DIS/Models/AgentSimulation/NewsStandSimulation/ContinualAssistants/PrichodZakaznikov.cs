@@ -34,8 +34,7 @@ namespace DIS.Models.AgentSimulation.NewsStandSimulation.ContinualAssistants
                     var copy = message.CreateCopy();
                     Hold(((MySimulation)MySim).GeneratorPrichodov.Next(), message);
 
-                    message.Addressee = MyAgent;
-                    message.Code = 
+                    message.Addressee = MyAgent;                    
                     break;
             }
         }

@@ -11,4 +11,10 @@
     <ProjectReference Include="..\DIS\DIS.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="ABACore">
+      <HintPath>..\ABACore\ABACore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

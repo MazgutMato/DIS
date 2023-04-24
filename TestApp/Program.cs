@@ -1,12 +1,5 @@
-﻿using DIS.Distributions;
-using DIS.SimulationCores;
-using DIS.SimulationCores.Statistics;
-using System.Threading.Tasks;
-using TestApp;
+﻿using DIS.Models.AgentSimulation.STKSimulation.simulation;
 
-var dis = new Exponential(10);
+MySimulation sim = new MySimulation();
 
-for (int i = 0; i < 100000; i++)
-{
-    Console.WriteLine(dis.Next());
-}
+sim.Simulate(1,10000);
