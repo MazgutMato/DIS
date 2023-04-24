@@ -24,81 +24,65 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             }
         }
 
-        //meta! sender="AgentPrevziatia", id="46", type="Response"
-        public void ProcessPrevziatieVozidla(MessageForm message)
-        {
-        }
-
-        //meta! sender="AgentModelu", id="22", type="Request"
-        public void ProcessObsluhaZakaznika(MessageForm message)
-        {
-            var sprava = (MyMessage)message;
-            if(MyAgent.VolnyTechnici.Count > 0)
-            {
-                if(MyAgent.CakajucePlatba.Count > 0)
-                {
-
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                MyAgent.CakajucePrevziate.Enqueue(sprava.Vozidlo);
-            }
-        }
-
-        //meta! sender="AgentPlatenia", id="48", type="Response"
-        public void ProcessZaplatenieKontroly(MessageForm message)
-        {
-        }
-
-        //meta! sender="AgentKontroly", id="47", type="Response"
-        public void ProcessKontrolaVozidla(MessageForm message)
-        {
-        }
-
-        //meta! userInfo="Process messages defined in code", id="0"
-        public void ProcessDefault(MessageForm message)
+		//meta! userInfo="Process messages defined in code", id="0"
+		public void ProcessDefault(MessageForm message)
         {
             switch (message.Code)
             {
             }
         }
 
-        //meta! userInfo="Generated code: do not modify", tag="begin"
-        public void Init()
-        {
-        }
+		//meta! sender="AgentPrevziatia", id="29", type="Response"
+		public void ProcessPrevziatieVozidla(MessageForm message)
+		{
+		}
 
-        override public void ProcessMessage(MessageForm message)
-        {
-            switch (message.Code)
-            {
-                case Mc.ObsluhaZakaznika:
-                    ProcessObsluhaZakaznika(message);
-                    break;
+		//meta! sender="AgentModelu", id="28", type="Request"
+		public void ProcessObsluhaZakaznika(MessageForm message)
+		{
+		}
 
-                case Mc.PrevziatieVozidla:
-                    ProcessPrevziatieVozidla(message);
-                    break;
+		//meta! sender="AgentPlatenia", id="32", type="Response"
+		public void ProcessZaplatenieKontroly(MessageForm message)
+		{
+		}
 
-                case Mc.KontrolaVozidla:
-                    ProcessKontrolaVozidla(message);
-                    break;
+		//meta! sender="AgentKontroly", id="30", type="Response"
+		public void ProcessKontrolaVozidla(MessageForm message)
+		{
+		}
 
-                case Mc.ZaplatenieKontroly:
-                    ProcessZaplatenieKontroly(message);
-                    break;
+		//meta! userInfo="Generated code: do not modify", tag="begin"
+		public void Init()
+		{
+		}
 
-                default:
-                    ProcessDefault(message);
-                    break;
-            }
-        }
-        //meta! tag="end"
+		override public void ProcessMessage(MessageForm message)
+		{
+			switch (message.Code)
+			{
+			case Mc.PrevziatieVozidla:
+				ProcessPrevziatieVozidla(message);
+			break;
+
+			case Mc.ZaplatenieKontroly:
+				ProcessZaplatenieKontroly(message);
+			break;
+
+			case Mc.ObsluhaZakaznika:
+				ProcessObsluhaZakaznika(message);
+			break;
+
+			case Mc.KontrolaVozidla:
+				ProcessKontrolaVozidla(message);
+			break;
+
+			default:
+				ProcessDefault(message);
+			break;
+			}
+		}
+		//meta! tag="end"
         public new AgentSTK MyAgent
         {
             get

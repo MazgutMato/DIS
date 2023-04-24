@@ -4,7 +4,7 @@ using DIS.Models.AgentSimulation.STKSimulation.agents;
 
 namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
 {
-    //meta! id="38"
+    //meta! id="35"
     public class ProcessPrevziatia : Process
     {
         public ProcessPrevziatia(int id, Simulation mySim, CommonAgent myAgent) :
@@ -18,7 +18,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
             // Setup component for the next replication
         }
 
-        //meta! sender="AgentPrevziatia", id="39", type="Start"
+        //meta! sender="AgentPrevziatia", id="36", type="Start"
         public void ProcessStart(MessageForm message)
         {
         }

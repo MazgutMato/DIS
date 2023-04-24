@@ -25,22 +25,22 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             }
         }
 
-        //meta! sender="ProcessKontroly", id="42", type="Finish"
-        public void ProcessFinish(MessageForm message)
-        {
-        }
-
-        //meta! sender="AgentSTK", id="47", type="Request"
-        public void ProcessKontrolaVozidla(MessageForm message)
-        {
-        }
-
         //meta! userInfo="Process messages defined in code", id="0"
         public void ProcessDefault(MessageForm message)
         {
             switch (message.Code)
             {
             }
+        }
+
+        //meta! sender="ProcessKontroly", id="39", type="Finish"
+        public void ProcessFinish(MessageForm message)
+        {
+        }
+
+        //meta! sender="AgentSTK", id="30", type="Request"
+        public void ProcessKontrolaVozidla(MessageForm message)
+        {
         }
 
         //meta! userInfo="Generated code: do not modify", tag="begin"

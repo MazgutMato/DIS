@@ -25,47 +25,47 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             }
         }
 
-        //meta! sender="ProcessPlatenia", id="45", type="Finish"
-        public void ProcessFinish(MessageForm message)
-        {
-        }
-
-        //meta! sender="AgentSTK", id="48", type="Request"
-        public void ProcessZaplatenieKontroly(MessageForm message)
-        {
-        }
-
-        //meta! userInfo="Process messages defined in code", id="0"
-        public void ProcessDefault(MessageForm message)
+		//meta! userInfo="Process messages defined in code", id="0"
+		public void ProcessDefault(MessageForm message)
         {
             switch (message.Code)
             {
             }
         }
 
-        //meta! userInfo="Generated code: do not modify", tag="begin"
-        public void Init()
-        {
-        }
+		//meta! sender="ProcessPlatenia", id="42", type="Finish"
+		public void ProcessFinish(MessageForm message)
+		{
+		}
 
-        override public void ProcessMessage(MessageForm message)
-        {
-            switch (message.Code)
-            {
-                case Mc.ZaplatenieKontroly:
-                    ProcessZaplatenieKontroly(message);
-                    break;
+		//meta! sender="AgentSTK", id="32", type="Request"
+		public void ProcessZaplatenieKontroly(MessageForm message)
+		{
+		}
 
-                case Mc.Finish:
-                    ProcessFinish(message);
-                    break;
+		//meta! userInfo="Generated code: do not modify", tag="begin"
+		public void Init()
+		{
+		}
 
-                default:
-                    ProcessDefault(message);
-                    break;
-            }
-        }
-        //meta! tag="end"
+		override public void ProcessMessage(MessageForm message)
+		{
+			switch (message.Code)
+			{
+			case Mc.Finish:
+				ProcessFinish(message);
+			break;
+
+			case Mc.ZaplatenieKontroly:
+				ProcessZaplatenieKontroly(message);
+			break;
+
+			default:
+				ProcessDefault(message);
+			break;
+			}
+		}
+		//meta! tag="end"
         public new AgentPlatenia MyAgent
         {
             get

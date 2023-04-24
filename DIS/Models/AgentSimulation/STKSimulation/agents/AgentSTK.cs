@@ -45,15 +45,15 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
             VsetciZamestnanci.AddRange(VolnyAutomechanici);
         }
 
-        //meta! userInfo="Generated code: do not modify", tag="begin"
-        private void Init()
-        {
-            new ManagerSTK(SimId.ManagerSTK, MySim, this);
-            AddOwnMessage(Mc.PrevziatieVozidla);
-            AddOwnMessage(Mc.ObsluhaZakaznika);
-            AddOwnMessage(Mc.ZaplatenieKontroly);
-            AddOwnMessage(Mc.KontrolaVozidla);
-        }
-        //meta! tag="end"
+		//meta! userInfo="Generated code: do not modify", tag="begin"
+		private void Init()
+		{
+			new ManagerSTK(SimId.ManagerSTK, MySim, this);
+			AddOwnMessage(Mc.PrevziatieVozidla);
+			AddOwnMessage(Mc.ObsluhaZakaznika);
+			AddOwnMessage(Mc.ZaplatenieKontroly);
+			AddOwnMessage(Mc.KontrolaVozidla);
+		}
+		//meta! tag="end"
     }
 }

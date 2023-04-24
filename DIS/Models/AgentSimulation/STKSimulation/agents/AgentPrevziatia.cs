@@ -20,13 +20,13 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
             // Setup component for the next replication
         }
 
-        //meta! userInfo="Generated code: do not modify", tag="begin"
-        private void Init()
-        {
-            new ManagerPrevziatia(SimId.ManagerPrevziatia, MySim, this);
-            new ProcessPrevziatia(SimId.ProcessPrevziatia, MySim, this);
-            AddOwnMessage(Mc.PrevziatieVozidla);
-        }
-        //meta! tag="end"
+		//meta! userInfo="Generated code: do not modify", tag="begin"
+		private void Init()
+		{
+			new ManagerPrevziatia(SimId.ManagerPrevziatia, MySim, this);
+			new ProcessPrevziatia(SimId.ProcessPrevziatia, MySim, this);
+			AddOwnMessage(Mc.PrevziatieVozidla);
+		}
+		//meta! tag="end"
     }
 }

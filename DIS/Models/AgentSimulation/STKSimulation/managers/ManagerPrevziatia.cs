@@ -24,47 +24,47 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             }
         }
 
-        //meta! sender="AgentSTK", id="46", type="Request"
-        public void ProcessPrevziatieVozidla(MessageForm message)
-        {
-        }
-
-        //meta! sender="ProcessPrevziatia", id="39", type="Finish"
-        public void ProcessFinish(MessageForm message)
-        {
-        }
-
-        //meta! userInfo="Process messages defined in code", id="0"
-        public void ProcessDefault(MessageForm message)
+		//meta! userInfo="Process messages defined in code", id="0"
+		public void ProcessDefault(MessageForm message)
         {
             switch (message.Code)
             {
             }
         }
 
-        //meta! userInfo="Generated code: do not modify", tag="begin"
-        public void Init()
-        {
-        }
+		//meta! sender="AgentSTK", id="29", type="Request"
+		public void ProcessPrevziatieVozidla(MessageForm message)
+		{
+		}
 
-        override public void ProcessMessage(MessageForm message)
-        {
-            switch (message.Code)
-            {
-                case Mc.PrevziatieVozidla:
-                    ProcessPrevziatieVozidla(message);
-                    break;
+		//meta! sender="ProcessPrevziatia", id="36", type="Finish"
+		public void ProcessFinish(MessageForm message)
+		{
+		}
 
-                case IdList.Finish:
-                    ProcessFinish(message);
-                    break;
+		//meta! userInfo="Generated code: do not modify", tag="begin"
+		public void Init()
+		{
+		}
 
-                default:
-                    ProcessDefault(message);
-                    break;
-            }
-        }
-        //meta! tag="end"
+		override public void ProcessMessage(MessageForm message)
+		{
+			switch (message.Code)
+			{
+			case Mc.PrevziatieVozidla:
+				ProcessPrevziatieVozidla(message);
+			break;
+
+			case Mc.Finish:
+				ProcessFinish(message);
+			break;
+
+			default:
+				ProcessDefault(message);
+			break;
+			}
+		}
+		//meta! tag="end"
         public new AgentPrevziatia MyAgent
         {
             get

@@ -4,7 +4,7 @@ using DIS.Models.AgentSimulation.STKSimulation.agents;
 
 namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
 {
-    //meta! id="44"
+    //meta! id="41"
     public class ProcessPlatenia : Process
     {
         public ProcessPlatenia(int id, Simulation mySim, CommonAgent myAgent) :
@@ -18,39 +18,39 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
             // Setup component for the next replication
         }
 
-        //meta! sender="AgentPlatenia", id="45", type="Start"
-        public void ProcessStart(MessageForm message)
+		//meta! sender="AgentPlatenia", id="42", type="Start"
+		public void ProcessStart(MessageForm message)
         {
         }
 
-        //meta! userInfo="Process messages defined in code", id="0"
-        public void ProcessDefault(MessageForm message)
+		//meta! userInfo="Process messages defined in code", id="0"
+		public void ProcessDefault(MessageForm message)
         {
             switch (message.Code)
             {
             }
         }
 
-        //meta! userInfo="Generated code: do not modify", tag="begin"
-        override public void ProcessMessage(MessageForm message)
-        {
-            switch (message.Code)
-            {
-                case Mc.Start:
-                    ProcessStart(message);
-                    break;
+		//meta! userInfo="Generated code: do not modify", tag="begin"
+		override public void ProcessMessage(MessageForm message)
+		{
+			switch (message.Code)
+			{
+			case Mc.Start:
+				ProcessStart(message);
+			break;
 
-                default:
-                    ProcessDefault(message);
-                    break;
-            }
-        }
-        //meta! tag="end"
-        public new AgentPlatenia MyAgent
+			default:
+				ProcessDefault(message);
+			break;
+			}
+		}
+		//meta! tag="end"
+        public new AgentKontroly MyAgent
         {
             get
             {
-                return (AgentPlatenia)base.MyAgent;
+                return (AgentKontroly)base.MyAgent;
             }
         }
     }

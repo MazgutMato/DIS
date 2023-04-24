@@ -20,13 +20,13 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
             // Setup component for the next replication
         }
 
-        //meta! userInfo="Generated code: do not modify", tag="begin"
-        private void Init()
-        {
-            new ManagerKontroly(SimId.ManagerKontroly, MySim, this);
-            new ProcessKontroly(SimId.ProcessKontroly, MySim, this);
-            AddOwnMessage(Mc.KontrolaVozidla);
-        }
-        //meta! tag="end"
+		//meta! userInfo="Generated code: do not modify", tag="begin"
+		private void Init()
+		{
+			new ManagerKontroly(SimId.ManagerKontroly, MySim, this);
+			new ProcessKontroly(SimId.ProcessKontroly, MySim, this);
+			AddOwnMessage(Mc.KontrolaVozidla);
+		}
+		//meta! tag="end"
     }
 }
