@@ -35,12 +35,22 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		//meta! sender="AgentSTK", id="29", type="Request"
 		public void ProcessPrevziatieVozidla(MessageForm message)
 		{
-		}
+            var sprava = (MyMessage)message;
+            sprava.Addressee = MyAgent.FindAssistant(SimId.ProcessPrevziatia);
+            StartContinualAssistant(sprava);
+            Console.WriteLine("Zaciatok prevziatia(" + MySim.CurrentTime + "): " + sprava.Vozidlo +
+                "\tZamestnanec " + sprava.Zamestnanec + "\n");
+        }
 
 		//meta! sender="ProcessPrevziatia", id="36", type="Finish"
 		public void ProcessFinish(MessageForm message)
 		{
-		}
+            var sprava = (MyMessage)message;
+            Console.WriteLine("Koniec prevziatia(" + MySim.CurrentTime + "): " + sprava.Vozidlo +
+                "\tZamestnanec " + sprava.Zamestnanec + "\n");
+            sprava.Code = Mc.PrevziatieVozidla;
+            Response(sprava);
+        }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()

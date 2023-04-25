@@ -1,6 +1,7 @@
 using OSPABA;
 using DIS.Models.AgentSimulation.STKSimulation.simulation;
 using DIS.Models.AgentSimulation.STKSimulation.agents;
+using DIS.Models.AgentSimulation.STKSimulation.entities;
 
 namespace DIS.Models.AgentSimulation.STKSimulation.managers
 {
@@ -35,20 +36,100 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		//meta! sender="AgentPrevziatia", id="29", type="Response"
 		public void ProcessPrevziatieVozidla(MessageForm message)
 		{
+			var sprava = (MyMessage)message;
+			//Kontrola
+			if(MyAgent.VolnyAutomechanici.Count > 0)
+			{
+				var spravaKopia = (MyMessage)sprava.CreateCopy();
+				spravaKopia.Zamestnanec = MyAgent.VolnyAutomechanici.Dequeue();
+				spravaKopia.Zamestnanec.Pracuje = Pracuje.KONTROLUJE;
+				spravaKopia.Code = Mc.KontrolaVozidla;
+				spravaKopia.Addressee = MySim.FindAgent(SimId.AgentKontroly);
+				Request(spravaKopia);
+			}
+			else
+			{
+				MyAgent.CakajuceKontrola.Enqueue(sprava.Vozidlo);
+			}
+			UvolnenieTechnika(sprava);
 		}
 
 		//meta! sender="AgentModelu", id="28", type="Request"
 		public void ProcessObsluhaZakaznika(MessageForm message)
 		{
+			var sprava = (MyMessage)message;
+			//Prebranie
+			if(MyAgent.VolnyTechnici.Count > 0 && (MyAgent.KapacitaParkoviska >
+				(MyAgent.PrevzateVozidla + MyAgent.CakajuceKontrola.Count)))
+			{
+				MyAgent.PrevzateVozidla++;
+				sprava.Zamestnanec = MyAgent.VolnyTechnici.Dequeue();
+				sprava.Zamestnanec.Pracuje = Pracuje.PREBERA;
+                sprava.Code = Mc.PrevziatieVozidla;
+                sprava.Addressee = MySim.FindAgent(SimId.AgentPrevziatia);
+                Request(message);
+            }
+			else
+			{
+				MyAgent.CakajucePrevziate.Enqueue(sprava.Vozidlo);
+			}
 		}
 
 		//meta! sender="AgentPlatenia", id="32", type="Response"
 		public void ProcessZaplatenieKontroly(MessageForm message)
 		{
+			var sprava = (MyMessage)message;			
+			UvolnenieTechnika(sprava.CreateCopy());
+			//Koniec obluhy
+			sprava.Code = Mc.ObsluhaZakaznika;
+			Response(sprava);
 		}
 
 		//meta! sender="AgentKontroly", id="30", type="Response"
 		public void ProcessKontrolaVozidla(MessageForm message)
+		{
+			var sprava = (MyMessage)message;
+			//Kontrola
+			if(MyAgent.CakajuceKontrola.Count > 0)
+			{
+				var spravaKopia = (MyMessage)sprava.CreateCopy();
+				spravaKopia.Vozidlo = MyAgent.CakajuceKontrola.Dequeue();
+				spravaKopia.Code = Mc.KontrolaVozidla;
+				spravaKopia.Addressee = MySim.FindAgent(SimId.AgentKontroly);
+				Request(spravaKopia);
+			}
+			else
+			{
+				sprava.Zamestnanec.Pracuje = Pracuje.NIE;
+				MyAgent.VolnyAutomechanici.Enqueue(sprava.Zamestnanec);
+			}
+			//Platenie
+			if(MyAgent.VolnyTechnici.Count > 0)
+			{
+				sprava.Zamestnanec = MyAgent.VolnyTechnici.Dequeue();
+				sprava.Zamestnanec.Pracuje = Pracuje.PLATI;
+                sprava.Code = Mc.ZaplatenieKontroly;
+				sprava.Addressee = MySim.FindAgent(SimId.AgentPlatenia);
+				Request(sprava);
+			}
+			else
+			{
+				MyAgent.CakajucePlatba.Enqueue(sprava.Vozidlo);
+			}
+		}
+
+		//meta! sender="PlanovacPrestavky", id="50", type="Finish"
+		public void ProcessFinishPlanovacPrestavky(MessageForm message)
+		{
+		}
+
+		//meta! sender="ProcessPrestavka", id="52", type="Finish"
+		public void ProcessFinishProcessPrestavka(MessageForm message)
+		{
+		}
+
+		//meta! sender="PlanovacPrestavky", id="55", type="Notice"
+		public void ProcessZacniPrestavku(MessageForm message)
 		{
 		}
 
@@ -61,10 +142,6 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		{
 			switch (message.Code)
 			{
-			case Mc.PrevziatieVozidla:
-				ProcessPrevziatieVozidla(message);
-			break;
-
 			case Mc.ZaplatenieKontroly:
 				ProcessZaplatenieKontroly(message);
 			break;
@@ -73,8 +150,29 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 				ProcessObsluhaZakaznika(message);
 			break;
 
+			case Mc.Finish:
+				switch (message.Sender.Id)
+				{
+				case SimId.PlanovacPrestavky:
+					ProcessFinishPlanovacPrestavky(message);
+				break;
+
+				case SimId.ProcessPrestavka:
+					ProcessFinishProcessPrestavka(message);
+				break;
+				}
+			break;
+
+			case Mc.PrevziatieVozidla:
+				ProcessPrevziatieVozidla(message);
+			break;
+
 			case Mc.KontrolaVozidla:
 				ProcessKontrolaVozidla(message);
+			break;
+
+			case Mc.ZacniPrestavku:
+				ProcessZacniPrestavku(message);
 			break;
 
 			default:
@@ -88,6 +186,49 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             get
             {
                 return (AgentSTK)base.MyAgent;
+            }
+        }
+		private void VykonajPrestavku(Zamestnanec zamestnanec)
+		{
+			//Urobit pri kazdom response
+		}
+		private void UvolnenieTechnika(MessageForm message)
+		{
+            var sprava = (MyMessage)message;
+            if (MyAgent.CakajucePlatba.Count > 0)
+            {
+				if(sprava.Zamestnanec.Pracuje == Pracuje.PREBERA)
+				{
+                    MyAgent.PrevzateVozidla--;
+                }
+                sprava.Zamestnanec.Pracuje = Pracuje.PLATI;
+                sprava.Vozidlo = MyAgent.CakajucePlatba.Dequeue();
+                sprava.Code = Mc.ZaplatenieKontroly;                
+                sprava.Addressee = MySim.FindAgent(SimId.AgentPlatenia);
+                Request(sprava);
+            }
+            else if (MyAgent.VolnyTechnici.Count > 0 && (MyAgent.KapacitaParkoviska >
+                (MyAgent.PrevzateVozidla + MyAgent.CakajuceKontrola.Count)) &&
+                MyAgent.CakajucePrevziate.Count > 0)
+            {
+				if(sprava.Zamestnanec.Pracuje == Pracuje.PLATI)
+				{
+					MyAgent.PrevzateVozidla++;
+				}
+				sprava.Zamestnanec.Pracuje = Pracuje.PREBERA;
+                sprava.Vozidlo = MyAgent.CakajucePrevziate.Dequeue();
+                sprava.Code = Mc.PrevziatieVozidla;
+                sprava.Addressee = MySim.FindAgent(SimId.AgentSTK);
+                Request(sprava);
+            }
+            else
+            {
+                if (sprava.Zamestnanec.Pracuje == Pracuje.PREBERA)
+                {
+                    MyAgent.PrevzateVozidla--;
+                }
+				sprava.Zamestnanec.Pracuje = Pracuje.NIE;
+                MyAgent.VolnyTechnici.Enqueue(sprava.Zamestnanec);
             }
         }
     }

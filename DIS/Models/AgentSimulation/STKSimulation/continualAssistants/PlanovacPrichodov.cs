@@ -9,18 +9,12 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
     //meta! id="9"
     public class PlanovacPrichodov : Scheduler
     {
-        public Exponential RozdeleniePrichod { get; set; }
-        public DiscreteEmpirical RozdelenieTyp { get; set; }
-        public int PocetVozidiel { get; set; }
+        private Exponential RozdeleniePrichod { get; set; }
+        private DiscreteEmpirical RozdelenieTyp { get; set; }
+        private int PocetVozidiel { get; set; }
         public PlanovacPrichodov(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)
         {
-        }
-
-        override public void PrepareReplication()
-        {
-            base.PrepareReplication();
-            // Setup component for the next replication
             RozdeleniePrichod = new Exponential((double)3600 / 23);
             var empParams = new List<EmpiricalParam>();
             empParams.AddRange(new[] {
@@ -29,6 +23,12 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
                 new EmpiricalParam(3, 3, 0.14)
             });
             RozdelenieTyp = new DiscreteEmpirical(empParams);
+        }
+
+        override public void PrepareReplication()
+        {
+            base.PrepareReplication();
+            // Setup component for the next replication            
             PocetVozidiel = 0;
         }
 

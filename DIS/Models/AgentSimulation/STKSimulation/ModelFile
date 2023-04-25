@@ -2,27 +2,10 @@
 <ABAsim>
   <Agents>
     <Agent>
-      <SimId>2</SimId>
-      <InternalId>2</InternalId>
-      <Name>AgentOkolia</Name>
-      <Bounds>444,608,180,180</Bounds>
-      <Reasoner>ManagerOkolia</Reasoner>
-      <ReasonerBounds>74,25,32,25</ReasonerBounds>
-      <UsePetriNet>false</UsePetriNet>
-      <Components>
-        <Scheduler>
-          <SimId>1001</SimId>
-          <InternalId>9</InternalId>
-          <Name>PlanovacPrichodov</Name>
-          <Bounds>8,81,35,13</Bounds>
-        </Scheduler>
-      </Components>
-    </Agent>
-    <Agent>
       <SimId>6</SimId>
       <InternalId>23</InternalId>
       <Name>AgentPrevziatia</Name>
-      <Bounds>716,1048,180,180</Bounds>
+      <Bounds>718,1048,180,180</Bounds>
       <Reasoner>ManagerPrevziatia</Reasoner>
       <ReasonerBounds>74,25,32,25</ReasonerBounds>
       <UsePetriNet>false</UsePetriNet>
@@ -34,22 +17,6 @@
           <Bounds>74,100,35,18</Bounds>
         </Process>
       </Components>
-    </Agent>
-    <Agent>
-      <SimId>1</SimId>
-      <InternalId>1</InternalId>
-      <Name>AgentModelu</Name>
-      <Bounds>848,204,180,180</Bounds>
-      <Reasoner>ManagerModelu</Reasoner>
-      <UsePetriNet>false</UsePetriNet>
-    </Agent>
-    <Agent>
-      <SimId>3</SimId>
-      <InternalId>17</InternalId>
-      <Name>AgentSTK</Name>
-      <Bounds>1202,598,180,180</Bounds>
-      <Reasoner>ManagerSTK</Reasoner>
-      <UsePetriNet>false</UsePetriNet>
     </Agent>
     <Agent>
       <SimId>4</SimId>
@@ -67,6 +34,54 @@
           <Bounds>73,100,35,18</Bounds>
         </Process>
       </Components>
+    </Agent>
+    <Agent>
+      <SimId>3</SimId>
+      <InternalId>17</InternalId>
+      <Name>AgentSTK</Name>
+      <Bounds>1202,598,180,180</Bounds>
+      <Reasoner>ManagerSTK</Reasoner>
+      <ReasonerBounds>74,25,32,25</ReasonerBounds>
+      <UsePetriNet>false</UsePetriNet>
+      <Components>
+        <Scheduler>
+          <SimId>1005</SimId>
+          <InternalId>49</InternalId>
+          <Name>PlanovacPrestavky</Name>
+          <Bounds>18,93,35,13</Bounds>
+        </Scheduler>
+        <Process>
+          <SimId>1006</SimId>
+          <InternalId>51</InternalId>
+          <Name>ProcessPrestavka</Name>
+          <Bounds>110,91,35,18</Bounds>
+        </Process>
+      </Components>
+    </Agent>
+    <Agent>
+      <SimId>2</SimId>
+      <InternalId>2</InternalId>
+      <Name>AgentOkolia</Name>
+      <Bounds>444,608,180,180</Bounds>
+      <Reasoner>ManagerOkolia</Reasoner>
+      <ReasonerBounds>74,25,32,25</ReasonerBounds>
+      <UsePetriNet>false</UsePetriNet>
+      <Components>
+        <Scheduler>
+          <SimId>1001</SimId>
+          <InternalId>9</InternalId>
+          <Name>PlanovacPrichodov</Name>
+          <Bounds>8,81,35,13</Bounds>
+        </Scheduler>
+      </Components>
+    </Agent>
+    <Agent>
+      <SimId>1</SimId>
+      <InternalId>1</InternalId>
+      <Name>AgentModelu</Name>
+      <Bounds>848,204,180,180</Bounds>
+      <Reasoner>ManagerModelu</Reasoner>
+      <UsePetriNet>false</UsePetriNet>
     </Agent>
     <Agent>
       <SimId>5</SimId>
@@ -150,10 +165,30 @@
       <Destination>2</Destination>
     </Message>
     <Message>
+      <InternalId>50</InternalId>
+      <Type>StartFinish</Type>
+      <Source>17</Source>
+      <Destination>49</Destination>
+    </Message>
+    <Message>
       <InternalId>19</InternalId>
       <Type>Parent</Type>
       <Source>17</Source>
       <Destination>1</Destination>
+    </Message>
+    <Message>
+      <InternalId>52</InternalId>
+      <Type>StartFinish</Type>
+      <Source>17</Source>
+      <Destination>51</Destination>
+    </Message>
+    <Message>
+      <SimId>1011</SimId>
+      <InternalId>55</InternalId>
+      <Name>ZacniPrestavku</Name>
+      <Type>Notice</Type>
+      <Source>49</Source>
+      <Destination>17</Destination>
     </Message>
     <Message>
       <InternalId>24</InternalId>
@@ -198,5 +233,5 @@
       <Destination>21</Destination>
     </Message>
   </Messages>
-  <IID>44</IID>
+  <IID>60</IID>
 </ABAsim>

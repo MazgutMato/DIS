@@ -2,4 +2,4 @@
 
 MySimulation sim = new MySimulation();
 
-sim.Simulate(1,10000);
+sim.Simulate(1,100000);

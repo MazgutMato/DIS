@@ -1043,7 +1043,6 @@
             label20.Size = new Size(111, 20);
             label20.TabIndex = 68;
             label20.Text = "Ending vehicles";
-            label20.Click += label20_Click;
             // 
             // Application
             // 

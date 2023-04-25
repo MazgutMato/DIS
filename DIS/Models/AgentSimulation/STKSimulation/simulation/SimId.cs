@@ -17,7 +17,9 @@ namespace DIS.Models.AgentSimulation.STKSimulation.simulation
 		public const int ManagerKontroly = 104;
 		public const int ManagerPlatenia = 105;
 		public const int ManagerPrevziatia = 106;
+		public const int PlanovacPrestavky = 1005;
 		public const int ProcessPrevziatia = 1002;
+		public const int ProcessPrestavka = 1006;
 		public const int ProcessKontroly = 1003;
 		public const int PlanovacPrichodov = 1001;
 		public const int ProcessPlatenia = 1004;

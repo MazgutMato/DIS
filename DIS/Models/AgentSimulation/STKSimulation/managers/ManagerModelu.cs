@@ -29,7 +29,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		public void ProcessPrichodZakaznika(MessageForm message)
         {
             var sprava = (MyMessage)message;
-            Console.WriteLine("Novy zakaznik(" + MySim.CurrentTime + "): " + sprava.Vozidlo.ToString());
+            Console.WriteLine("Novy zakaznik(" + MySim.CurrentTime + "): " + sprava.Vozidlo.ToString() + "\n");
             message.Code = Mc.ObsluhaZakaznika;
             message.Addressee = MySim.FindAgent(SimId.AgentSTK);
             Request(message);
@@ -46,7 +46,9 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		//meta! sender="AgentSTK", id="28", type="Response"
 		public void ProcessObsluhaZakaznika(MessageForm message)
 		{
-		}
+            var sprava = (MyMessage)message;
+            Console.WriteLine("Zakaznik odchadza(" + MySim.CurrentTime + "): " + sprava.Vozidlo + "\n");
+        }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()

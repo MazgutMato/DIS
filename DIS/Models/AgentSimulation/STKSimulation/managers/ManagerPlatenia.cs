@@ -36,12 +36,22 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		//meta! sender="ProcessPlatenia", id="42", type="Finish"
 		public void ProcessFinish(MessageForm message)
 		{
-		}
+            var sprava = (MyMessage)message;
+            Console.WriteLine("Koniec Platenia(" + MySim.CurrentTime + "): " + sprava.Vozidlo +
+                "\tZamestnanec " + sprava.Zamestnanec + "\n");
+            sprava.Code = Mc.ZaplatenieKontroly;
+            Response(sprava);
+        }
 
 		//meta! sender="AgentSTK", id="32", type="Request"
 		public void ProcessZaplatenieKontroly(MessageForm message)
 		{
-		}
+            var sprava = (MyMessage)message;
+            sprava.Addressee = MyAgent.FindAssistant(SimId.ProcessPlatenia);
+            StartContinualAssistant(sprava);
+            Console.WriteLine("Zaciatok platenia(" + MySim.CurrentTime + "): " + sprava.Vozidlo +
+                "\tZamestnanec " + sprava.Zamestnanec + "\n");
+        }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()
@@ -52,12 +62,12 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		{
 			switch (message.Code)
 			{
-			case Mc.Finish:
-				ProcessFinish(message);
-			break;
-
 			case Mc.ZaplatenieKontroly:
 				ProcessZaplatenieKontroly(message);
+			break;
+
+			case Mc.Finish:
+				ProcessFinish(message);
 			break;
 
 			default:
