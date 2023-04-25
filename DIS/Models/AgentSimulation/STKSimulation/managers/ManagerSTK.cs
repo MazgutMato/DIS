@@ -33,7 +33,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             }
         }
 
-		//meta! sender="AgentPrevziatia", id="29", type="Response"
+		//meta! sender="AgentTechnici", id="29", type="Response"
 		public void ProcessPrevziatieVozidla(MessageForm message)
 		{
 			var sprava = (MyMessage)message;
@@ -75,7 +75,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 			}
 		}
 
-		//meta! sender="AgentPlatenia", id="32", type="Response"
+		//meta! sender="AgentTechnici", id="32", type="Response"
 		public void ProcessZaplatenieKontroly(MessageForm message)
 		{
 			var sprava = (MyMessage)message;			
@@ -85,7 +85,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 			Response(sprava);
 		}
 
-		//meta! sender="AgentKontroly", id="30", type="Response"
+		//meta! sender="AgentAutomechanici", id="30", type="Response"
 		public void ProcessKontrolaVozidla(MessageForm message)
 		{
 			var sprava = (MyMessage)message;
@@ -133,6 +133,11 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		{
 		}
 
+		//meta! sender="AgentAutomechanici", id="65", type="Response"
+		public void ProcessRezervujMiesto(MessageForm message)
+		{
+		}
+
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()
 		{
@@ -142,10 +147,6 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		{
 			switch (message.Code)
 			{
-			case Mc.ZaplatenieKontroly:
-				ProcessZaplatenieKontroly(message);
-			break;
-
 			case Mc.ObsluhaZakaznika:
 				ProcessObsluhaZakaznika(message);
 			break;
@@ -163,8 +164,16 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 				}
 			break;
 
+			case Mc.ZaplatenieKontroly:
+				ProcessZaplatenieKontroly(message);
+			break;
+
 			case Mc.PrevziatieVozidla:
 				ProcessPrevziatieVozidla(message);
+			break;
+
+			case Mc.RezervujMiesto:
+				ProcessRezervujMiesto(message);
 			break;
 
 			case Mc.KontrolaVozidla:

@@ -22,7 +22,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
             // Setup component for the next replication
         }
 
-		//meta! sender="AgentPlatenia", id="42", type="Start"
+		//meta! sender="AgentTechnici", id="63", type="Start"
 		public void ProcessStart(MessageForm message)
         {
             var sprava = (MyMessage)message;
@@ -40,6 +40,11 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
                     break;
             }
         }
+
+		//meta! sender="AgentTechnici", id="63", type="Start"
+		public void ProcessStart(MessageForm message)
+		{
+		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		override public void ProcessMessage(MessageForm message)

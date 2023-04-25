@@ -10,14 +10,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
     //meta! id="17"
     public class AgentSTK : Agent
     {
-        public int KapacitaParkoviska { get; } = 5;
-        public Queue<Zamestnanec> VolnyTechnici { get; set; }
-        public Queue<Zamestnanec> VolnyAutomechanici { get; set; }
-        public List<Zamestnanec> VsetciZamestnanci { get; set; }
-        public Queue<Vozidlo> CakajucePrevziate { get; set; }
-        public Queue<Vozidlo> CakajucePlatba { get; set; }
-        public Queue<Vozidlo> CakajuceKontrola { get; set; }
-        public int PrevzateVozidla { get; set; }
+        public Queue<Vozidlo> ParkoviskoPrevziate { get; set; }
         public AgentSTK(int id, Simulation mySim, Agent parent) :
             base(id, mySim, parent)
         {
@@ -28,23 +21,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
         {
             base.PrepareReplication();
             // Setup component for the next replication
-            CakajucePrevziate = new Queue<Vozidlo>();
-            CakajucePlatba = new Queue<Vozidlo>();
-            CakajuceKontrola = new Queue<Vozidlo>(KapacitaParkoviska);
-            VolnyTechnici = new Queue<Zamestnanec>();
-            for (int i = 0; i < 5; i++)
-            {
-                VolnyTechnici.Enqueue(new Zamestnanec(i + 1, TypZamestnanca.TECHNIK));
-            }
-            VolnyAutomechanici = new Queue<Zamestnanec>();
-            for (int i = 0; i < 5; i++)
-            {
-                VolnyAutomechanici.Enqueue(new Zamestnanec(i + 1, TypZamestnanca.AUTOMECHANIK));
-            }
-            VsetciZamestnanci = new List<Zamestnanec>();
-            VsetciZamestnanci.AddRange(VolnyTechnici);
-            VsetciZamestnanci.AddRange(VolnyAutomechanici);
-            PrevzateVozidla = 0;
+            ParkoviskoPrevziate = new Queue<Vozidlo>();
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -54,6 +31,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
 			new PlanovacPrestavky(SimId.PlanovacPrestavky, MySim, this);
 			new ProcessPrestavka(SimId.ProcessPrestavka, MySim, this);
 			AddOwnMessage(Mc.PrevziatieVozidla);
+			AddOwnMessage(Mc.RezervujMiesto);
 			AddOwnMessage(Mc.ObsluhaZakaznika);
 			AddOwnMessage(Mc.ZaplatenieKontroly);
 			AddOwnMessage(Mc.KontrolaVozidla);

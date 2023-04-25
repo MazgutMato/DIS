@@ -44,7 +44,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
             // Setup component for the next replication
         }
 
-		//meta! sender="AgentKontroly", id="39", type="Start"
+		//meta! sender="AgentAutomechanici", id="39", type="Start"
 		public void ProcessStart(MessageForm message)
         {
             var sprava = (MyMessage)message;

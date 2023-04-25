@@ -22,7 +22,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
             // Setup component for the next replication
         }
 
-		//meta! sender="AgentPrevziatia", id="36", type="Start"
+		//meta! sender="AgentTechnici", id="36", type="Start"
 		public void ProcessStart(MessageForm message)
         {
             message.Code = Mc.KoniecPrevziatia;

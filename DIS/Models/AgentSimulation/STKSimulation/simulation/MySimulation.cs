@@ -40,9 +40,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.simulation
 			AgentModelu = new AgentModelu(SimId.AgentModelu, this, null);
 			AgentOkolia = new AgentOkolia(SimId.AgentOkolia, this, AgentModelu);
 			AgentSTK = new AgentSTK(SimId.AgentSTK, this, AgentModelu);
-			AgentKontroly = new AgentKontroly(SimId.AgentKontroly, this, AgentSTK);
-			AgentPlatenia = new AgentPlatenia(SimId.AgentPlatenia, this, AgentSTK);
-			AgentPrevziatia = new AgentPrevziatia(SimId.AgentPrevziatia, this, AgentSTK);
+			AgentAutomechanici = new AgentAutomechanici(SimId.AgentAutomechanici, this, AgentSTK);
+			AgentTechnici = new AgentTechnici(SimId.AgentTechnici, this, AgentSTK);
 		}
 		public AgentModelu AgentModelu
 		{ get; set; }
@@ -50,11 +49,9 @@ namespace DIS.Models.AgentSimulation.STKSimulation.simulation
 		{ get; set; }
 		public AgentSTK AgentSTK
 		{ get; set; }
-		public AgentKontroly AgentKontroly
+		public AgentAutomechanici AgentAutomechanici
 		{ get; set; }
-		public AgentPlatenia AgentPlatenia
-		{ get; set; }
-		public AgentPrevziatia AgentPrevziatia
+		public AgentTechnici AgentTechnici
 		{ get; set; }
 		//meta! tag="end"
     }
