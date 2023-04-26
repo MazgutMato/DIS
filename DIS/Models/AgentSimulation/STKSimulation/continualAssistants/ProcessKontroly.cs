@@ -48,17 +48,19 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
 		public void ProcessStart(MessageForm message)
         {
             var sprava = (MyMessage)message;
+            sprava.Zamestnanec.Pracuje = Pracuje.KONTROLUJE;
+            sprava.Zamestnanec.Vozidlo = sprava.Vozidlo;
             sprava.Code = Mc.KoniecKontroly;
             switch (sprava.Vozidlo.TypVozidla)
             {
                 case TypVozidla.OSOBNE:
-                    Hold(KontrolaOsobne.Next(), sprava);
+                    Hold(KontrolaOsobne.Next()*60, sprava);
                     break;
                 case TypVozidla.NAKLADNE:
-                    Hold(KontrolaNakladne.Next(), sprava);
+                    Hold(KontrolaNakladne.Next()*60, sprava);
                     break;
                 case TypVozidla.DODAVKA:
-                    Hold(KontrolaDodavka.Next(), sprava);
+                    Hold(KontrolaDodavka.Next()*60, sprava);
                     break;
             }
         }
@@ -66,9 +68,12 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
         {
+            var sprava = (MyMessage)message;
             switch (message.Code)
             {
                 case Mc.KoniecKontroly:
+                    sprava.Zamestnanec.Pracuje = Pracuje.NIE;
+                    sprava.Zamestnanec.Vozidlo = null;
                     AssistantFinished(message);
                     break;
             }
@@ -89,11 +94,11 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
 			}
 		}
 		//meta! tag="end"
-        public new AgentKontroly MyAgent
+        public new AgentAutomechanici MyAgent
         {
             get
             {
-                return (AgentKontroly)base.MyAgent;
+                return (AgentAutomechanici)base.MyAgent;
             }
         }
     }

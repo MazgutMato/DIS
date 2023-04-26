@@ -6,9 +6,9 @@ namespace DIS.Models.AgentSimulation.STKSimulation.simulation
     {
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public const int ZaplatenieKontroly = 1010;
-		public const int RezervujMiesto = 1012;
 		public const int PrichodZakaznika = 1002;
 		public const int OdchodZakaznika = 1003;
+		public const int UvolnenieMiesta = 1014;
 		public const int NovyZakaznik = 1005;
 		public const int ZacniPrestavku = 1011;
 		public const int ObsluhaZakaznika = 1006;

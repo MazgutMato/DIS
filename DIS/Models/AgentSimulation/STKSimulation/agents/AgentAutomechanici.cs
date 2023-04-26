@@ -3,7 +3,6 @@ using DIS.Models.AgentSimulation.STKSimulation.simulation;
 using DIS.Models.AgentSimulation.STKSimulation.managers;
 using DIS.Models.AgentSimulation.STKSimulation.continualAssistants;
 using DIS.Models.AgentSimulation.STKSimulation.entities;
-using DIS.Models.AgentSimulation.STKSimulation.instantAssistants;
 
 namespace DIS.Models.AgentSimulation.STKSimulation.agents
 {
@@ -33,9 +32,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
 		private void Init()
 		{
 			new ManagerAutomechanici(SimId.ManagerAutomechanici, MySim, this);
-			new JeVolneMiesto(SimId.JeVolneMiesto, MySim, this);
 			new ProcessKontroly(SimId.ProcessKontroly, MySim, this);
-			AddOwnMessage(Mc.RezervujMiesto);
 			AddOwnMessage(Mc.KontrolaVozidla);
 		}
 		//meta! tag="end"

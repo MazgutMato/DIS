@@ -26,6 +26,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
 		public void ProcessStart(MessageForm message)
         {
             var sprava = (MyMessage)message;
+            sprava.Zamestnanec.Pracuje = entities.Pracuje.PLATI;
+            sprava.Zamestnanec.Vozidlo = sprava.Vozidlo;
             sprava.Code = Mc.KoniecPlatenia;
             Hold(CasPlatenia.Next(), sprava);
         }
@@ -33,18 +35,16 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
         {
+            var sprava = (MyMessage)message;
             switch (message.Code)
             {
                 case Mc.KoniecPlatenia:
+                    sprava.Zamestnanec.Pracuje = entities.Pracuje.NIE;
+                    sprava.Zamestnanec.Vozidlo = null;
                     AssistantFinished(message);
                     break;
             }
         }
-
-		//meta! sender="AgentTechnici", id="63", type="Start"
-		public void ProcessStart(MessageForm message)
-		{
-		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		override public void ProcessMessage(MessageForm message)
@@ -61,11 +61,11 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
 			}
 		}
 		//meta! tag="end"
-        public new AgentPlatenia MyAgent
+        public new AgentTechnici MyAgent
         {
             get
             {
-                return (AgentPlatenia)base.MyAgent;
+                return (AgentTechnici)base.MyAgent;
             }
         }
     }

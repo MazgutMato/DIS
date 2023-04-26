@@ -25,16 +25,22 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
 		//meta! sender="AgentTechnici", id="36", type="Start"
 		public void ProcessStart(MessageForm message)
         {
-            message.Code = Mc.KoniecPrevziatia;
-            Hold(CasPrevzatia.Next(), message);
+            var sprava = (MyMessage)message;
+            sprava.Zamestnanec.Pracuje = entities.Pracuje.PREBERA;
+            sprava.Zamestnanec.Vozidlo = sprava.Vozidlo;
+            sprava.Code = Mc.KoniecPrevziatia;
+            Hold(CasPrevzatia.Next(), sprava);
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
         {
+            var sprava = (MyMessage)message;            
             switch (message.Code)
             {
                 case Mc.KoniecPrevziatia:
+                    sprava.Zamestnanec.Pracuje = entities.Pracuje.NIE;
+                    sprava.Zamestnanec.Vozidlo = null;
                     AssistantFinished(message);
                     break;
             }
@@ -55,11 +61,11 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
 			}
 		}
 		//meta! tag="end"
-        public new AgentPrevziatia MyAgent
+        public new AgentTechnici MyAgent
         {
             get
             {
-                return (AgentPrevziatia)base.MyAgent;
+                return (AgentTechnici)base.MyAgent;
             }
         }
     }

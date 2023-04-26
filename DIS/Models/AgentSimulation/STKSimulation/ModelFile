@@ -2,6 +2,23 @@
 <ABAsim>
   <Agents>
     <Agent>
+      <SimId>4</SimId>
+      <InternalId>21</InternalId>
+      <Name>AgentAutomechanici</Name>
+      <Bounds>1565,1058,180,180</Bounds>
+      <Reasoner>ManagerAutomechanici</Reasoner>
+      <ReasonerBounds>74,25,32,25</ReasonerBounds>
+      <UsePetriNet>false</UsePetriNet>
+      <Components>
+        <Process>
+          <SimId>1003</SimId>
+          <InternalId>38</InternalId>
+          <Name>ProcessKontroly</Name>
+          <Bounds>70,98,35,18</Bounds>
+        </Process>
+      </Components>
+    </Agent>
+    <Agent>
       <SimId>6</SimId>
       <InternalId>23</InternalId>
       <Name>AgentTechnici</Name>
@@ -21,29 +38,6 @@
           <InternalId>35</InternalId>
           <Name>ProcessPrevziatia</Name>
           <Bounds>24,94,35,18</Bounds>
-        </Process>
-      </Components>
-    </Agent>
-    <Agent>
-      <SimId>4</SimId>
-      <InternalId>21</InternalId>
-      <Name>AgentAutomechanici</Name>
-      <Bounds>1565,1058,180,180</Bounds>
-      <Reasoner>ManagerAutomechanici</Reasoner>
-      <ReasonerBounds>74,25,32,25</ReasonerBounds>
-      <UsePetriNet>false</UsePetriNet>
-      <Components>
-        <Query>
-          <SimId>1009</SimId>
-          <InternalId>68</InternalId>
-          <Name>JeVolneMiesto</Name>
-          <Bounds>112,95,35,13</Bounds>
-        </Query>
-        <Process>
-          <SimId>1003</SimId>
-          <InternalId>38</InternalId>
-          <Name>ProcessKontroly</Name>
-          <Bounds>18,88,35,18</Bounds>
         </Process>
       </Components>
     </Agent>
@@ -106,14 +100,6 @@
       <Destination>23</Destination>
     </Message>
     <Message>
-      <SimId>1012</SimId>
-      <InternalId>65</InternalId>
-      <Name>RezervujMiesto</Name>
-      <Type>RequestResponse</Type>
-      <Source>17</Source>
-      <Destination>21</Destination>
-    </Message>
-    <Message>
       <InternalId>3</InternalId>
       <Type>Parent</Type>
       <Source>2</Source>
@@ -132,12 +118,6 @@
       <Type>Notice</Type>
       <Source>2</Source>
       <Destination>1</Destination>
-    </Message>
-    <Message>
-      <InternalId>69</InternalId>
-      <Type>Execute</Type>
-      <Source>21</Source>
-      <Destination>68</Destination>
     </Message>
     <Message>
       <SimId>1003</SimId>
@@ -160,12 +140,28 @@
       <Destination>9</Destination>
     </Message>
     <Message>
+      <SimId>1014</SimId>
+      <InternalId>76</InternalId>
+      <Name>UvolnenieMiesta</Name>
+      <Type>Notice</Type>
+      <Source>21</Source>
+      <Destination>17</Destination>
+    </Message>
+    <Message>
       <SimId>1005</SimId>
       <InternalId>13</InternalId>
       <Name>NovyZakaznik</Name>
       <Type>Notice</Type>
       <Source>9</Source>
       <Destination>2</Destination>
+    </Message>
+    <Message>
+      <SimId>1015</SimId>
+      <InternalId>77</InternalId>
+      <Name>UvolnenieMiesta</Name>
+      <Type>Notice</Type>
+      <Source>17</Source>
+      <Destination>23</Destination>
     </Message>
     <Message>
       <InternalId>50</InternalId>
@@ -236,5 +232,5 @@
       <Destination>62</Destination>
     </Message>
   </Messages>
-  <IID>70</IID>
+  <IID>78</IID>
 </ABAsim>

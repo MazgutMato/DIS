@@ -10,7 +10,6 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
     //meta! id="17"
     public class AgentSTK : Agent
     {
-        public Queue<Vozidlo> ParkoviskoPrevziate { get; set; }
         public AgentSTK(int id, Simulation mySim, Agent parent) :
             base(id, mySim, parent)
         {
@@ -21,7 +20,6 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
         {
             base.PrepareReplication();
             // Setup component for the next replication
-            ParkoviskoPrevziate = new Queue<Vozidlo>();
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -31,7 +29,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
 			new PlanovacPrestavky(SimId.PlanovacPrestavky, MySim, this);
 			new ProcessPrestavka(SimId.ProcessPrestavka, MySim, this);
 			AddOwnMessage(Mc.PrevziatieVozidla);
-			AddOwnMessage(Mc.RezervujMiesto);
+			AddOwnMessage(Mc.UvolnenieMiesta);
 			AddOwnMessage(Mc.ObsluhaZakaznika);
 			AddOwnMessage(Mc.ZaplatenieKontroly);
 			AddOwnMessage(Mc.KontrolaVozidla);

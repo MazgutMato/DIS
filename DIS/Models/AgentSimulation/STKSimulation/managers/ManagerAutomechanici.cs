@@ -1,7 +1,5 @@
 using OSPABA;
-using simulation;
-using continualAssistants;
-using instantAssistants;
+using DIS.Models.AgentSimulation.STKSimulation.simulation;
 using DIS.Models.AgentSimulation.STKSimulation.agents;
 
 namespace DIS.Models.AgentSimulation.STKSimulation.managers
@@ -29,11 +27,41 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		//meta! sender="ProcessKontroly", id="39", type="Finish"
 		public void ProcessFinish(MessageForm message)
         {
+            var sprava = (MyMessage)message;            
+            sprava.Code = Mc.KontrolaVozidla;
+            Response(sprava);
+            //Zaciatok novej kontroly
+            var spravaKontrola = (MyMessage)sprava.CreateCopy();
+            if(MyAgent.ParkoviskoKontrola.Count > 0)
+            {                
+                spravaKontrola.Vozidlo = MyAgent.ParkoviskoKontrola.Dequeue();
+                spravaKontrola.Addressee = MyAgent.FindAssistant(SimId.ProcessKontroly);
+                StartContinualAssistant(spravaKontrola);
+                UvolnenieMiesta(spravaKontrola);
+            }
+            else
+            {
+                MyAgent.VolniAutomechanici.Enqueue(spravaKontrola.Zamestnanec);
+            }
         }
 
 		//meta! sender="AgentSTK", id="30", type="Request"
 		public void ProcessKontrolaVozidla(MessageForm message)
         {
+            var sprava = (MyMessage)message;
+            if(MyAgent.VolniAutomechanici.Count > 0)
+            {
+                //Zaciatok kontroly
+                sprava.Zamestnanec = MyAgent.VolniAutomechanici.Dequeue();
+                sprava.Addressee = MyAgent.FindAssistant(SimId.ProcessKontroly);
+                StartContinualAssistant(sprava);
+                //Uvolnenie miesta
+                UvolnenieMiesta(sprava);
+            }
+            else
+            {
+                MyAgent.ParkoviskoKontrola.Enqueue(sprava.Vozidlo);
+            }
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -44,11 +72,6 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             }
         }
 
-		//meta! sender="AgentSTK", id="65", type="Request"
-		public void ProcessRezervujMiesto(MessageForm message)
-		{
-		}
-
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()
 		{
@@ -58,16 +81,12 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		{
 			switch (message.Code)
 			{
-			case Mc.RezervujMiesto:
-				ProcessRezervujMiesto(message);
+			case Mc.Finish:
+				ProcessFinish(message);
 			break;
 
 			case Mc.KontrolaVozidla:
 				ProcessKontrolaVozidla(message);
-			break;
-
-			case Mc.Finish:
-				ProcessFinish(message);
 			break;
 
 			default:
@@ -82,6 +101,14 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             {
                 return (AgentAutomechanici)base.MyAgent;
             }
+        }
+        private void UvolnenieMiesta(MyMessage message)
+        {
+            //Uvolnenie miesta
+            var spravaUvolnenie = (MyMessage)message.CreateCopy();
+            spravaUvolnenie.Code = Mc.UvolnenieMiesta;
+            spravaUvolnenie.Addressee = MySim.FindAgent(SimId.AgentSTK);
+            Notice(spravaUvolnenie);
         }
     }
 }

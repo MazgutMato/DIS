@@ -12,6 +12,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
         public Queue<Zamestnanec> VolniTechnici { get; set; }
         public List<Zamestnanec> VsetciTechnici { get; set; }
         public Queue<Vozidlo> ParkoviskoPlatba { get; set; }
+        public Queue<Vozidlo> ParkoviskoPrevziate { get; set; }
+        public int VolneMiestaKontrola { get; set; }
         public AgentTechnici(int id, Simulation mySim, Agent parent) :
             base(id, mySim, parent)
         {
@@ -22,7 +24,9 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
         {
             base.PrepareReplication();
             // Setup component for the next replication
-            ParkoviskoPlatba = new Queue<Vozidlo>();
+            VolneMiestaKontrola = Config.KapacitaParkoviskaKontrola;
+            ParkoviskoPrevziate = new Queue<Vozidlo>();
+            ParkoviskoPlatba = new Queue<Vozidlo>();            
             ZmenPocetTechnikov(Config.PocetTechnikov);         
         }
 
@@ -33,6 +37,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
 			new ProcessPlatenia(SimId.ProcessPlatenia, MySim, this);
 			new ProcessPrevziatia(SimId.ProcessPrevziatia, MySim, this);
 			AddOwnMessage(Mc.PrevziatieVozidla);
+			AddOwnMessage(Mc.UvolnenieMiesta);
 			AddOwnMessage(Mc.ZaplatenieKontroly);
 		}
 		//meta! tag="end"

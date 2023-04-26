@@ -4,6 +4,7 @@ using DIS.SimulationCores.EventSimulation;
 using DIS.Models.EventSimulation.STKSimulation;
 using OSPABA;
 using DIS.Models.AgentSimulation.STKSimulation.simulation;
+using DIS.Models.AgentSimulation.STKSimulation.entities;
 
 namespace DIS_1
 {
@@ -29,7 +30,7 @@ namespace DIS_1
         private void InitializeSim()
         {
             _core = new MySimulation();
-            _core.SetSimSpeed(1, 1);            
+            _core.SetSimSpeed(1, 1);
 
             _core.OnRefreshUI(RefreshUI);
             _core.OnSimulationWillStart(OnSimulationWillStart);
@@ -39,7 +40,7 @@ namespace DIS_1
         }
         private void InitializeGui()
         {
-            textBoxActualRep.Text = "0";            
+            textBoxActualRep.Text = "0";
         }
         private void InitializeCharts()
         {
@@ -74,12 +75,12 @@ namespace DIS_1
         private void RefreshUI(Simulation simulation)
         {
             Invoke((System.Action)(() =>
-            {                
+            {
                 var actualTime = _startTime.AddSeconds(simulation.CurrentTime);
                 textBoxActualTime.Text = actualTime.ToString("HH:mm:ss");
                 textBoxActualRep.Text = simulation.CurrentReplication.ToString();
 
-                //dataGridViewLocal.Rows.Clear();
+                dataGridViewLocal.Rows.Clear();
 
                 ////Vehicle in system
                 //var dataGridViewRowVehicle = new DataGridViewRow();
@@ -111,76 +112,65 @@ namespace DIS_1
                 //dataGridViewRowInspection.CreateCells(dataGridViewLocal, "Free inspection", core._freeInspectionLocal.GetResult(), "workers");
                 //dataGridViewLocal.Rows.Add(dataGridViewRowInspection);
 
-                ////Arrival line
-                //textBoxArrival.Text = core._vehicleLine.Count.ToString();
-                //dataGridViewArrivalQueue.Rows.Clear();
+                //Arrival line
+                textBoxArrival.Text = _core.AgentTechnici.ParkoviskoPrevziate.Count.ToString();
+                dataGridViewArrivalQueue.Rows.Clear();
+                foreach (var vozidlo in _core.AgentTechnici.ParkoviskoPrevziate)
+                {
+                    var arrivalTime = _startTime.AddSeconds(vozidlo.CasPrichodu);
+                    var outTime = arrivalTime.ToString("HH:mm:ss");
+                    // Create a new row and add it to the control
+                    var dataGridViewRow = new DataGridViewRow();
+                    dataGridViewRow.CreateCells(dataGridViewArrivalQueue, vozidlo.ID, vozidlo.TypVozidla,
+                        outTime);
+                    dataGridViewArrivalQueue.Rows.Add(dataGridViewRow);
+                }
 
-                //foreach (var vehicle in core._vehicleLine)
-                //{
-                //    var arrivalTime = _startTime.AddSeconds(vehicle._arrivalTime);
-                //    var outTime = arrivalTime.ToString("HH:mm:ss");
-                //    // Create a new row and add it to the control
-                //    var dataGridViewRow = new DataGridViewRow();
-                //    dataGridViewRow.CreateCells(dataGridViewArrivalQueue, vehicle._id, vehicle._vehicleType,
-                //        outTime);
-                //    dataGridViewArrivalQueue.Rows.Add(dataGridViewRow);
-                //}
+                //Workers INS
+                textBoxIns.Text = (_core.AgentAutomechanici.VolniAutomechanici.Count).ToString() + "/" +
+                    _core.AgentAutomechanici.VsetciAutomechanici.Count;
+                dataGridViewWorkersIns.Rows.Clear();
+                foreach (var zamestnanec in _core.AgentAutomechanici.VsetciAutomechanici)
+                {
+                    var dataGridViewRow = new DataGridViewRow();
+                    dataGridViewRow.CreateCells(dataGridViewWorkersIns, zamestnanec.ID, zamestnanec.Typ, 
+                        zamestnanec.Pracuje, zamestnanec.Vozidlo);
+                    dataGridViewWorkersIns.Rows.Add(dataGridViewRow);
+                }
 
-                ////Workers INS
-                //textBoxIns.Text = (core._inspectionWorkersCount - core._inspectionWorkers.Count).ToString() + "/" +
-                //    core._inspectionWorkersCount;
-                //dataGridViewWorkersIns.Rows.Clear();
+                //Workers TECH
+                textBoxTechnical.Text = _core.AgentTechnici.VolniTechnici.Count + "/" +
+                    _core.AgentTechnici.VsetciTechnici.Count;
+                dataGridViewWorkersTech.Rows.Clear();
+                foreach (var zamestnanec in _core.AgentTechnici.VsetciTechnici)
+                {
+                    var dataGridViewRow = new DataGridViewRow();
+                    dataGridViewRow.CreateCells(dataGridViewWorkersIns, zamestnanec.ID, zamestnanec.Typ,
+                        zamestnanec.Pracuje, zamestnanec.Vozidlo);
+                    dataGridViewWorkersTech.Rows.Add(dataGridViewRow);
+                }
 
-                //foreach (var worker in core._workers)
-                //{
-                //    if (worker._type == WorkerType.INSPECTION)
-                //    {
-                //        var dataGridViewRow = new DataGridViewRow();
-                //        dataGridViewRow.CreateCells(dataGridViewWorkersIns, worker._id, worker._type, worker._working, worker._vehicle);
-                //        dataGridViewWorkersIns.Rows.Add(dataGridViewRow);
-                //    }
-                //}
+                //Inpsection parking
+                textBoxInsP.Text = _core.AgentAutomechanici.ParkoviskoKontrola.Count.ToString() + "/5";
+                dataGridViewInspectionParking.Rows.Clear();
+                foreach (var vozidlo in _core.AgentAutomechanici.ParkoviskoKontrola)
+                {
+                    // Create a new row and add it to the control
+                    var dataGridViewRow = new DataGridViewRow();
+                    dataGridViewRow.CreateCells(dataGridViewInspectionParking, vozidlo.ID, vozidlo.TypVozidla);
+                    dataGridViewInspectionParking.Rows.Add(dataGridViewRow);
+                }
 
-                ////Workers TECH
-                //textBoxTechnical.Text = (core._technicWorkersCount - core._technicWorkers.Count).ToString() + "/" +
-                //    core._technicWorkersCount;
-                //dataGridViewWorkersTech.Rows.Clear();
-
-                //foreach (var worker in core._workers)
-                //{
-                //    if (worker._type == WorkerType.TECHNICAL)
-                //    {
-                //        var dataGridViewRow = new DataGridViewRow();
-                //        dataGridViewRow.CreateCells(dataGridViewWorkersTech, worker._id, worker._type, worker._working, worker._vehicle);
-                //        dataGridViewWorkersTech.Rows.Add(dataGridViewRow);
-                //    }
-                //}
-
-
-                ////Inpsection parking
-                //textBoxInsP.Text = core._inspectionParking.Count.ToString() + "/" +
-                //    core._inspectionParkingCapacity;
-                //dataGridViewInspectionParking.Rows.Clear();
-
-                //foreach (var vehicle in core._inspectionParking)
-                //{
-                //    // Create a new row and add it to the control
-                //    var dataGridViewRow = new DataGridViewRow();
-                //    dataGridViewRow.CreateCells(dataGridViewInspectionParking, vehicle._id, vehicle._vehicleType);
-                //    dataGridViewInspectionParking.Rows.Add(dataGridViewRow);
-                //}
-
-                ////Payment parking
-                //textBoxPayment.Text = core._paymentParking.Count.ToString();
-                //dataGridViewPaymentParking.Rows.Clear();
-
-                //foreach (var vehicle in core._paymentParking)
-                //{
-                //    // Create a new row and add it to the control
-                //    var dataGridViewRow = new DataGridViewRow();
-                //    dataGridViewRow.CreateCells(dataGridViewPaymentParking, vehicle._id, vehicle._vehicleType);
-                //    dataGridViewPaymentParking.Rows.Add(dataGridViewRow);
-                //}                
+                //Payment parking
+                textBoxPayment.Text = _core.AgentTechnici.ParkoviskoPlatba.Count.ToString();
+                dataGridViewPaymentParking.Rows.Clear();
+                foreach (var vozidlo in _core.AgentTechnici.ParkoviskoPlatba)
+                {
+                    // Create a new row and add it to the control
+                    var dataGridViewRow = new DataGridViewRow();
+                    dataGridViewRow.CreateCells(dataGridViewPaymentParking, vozidlo.ID, vozidlo.TypVozidla);
+                    dataGridViewPaymentParking.Rows.Add(dataGridViewRow);
+                }
             }));
         }
         private void OnReplicationDidFinish(Simulation obj)
@@ -189,60 +179,60 @@ namespace DIS_1
             {
                 Invoke((System.Action)(() =>
                 {
-                //GlobalUpdate
-                textBoxActualRep.Text = _core.CurrentReplication.ToString();
+                    //GlobalUpdate
+                    textBoxActualRep.Text = _core.CurrentReplication.ToString();
 
-                //    dataGridViewGlobal.Rows.Clear();
+                    //    dataGridViewGlobal.Rows.Clear();
 
-                //    //Vehicle in system
-                //    var dataGridViewRowVehicle = new DataGridViewRow();
-                //    dataGridViewRowVehicle.CreateCells(dataGridViewGlobal, "Vehicle in system", core._vehicleInSystemGlobal.GetResult(), "vehicles");
-                //    dataGridViewGlobal.Rows.Add(dataGridViewRowVehicle);
+                    //    //Vehicle in system
+                    //    var dataGridViewRowVehicle = new DataGridViewRow();
+                    //    dataGridViewRowVehicle.CreateCells(dataGridViewGlobal, "Vehicle in system", core._vehicleInSystemGlobal.GetResult(), "vehicles");
+                    //    dataGridViewGlobal.Rows.Add(dataGridViewRowVehicle);
 
-                //    //Vehicle in system IS
-                //    var vehicleInIs = core._vehicleInSystemGlobal.ConfidenceInterval(95);
-                //    var dataGridViewRowVehicleIS = new DataGridViewRow();
-                //    dataGridViewRowVehicleIS.CreateCells(dataGridViewGlobal, "Vehicle in system IS", "(" + Math.Round(vehicleInIs.Item1, 5) +
-                //        " ; " + Math.Round(vehicleInIs.Item2, 5) + ")", "vehicles");
-                //    dataGridViewGlobal.Rows.Add(dataGridViewRowVehicleIS);
+                    //    //Vehicle in system IS
+                    //    var vehicleInIs = core._vehicleInSystemGlobal.ConfidenceInterval(95);
+                    //    var dataGridViewRowVehicleIS = new DataGridViewRow();
+                    //    dataGridViewRowVehicleIS.CreateCells(dataGridViewGlobal, "Vehicle in system IS", "(" + Math.Round(vehicleInIs.Item1, 5) +
+                    //        " ; " + Math.Round(vehicleInIs.Item2, 5) + ")", "vehicles");
+                    //    dataGridViewGlobal.Rows.Add(dataGridViewRowVehicleIS);
 
-                //    //Vehicle in system at the End
-                //    var dataGridViewRowEnd = new DataGridViewRow();
-                //    dataGridViewRowEnd.CreateCells(dataGridViewGlobal, "Vehicles at the End", core._vehiclesAtTheEnd.GetResult(), "vehicles");
-                //    dataGridViewGlobal.Rows.Add(dataGridViewRowEnd);
+                    //    //Vehicle in system at the End
+                    //    var dataGridViewRowEnd = new DataGridViewRow();
+                    //    dataGridViewRowEnd.CreateCells(dataGridViewGlobal, "Vehicles at the End", core._vehiclesAtTheEnd.GetResult(), "vehicles");
+                    //    dataGridViewGlobal.Rows.Add(dataGridViewRowEnd);
 
-                //    //Time in system
-                //    var dataGridViewRowSystem = new DataGridViewRow();
-                //    dataGridViewRowSystem.CreateCells(dataGridViewGlobal, "Time in system", core._timeInSystemGlobal.GetResult() / 60, "minutes");
-                //    dataGridViewGlobal.Rows.Add(dataGridViewRowSystem);
+                    //    //Time in system
+                    //    var dataGridViewRowSystem = new DataGridViewRow();
+                    //    dataGridViewRowSystem.CreateCells(dataGridViewGlobal, "Time in system", core._timeInSystemGlobal.GetResult() / 60, "minutes");
+                    //    dataGridViewGlobal.Rows.Add(dataGridViewRowSystem);
 
-                //    //Time in system
-                //    var timeInIS = core._timeInSystemGlobal.ConfidenceInterval(90);
-                //    var dataGridViewRowSystemIS = new DataGridViewRow();
-                //    dataGridViewRowSystemIS.CreateCells(dataGridViewGlobal, "Time in system IS", "(" + Math.Round(timeInIS.Item1 / 60, 5) +
-                //        " ; " + Math.Round(timeInIS.Item2 / 60, 5) + ")", "minutes");
-                //    dataGridViewGlobal.Rows.Add(dataGridViewRowSystemIS);
+                    //    //Time in system
+                    //    var timeInIS = core._timeInSystemGlobal.ConfidenceInterval(90);
+                    //    var dataGridViewRowSystemIS = new DataGridViewRow();
+                    //    dataGridViewRowSystemIS.CreateCells(dataGridViewGlobal, "Time in system IS", "(" + Math.Round(timeInIS.Item1 / 60, 5) +
+                    //        " ; " + Math.Round(timeInIS.Item2 / 60, 5) + ")", "minutes");
+                    //    dataGridViewGlobal.Rows.Add(dataGridViewRowSystemIS);
 
-                //    //Waiting time
-                //    var dataGridViewRowWaiting = new DataGridViewRow();
-                //    dataGridViewRowWaiting.CreateCells(dataGridViewGlobal, "Waiting time", core._waitingTimeGlobal.GetResult() / 60, "minutes");
-                //    dataGridViewGlobal.Rows.Add(dataGridViewRowWaiting);
+                    //    //Waiting time
+                    //    var dataGridViewRowWaiting = new DataGridViewRow();
+                    //    dataGridViewRowWaiting.CreateCells(dataGridViewGlobal, "Waiting time", core._waitingTimeGlobal.GetResult() / 60, "minutes");
+                    //    dataGridViewGlobal.Rows.Add(dataGridViewRowWaiting);
 
-                //    //Vehicle line
-                //    var dataGridViewRowLine = new DataGridViewRow();
-                //    dataGridViewRowLine.CreateCells(dataGridViewGlobal, "Line length", core._lineLengthGlobal.GetResult(), "vehicles");
-                //    dataGridViewGlobal.Rows.Add(dataGridViewRowLine);
+                    //    //Vehicle line
+                    //    var dataGridViewRowLine = new DataGridViewRow();
+                    //    dataGridViewRowLine.CreateCells(dataGridViewGlobal, "Line length", core._lineLengthGlobal.GetResult(), "vehicles");
+                    //    dataGridViewGlobal.Rows.Add(dataGridViewRowLine);
 
-                //    //Free technical
-                //    var dataGridViewRowTechnical = new DataGridViewRow();
-                //    dataGridViewRowTechnical.CreateCells(dataGridViewGlobal, "Free technical", core._freeTechnicalGlobal.GetResult(), "workers");
-                //    dataGridViewGlobal.Rows.Add(dataGridViewRowTechnical);
+                    //    //Free technical
+                    //    var dataGridViewRowTechnical = new DataGridViewRow();
+                    //    dataGridViewRowTechnical.CreateCells(dataGridViewGlobal, "Free technical", core._freeTechnicalGlobal.GetResult(), "workers");
+                    //    dataGridViewGlobal.Rows.Add(dataGridViewRowTechnical);
 
-                //    //Free inspection
-                //    var dataGridViewRowInspection = new DataGridViewRow();
-                //    dataGridViewRowInspection.CreateCells(dataGridViewGlobal, "Free inspection", core._freeInspectionGlobal.GetResult(), "workers");
-                //    dataGridViewGlobal.Rows.Add(dataGridViewRowInspection);
-            }));
+                    //    //Free inspection
+                    //    var dataGridViewRowInspection = new DataGridViewRow();
+                    //    dataGridViewRowInspection.CreateCells(dataGridViewGlobal, "Free inspection", core._freeInspectionGlobal.GetResult(), "workers");
+                    //    dataGridViewGlobal.Rows.Add(dataGridViewRowInspection);
+                }));
             }
         }
         private void OnReplicationWillStart(Simulation obj)
@@ -285,7 +275,10 @@ namespace DIS_1
                 //core._technicWorkersCount = Convert.ToInt32(technicalWorkers.Value);
                 //core._inspectionWorkersCount = Convert.ToInt32(inspectionWorkers.Value);
                 //core._dataGenerate = Convert.ToInt32(UpDownRepRefresh.Value);
+              
                 _core.SimulateAsync(pocetReplikacii, 8 * 60 * 60);
+                SetNormalSpeed();
+
                 buttonRun.Enabled = false;
             }
         }
@@ -308,12 +301,14 @@ namespace DIS_1
                     _isPaused = true;
                     _core.PauseSimulation();
                     buttonPause.Text = "Continue";
+                    buttonStop.Enabled = false;
                 }
-                else // resume
+                else
                 {
                     _isPaused = false;
                     _core.ResumeSimulation();
                     buttonPause.Text = "Pause";
+                    buttonStop.Enabled = true;
                 }
             }
         }
