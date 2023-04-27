@@ -2,6 +2,7 @@ using OSPABA;
 using DIS.Models.AgentSimulation.STKSimulation.continualAssistants;
 using DIS.Models.AgentSimulation.STKSimulation.agents;
 using DIS.Models.AgentSimulation.STKSimulation.simulation;
+using DIS.Models.AgentSimulation.STKSimulation.entities;
 
 namespace DIS.Models.AgentSimulation.STKSimulation.managers
 {
@@ -31,6 +32,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 			var sprava = (MyMessage)message;			
 			if(MyAgent.VolniTechnici.Count > 0 && MyAgent.VolneMiestaKontrola > 0)
 			{
+                //Stat
+                MyAgent.CasCakaniaPrevzatie.AddValue(MySim.CurrentTime - sprava.Vozidlo.CasPrichodu);
 				//Rezervacia miesta
 				MyAgent.VolneMiestaKontrola--;
 				//Pridelenie technika
@@ -41,7 +44,10 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             }
 			else
 			{
-				MyAgent.ParkoviskoPrevziate.Enqueue(sprava.Vozidlo);
+                //Stat
+                MyAgent.DlzkaRadyPrevzatie.AddValue(MyAgent.ParkoviskoPrevziate.Count);
+                //Pridanie do rady
+				MyAgent.ParkoviskoPrevziate.Enqueue(sprava);
 			}
         }
 
@@ -49,28 +55,24 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		public void ProcessFinishProcessPlatenia(MessageForm message)
         {
             var sprava = (MyMessage)message;
-            //Odoslanie na koniec obsluhy
-            var copia = (MyMessage)message.CreateCopy();
-            copia.Zamestnanec = null;
-            copia.Code = Mc.ZaplatenieKontroly;
-            Response(copia);
             //Uvolnenie technika
-            sprava.Vozidlo = null;
-            UvolnenieTechnika(sprava);
+            UvolnenieTechnika(sprava.Zamestnanec);
+            //Odoslanie na koniec obsluhy
+            sprava.Zamestnanec = null;
+            sprava.Code = Mc.ZaplatenieKontroly;
+            Response(sprava);
         }
 
 		//meta! sender="ProcessPrevziatia", id="36", type="Finish"
 		public void ProcessFinishProcessPrevziatia(MessageForm message)
         {
             var sprava = (MyMessage)message;
-			//Odoslanie na kontrolu
-			var copia = (MyMessage)message.CreateCopy();
-			copia.Zamestnanec = null;
-            copia.Code = Mc.PrevziatieVozidla;
-            Response(copia);
-			//Uvolnenie technika
-			sprava.Vozidlo = null;
-			UvolnenieTechnika(sprava);
+            //Uvolnenie technika
+            UvolnenieTechnika(sprava.Zamestnanec);
+            //Odoslanie na kontrolu
+            sprava.Zamestnanec = null;
+            sprava.Code = Mc.PrevziatieVozidla;
+            Response(sprava);
         }
 
 		//meta! sender="AgentSTK", id="32", type="Request"
@@ -87,7 +89,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             }
             else
             {
-                MyAgent.ParkoviskoPlatba.Enqueue(sprava.Vozidlo);
+                MyAgent.ParkoviskoPlatba.Enqueue(sprava);
             }
         }
 
@@ -104,19 +106,12 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		{
             //Uvolnenie miesta
             MyAgent.VolneMiestaKontrola++;
-            //Zacatie prevzatia
-            var sprava = (MyMessage)message;
-            if (MyAgent.ParkoviskoPrevziate.Count > 0 && MyAgent.VolniTechnici.Count > 0)
+            //Uvolnenie technika
+            if (MyAgent.VolniTechnici.Count > 0)
             {
-                //Rezervacia miesta
-                MyAgent.VolneMiestaKontrola--;
-                //Pridelenie vozidla
-                sprava.Vozidlo = MyAgent.ParkoviskoPrevziate.Dequeue();
                 //Priradenie technika
-                sprava.Zamestnanec = MyAgent.VolniTechnici.Dequeue();
-                //Zacatie processu
-                sprava.Addressee = MyAgent.FindAssistant(SimId.ProcessPrevziatia);
-                StartContinualAssistant(sprava);
+                var zamestnanec = MyAgent.VolniTechnici.Dequeue();
+                UvolnenieTechnika(zamestnanec);
             }
         }
 
@@ -166,30 +161,32 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             {
                 return (AgentTechnici)base.MyAgent;
             }
-        }
-		private void UvolnenieTechnika(MessageForm message)
+        }        
+		private void UvolnenieTechnika(Zamestnanec zamestnanec)
 		{
-			var sprava = (MyMessage)message.CreateCopy();
 			//Platba
 			if(MyAgent.ParkoviskoPlatba.Count > 0){
-				sprava.Vozidlo = MyAgent.ParkoviskoPlatba.Dequeue();
+				var sprava = MyAgent.ParkoviskoPlatba.Dequeue();
+                sprava.Zamestnanec = zamestnanec;
                 sprava.Addressee = MyAgent.FindAssistant(SimId.ProcessPlatenia);
                 StartContinualAssistant(sprava);
 			}
             //Prevzatie
-            else if (MyAgent.ParkoviskoPrevziate.Count > 0 && MyAgent.VolneMiestaKontrola > 0){
-                //Rezervacia miesta
+            else if (MyAgent.ParkoviskoPrevziate.Count > 0 && MyAgent.VolneMiestaKontrola > 0){                
                 MyAgent.VolneMiestaKontrola--;
-				//Pridelenie vozidla
-				sprava.Vozidlo = MyAgent.ParkoviskoPrevziate.Dequeue();
-                //Zacatie processu
+                //Stat
+                MyAgent.DlzkaRadyPrevzatie.AddValue(MyAgent.ParkoviskoPrevziate.Count);
+                var sprava = MyAgent.ParkoviskoPrevziate.Dequeue();
+                //Stat
+                MyAgent.CasCakaniaPrevzatie.AddValue(MySim.CurrentTime - sprava.Vozidlo.CasPrichodu);
+                sprava.Zamestnanec = zamestnanec;
                 sprava.Addressee = MyAgent.FindAssistant(SimId.ProcessPrevziatia);
                 StartContinualAssistant(sprava);
             }
             //Uvolnenie
             else
             {
-				MyAgent.VolniTechnici.Enqueue(sprava.Zamestnanec);
+				MyAgent.VolniTechnici.Enqueue(zamestnanec);
 			}					
 		}
     }

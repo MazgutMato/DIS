@@ -46,6 +46,9 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		public void ProcessObsluhaZakaznika(MessageForm message)
 		{
             var sprava = (MyMessage)message;
+            sprava.Code = Mc.OdchodZakaznika;
+            sprava.Addressee = MySim.FindAgent(SimId.AgentOkolia);
+            Notice(sprava);
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

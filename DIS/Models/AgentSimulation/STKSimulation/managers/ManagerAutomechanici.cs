@@ -26,23 +26,26 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 
 		//meta! sender="ProcessKontroly", id="39", type="Finish"
 		public void ProcessFinish(MessageForm message)
-        {
-            var sprava = (MyMessage)message;            
+        {            
+            //Ukoncenie kontroly
+            var sprava = (MyMessage)message;
+            var kontrolor = sprava.Zamestnanec;
+            sprava.Zamestnanec = null;
             sprava.Code = Mc.KontrolaVozidla;
             Response(sprava);
             //Zaciatok novej kontroly
-            var spravaKontrola = (MyMessage)sprava.CreateCopy();
-            if(MyAgent.ParkoviskoKontrola.Count > 0)
-            {                
-                spravaKontrola.Vozidlo = MyAgent.ParkoviskoKontrola.Dequeue();
+            if (MyAgent.ParkoviskoKontrola.Count > 0)
+            {
+                var spravaKontrola = MyAgent.ParkoviskoKontrola.Dequeue();
+                spravaKontrola.Zamestnanec = kontrolor;
                 spravaKontrola.Addressee = MyAgent.FindAssistant(SimId.ProcessKontroly);
                 StartContinualAssistant(spravaKontrola);
-                UvolnenieMiesta(spravaKontrola);
+                UvolnenieMiesta(sprava);
             }
             else
             {
-                MyAgent.VolniAutomechanici.Enqueue(spravaKontrola.Zamestnanec);
-            }
+                MyAgent.VolniAutomechanici.Enqueue(kontrolor);
+            }            
         }
 
 		//meta! sender="AgentSTK", id="30", type="Request"
@@ -60,7 +63,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             }
             else
             {
-                MyAgent.ParkoviskoKontrola.Enqueue(sprava.Vozidlo);
+                MyAgent.ParkoviskoKontrola.Enqueue(sprava);
             }
         }
 

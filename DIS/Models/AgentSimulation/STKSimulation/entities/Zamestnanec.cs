@@ -11,6 +11,7 @@
         PREBERA,
         KONTROLUJE,
         PLATI,
+        PRESTAVKA,
     }
     public class Zamestnanec
     {
@@ -18,14 +19,14 @@
         public Vozidlo? Vozidlo { get; set; }
         public TypZamestnanca Typ { get; set; }
         public Pracuje Pracuje { get; set; }
-        public bool MalPrestavku { get; set; }
+        public bool VykonajPrestavku { get; set; }
         public Zamestnanec(int id, TypZamestnanca typ)
         {
             Vozidlo = null;
             ID = id;
             Typ = typ;
             Pracuje = Pracuje.NIE;
-            MalPrestavku = false;
+            VykonajPrestavku = false;
         }
         public override string ToString()
         {

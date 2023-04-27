@@ -123,10 +123,10 @@ namespace DIS.Models.EventSimulation.STKSimulation
             //Statistics
             _timeInSystemLocal = new NormalStatistic();
             _waitingTimeLocal = new NormalStatistic();
-            _lineLengthLocal = new WeightStatistic(this);
-            _freeInspectionLocal = new WeightStatistic(this);
-            _freeTechnicalLocal = new WeightStatistic(this);
-            _vehicleInSystemLocal = new WeightStatistic(this);
+            //_lineLengthLocal = new WeightStatistic(this);
+            //_freeInspectionLocal = new WeightStatistic(this);
+            //_freeTechnicalLocal = new WeightStatistic(this);
+            //_vehicleInSystemLocal = new WeightStatistic(this);
         }
 
         protected override void BeforeSimulation()

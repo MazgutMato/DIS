@@ -1,4 +1,5 @@
 ﻿using DIS.SimulationCores.EventSimulation;
+using OSPABA;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace DIS.SimulationCores.Statistics
     public class WeightStatistic : Statistic
     {
         private double _lastUpdate;
-        private EventCore _core { get; set; }
-        public WeightStatistic(EventCore core) : base()
+        private Simulation _core { get; set; }
+        public WeightStatistic(Simulation core) : base()
         {
             _lastUpdate = 0.0;
             _core = core;
@@ -20,8 +21,8 @@ namespace DIS.SimulationCores.Statistics
 
         public override void AddValue(double value)
         {
-            var weight = _core._actualTime - _lastUpdate;
-            _lastUpdate = _core._actualTime;
+            var weight = _core.CurrentTime - _lastUpdate;
+            _lastUpdate = _core.CurrentTime;
 
             if (weight < 0)
             {

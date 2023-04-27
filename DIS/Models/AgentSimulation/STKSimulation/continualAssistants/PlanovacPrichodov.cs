@@ -46,14 +46,18 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
             switch (message.Code)
             {
                 case Mc.NovyZakaznik:
-                    Hold(RozdeleniePrichod.Next(), message.CreateCopy());
+                    var dalsiPrichod = RozdeleniePrichod.Next();
+                    if ((MySim.CurrentTime + dalsiPrichod) < 405 * 60)
+                    {
+                        Hold(dalsiPrichod, message.CreateCopy());
 
-                    MyMessage sprava = (MyMessage)message;
-                    PocetVozidiel++;
-                    sprava.Vozidlo = new Vozidlo(PocetVozidiel, (TypVozidla)RozdelenieTyp.Next(), MySim.CurrentTime);
-                    sprava.Addressee = MyAgent;
+                        MyMessage sprava = (MyMessage)message;
+                        PocetVozidiel++;
+                        sprava.Vozidlo = new Vozidlo(PocetVozidiel, (TypVozidla)RozdelenieTyp.Next(), MySim.CurrentTime);
+                        sprava.Addressee = MyAgent;
 
-                    Notice(sprava);
+                        Notice(sprava);
+                    }
                     break;
             }
         }

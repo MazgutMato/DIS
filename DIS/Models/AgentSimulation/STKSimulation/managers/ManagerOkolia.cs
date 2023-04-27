@@ -33,6 +33,10 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		//meta! sender="AgentModelu", id="6", type="Notice"
 		public void ProcessOdchodZakaznika(MessageForm message)
         {
+            MyAgent.VozidlaVSysteme.AddValue(MyAgent.PocetVozidilVSysteme);
+            MyAgent.PocetVozidilVSysteme--;            
+            var sprava = (MyMessage)message;
+            MyAgent.CasVSysteme.AddValue(MySim.CurrentTime - sprava.Vozidlo.CasPrichodu);
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -46,6 +50,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		//meta! sender="PlanovacPrichodov", id="13", type="Notice"
 		public void ProcessNovyZakaznik(MessageForm message)
 		{
+            MyAgent.VozidlaVSysteme.AddValue(MyAgent.PocetVozidilVSysteme);
+            MyAgent.PocetVozidilVSysteme++;
             message.Code = Mc.PrichodZakaznika;
             message.Addressee = MySim.FindAgent(SimId.AgentModelu);
             Notice(message);

@@ -9,9 +9,10 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
     //meta! id="21"
     public class AgentAutomechanici : Agent
     {
+        public int PocetAutomechanikov { get; set; } = Config.PocetAutomechanikov;
         public Queue<Zamestnanec> VolniAutomechanici { get; set; }
         public List<Zamestnanec> VsetciAutomechanici { get; set; }
-        public Queue<Vozidlo> ParkoviskoKontrola { get; set; }
+        public Queue<MyMessage> ParkoviskoKontrola { get; set; }
         public int PocetRezervovanychMiest { get; set; }
         public AgentAutomechanici(int id, Simulation mySim, Agent parent) :
             base(id, mySim, parent)
@@ -24,8 +25,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
             base.PrepareReplication();
             // Setup component for the next replication
             PocetRezervovanychMiest = 0;
-            ParkoviskoKontrola = new Queue<Vozidlo>(Config.KapacitaParkoviskaKontrola);
-            ZmenPocetAutomechanikov(Config.PocetAutomechanikov);
+            ParkoviskoKontrola = new Queue<MyMessage>(Config.KapacitaParkoviskaKontrola);
+            ZmenPocetAutomechanikov(PocetAutomechanikov);
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -36,7 +37,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
 			AddOwnMessage(Mc.KontrolaVozidla);
 		}
 		//meta! tag="end"
-        public void ZmenPocetAutomechanikov(int pocet)
+        private void ZmenPocetAutomechanikov(int pocet)
         {
             VolniAutomechanici = new Queue<Zamestnanec>();
             for (int i = 0; i < pocet; i++)

@@ -1,10 +1,16 @@
 using OSPABA;
 using DIS.Models.AgentSimulation.STKSimulation.agents;
+using DIS.SimulationCores.Statistics;
 
 namespace DIS.Models.AgentSimulation.STKSimulation.simulation
 {
     public class MySimulation : Simulation
     {
+        public NormalStatistic CasVSysteme { get; set; }
+        public NormalStatistic CasCakaniaPrevzatie { get; set; }
+        public NormalStatistic PocetVozidielVSysteme { get; set; }
+        public NormalStatistic PocetVozidielNaKonciDna { get; set; }
+        public NormalStatistic DlzkaRadyPrevzatie { get; set; }
         public MySimulation()
         {
             Init();
@@ -14,6 +20,11 @@ namespace DIS.Models.AgentSimulation.STKSimulation.simulation
         {
             base.PrepareSimulation();
             // Create global statistcis
+            CasVSysteme = new NormalStatistic();
+            CasCakaniaPrevzatie = new NormalStatistic();
+            PocetVozidielNaKonciDna = new NormalStatistic();
+            PocetVozidielVSysteme = new NormalStatistic();
+            DlzkaRadyPrevzatie = new NormalStatistic();
         }
 
         override protected void PrepareReplication()
@@ -24,6 +35,15 @@ namespace DIS.Models.AgentSimulation.STKSimulation.simulation
 
         override protected void ReplicationFinished()
         {
+            //Local update
+            AgentOkolia.VozidlaVSysteme.AddValue(AgentOkolia.PocetVozidilVSysteme);
+            AgentTechnici.DlzkaRadyPrevzatie.AddValue(AgentTechnici.ParkoviskoPrevziate.Count);
+            //Global
+            CasVSysteme.AddValue(AgentOkolia.CasVSysteme.GetResult());
+            CasCakaniaPrevzatie.AddValue(AgentTechnici.CasCakaniaPrevzatie.GetResult());
+            PocetVozidielVSysteme.AddValue(AgentOkolia.VozidlaVSysteme.GetResult());
+            PocetVozidielNaKonciDna.AddValue(AgentOkolia.PocetVozidilVSysteme);
+            DlzkaRadyPrevzatie.AddValue(AgentTechnici.DlzkaRadyPrevzatie.GetResult());
             // Collect local statistics into global, update UI, etc...
             base.ReplicationFinished();
         }
