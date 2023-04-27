@@ -5,7 +5,7 @@
       <SimId>4</SimId>
       <InternalId>21</InternalId>
       <Name>AgentAutomechanici</Name>
-      <Bounds>1565,1058,180,180</Bounds>
+      <Bounds>1625,1092,180,180</Bounds>
       <Reasoner>ManagerAutomechanici</Reasoner>
       <ReasonerBounds>74,25,32,25</ReasonerBounds>
       <UsePetriNet>false</UsePetriNet>
@@ -28,7 +28,7 @@
       <SimId>6</SimId>
       <InternalId>23</InternalId>
       <Name>AgentTechnici</Name>
-      <Bounds>797,1056,180,180</Bounds>
+      <Bounds>727,1104,180,180</Bounds>
       <Reasoner>ManagerTechnici</Reasoner>
       <ReasonerBounds>74,25,32,25</ReasonerBounds>
       <UsePetriNet>false</UsePetriNet>
@@ -154,20 +154,20 @@
       <Destination>17</Destination>
     </Message>
     <Message>
-      <SimId>1005</SimId>
-      <InternalId>13</InternalId>
-      <Name>NovyZakaznik</Name>
-      <Type>Notice</Type>
-      <Source>9</Source>
-      <Destination>2</Destination>
-    </Message>
-    <Message>
       <SimId>1015</SimId>
       <InternalId>77</InternalId>
       <Name>UvolnenieMiesta</Name>
       <Type>Notice</Type>
       <Source>17</Source>
       <Destination>23</Destination>
+    </Message>
+    <Message>
+      <SimId>1005</SimId>
+      <InternalId>13</InternalId>
+      <Name>NovyZakaznik</Name>
+      <Type>Notice</Type>
+      <Source>9</Source>
+      <Destination>2</Destination>
     </Message>
     <Message>
       <InternalId>50</InternalId>
@@ -252,5 +252,5 @@
       <Destination>62</Destination>
     </Message>
   </Messages>
-  <IID>89</IID>
+  <IID>91</IID>
 </ABAsim>
