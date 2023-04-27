@@ -10,6 +10,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
         public PlanovacPrestavky(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)
         {
+            MyAgent.AddOwnMessage(Mc.ZaciatokPrestavok);
         }
 
         override public void PrepareReplication()
@@ -21,6 +22,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
 		//meta! sender="AgentSTK", id="50", type="Start"
 		public void ProcessStart(MessageForm message)
         {
+            message.Code = Mc.ZaciatokPrestavok;
+            Hold(2 * 60 * 60, message);
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -28,6 +31,9 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
         {
             switch (message.Code)
             {
+                case Mc.ZaciatokPrestavok:
+                    AssistantFinished(message);
+                    break;
             }
         }
 

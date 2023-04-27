@@ -26,7 +26,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
             CasVSysteme = new NormalStatistic();
             VozidlaVSysteme = new WeightStatistic(MySim);
             PocetVozidilVSysteme = 0;
-            //Start simulation
+            //Zacatie simulacie
             var sprava = new MyMessage(MySim);
             sprava.Addressee = FindAssistant(SimId.PlanovacPrichodov);
             MyManager.StartContinualAssistant(sprava);            

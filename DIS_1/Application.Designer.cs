@@ -112,6 +112,7 @@
             UpDownRepCountCH2 = new NumericUpDown();
             UpDownTechCH2 = new NumericUpDown();
             label19 = new Label();
+            checkPrestavky = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)dataGridViewGlobal).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewLocal).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewArrivalQueue).BeginInit();
@@ -798,6 +799,7 @@
             // 
             // tabPageSimulation
             // 
+            tabPageSimulation.Controls.Add(checkPrestavky);
             tabPageSimulation.Controls.Add(buttonTurbo);
             tabPageSimulation.Controls.Add(textBoxPayment);
             tabPageSimulation.Controls.Add(textBoxIns);
@@ -1014,6 +1016,17 @@
             label19.TabIndex = 71;
             label19.Text = "Technical workers";
             // 
+            // checkPrestavky
+            // 
+            checkPrestavky.AutoSize = true;
+            checkPrestavky.Location = new Point(1058, 35);
+            checkPrestavky.Name = "checkPrestavky";
+            checkPrestavky.Size = new Size(60, 19);
+            checkPrestavky.TabIndex = 67;
+            checkPrestavky.Text = "Breaks";
+            checkPrestavky.UseVisualStyleBackColor = true;
+            checkPrestavky.CheckedChanged += checkBox1_CheckedChanged;
+            // 
             // Application
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1135,5 +1148,6 @@
         private NumericUpDown UpDownRepCountCH2;
         private NumericUpDown UpDownTechCH2;
         private Label label19;
+        private CheckBox checkPrestavky;
     }
 }

@@ -41,11 +41,13 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
 		private void Init()
 		{
 			new ManagerTechnici(SimId.ManagerTechnici, MySim, this);
+			new PrestavkaTechnici(SimId.PrestavkaTechnici, MySim, this);
 			new ProcessPlatenia(SimId.ProcessPlatenia, MySim, this);
 			new ProcessPrevziatia(SimId.ProcessPrevziatia, MySim, this);
 			AddOwnMessage(Mc.PrevziatieVozidla);
 			AddOwnMessage(Mc.UvolnenieMiesta);
 			AddOwnMessage(Mc.ZaplatenieKontroly);
+			AddOwnMessage(Mc.CasPrestavky);
 		}
 		//meta! tag="end"
 

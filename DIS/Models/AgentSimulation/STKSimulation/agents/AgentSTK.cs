@@ -10,6 +10,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
     //meta! id="17"
     public class AgentSTK : Agent
     {
+        public bool AktivovatPrestavky { get; set; } = true;
         public AgentSTK(int id, Simulation mySim, Agent parent) :
             base(id, mySim, parent)
         {
@@ -20,6 +21,13 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
         {
             base.PrepareReplication();
             // Setup component for the next replication
+            //Naplanovanie prestavok
+            if (AktivovatPrestavky)
+            {
+                var sprava = new MyMessage(MySim);
+                sprava.Addressee = FindAssistant(SimId.PlanovacPrestavky);
+                MyManager.StartContinualAssistant(sprava);
+            }            
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -27,13 +35,11 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
 		{
 			new ManagerSTK(SimId.ManagerSTK, MySim, this);
 			new PlanovacPrestavky(SimId.PlanovacPrestavky, MySim, this);
-			new ProcessPrestavka(SimId.ProcessPrestavka, MySim, this);
 			AddOwnMessage(Mc.PrevziatieVozidla);
 			AddOwnMessage(Mc.UvolnenieMiesta);
 			AddOwnMessage(Mc.ObsluhaZakaznika);
 			AddOwnMessage(Mc.ZaplatenieKontroly);
 			AddOwnMessage(Mc.KontrolaVozidla);
-			AddOwnMessage(Mc.ZacniPrestavku);
 		}
 		//meta! tag="end"
     }

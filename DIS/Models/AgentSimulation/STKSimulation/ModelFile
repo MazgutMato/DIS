@@ -11,10 +11,16 @@
       <UsePetriNet>false</UsePetriNet>
       <Components>
         <Process>
+          <SimId>1009</SimId>
+          <InternalId>85</InternalId>
+          <Name>PrestavkaAutomechanici</Name>
+          <Bounds>113,89,35,18</Bounds>
+        </Process>
+        <Process>
           <SimId>1003</SimId>
           <InternalId>38</InternalId>
           <Name>ProcessKontroly</Name>
-          <Bounds>70,98,35,18</Bounds>
+          <Bounds>28,92,35,18</Bounds>
         </Process>
       </Components>
     </Agent>
@@ -22,22 +28,28 @@
       <SimId>6</SimId>
       <InternalId>23</InternalId>
       <Name>AgentTechnici</Name>
-      <Bounds>795,1056,180,180</Bounds>
+      <Bounds>797,1056,180,180</Bounds>
       <Reasoner>ManagerTechnici</Reasoner>
       <ReasonerBounds>74,25,32,25</ReasonerBounds>
       <UsePetriNet>false</UsePetriNet>
       <Components>
         <Process>
+          <SimId>1008</SimId>
+          <InternalId>82</InternalId>
+          <Name>PrestavkaTechnici</Name>
+          <Bounds>120,83,35,18</Bounds>
+        </Process>
+        <Process>
           <SimId>1007</SimId>
           <InternalId>62</InternalId>
           <Name>ProcessPlatenia</Name>
-          <Bounds>108,94,35,18</Bounds>
+          <Bounds>69,95,35,18</Bounds>
         </Process>
         <Process>
           <SimId>1002</SimId>
           <InternalId>35</InternalId>
           <Name>ProcessPrevziatia</Name>
-          <Bounds>24,94,35,18</Bounds>
+          <Bounds>7,86,35,18</Bounds>
         </Process>
       </Components>
     </Agent>
@@ -45,7 +57,7 @@
       <SimId>3</SimId>
       <InternalId>17</InternalId>
       <Name>AgentSTK</Name>
-      <Bounds>1202,598,180,180</Bounds>
+      <Bounds>1202,595,180,180</Bounds>
       <Reasoner>ManagerSTK</Reasoner>
       <ReasonerBounds>74,25,32,25</ReasonerBounds>
       <UsePetriNet>false</UsePetriNet>
@@ -54,14 +66,8 @@
           <SimId>1005</SimId>
           <InternalId>49</InternalId>
           <Name>PlanovacPrestavky</Name>
-          <Bounds>18,93,35,13</Bounds>
+          <Bounds>68,99,35,13</Bounds>
         </Scheduler>
-        <Process>
-          <SimId>1006</SimId>
-          <InternalId>51</InternalId>
-          <Name>ProcessPrestavka</Name>
-          <Bounds>110,91,35,18</Bounds>
-        </Process>
       </Components>
     </Agent>
     <Agent>
@@ -176,24 +182,38 @@
       <Destination>1</Destination>
     </Message>
     <Message>
-      <InternalId>52</InternalId>
+      <InternalId>83</InternalId>
       <Type>StartFinish</Type>
-      <Source>17</Source>
-      <Destination>51</Destination>
+      <Source>23</Source>
+      <Destination>82</Destination>
     </Message>
     <Message>
-      <SimId>1011</SimId>
-      <InternalId>55</InternalId>
-      <Name>ZacniPrestavku</Name>
+      <InternalId>86</InternalId>
+      <Type>StartFinish</Type>
+      <Source>21</Source>
+      <Destination>85</Destination>
+    </Message>
+    <Message>
+      <SimId>1017</SimId>
+      <InternalId>87</InternalId>
+      <Name>CasPrestavky</Name>
       <Type>Notice</Type>
-      <Source>49</Source>
-      <Destination>17</Destination>
+      <Source>17</Source>
+      <Destination>23</Destination>
     </Message>
     <Message>
       <InternalId>24</InternalId>
       <Type>Parent</Type>
       <Source>23</Source>
       <Destination>17</Destination>
+    </Message>
+    <Message>
+      <SimId>1018</SimId>
+      <InternalId>88</InternalId>
+      <Name>CasPrestavky</Name>
+      <Type>Notice</Type>
+      <Source>17</Source>
+      <Destination>21</Destination>
     </Message>
     <Message>
       <InternalId>25</InternalId>
@@ -232,5 +252,5 @@
       <Destination>62</Destination>
     </Message>
   </Messages>
-  <IID>78</IID>
+  <IID>89</IID>
 </ABAsim>

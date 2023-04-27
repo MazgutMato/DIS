@@ -133,7 +133,7 @@ namespace DIS_1
                 foreach (var zamestnanec in _core.AgentAutomechanici.VsetciAutomechanici)
                 {
                     var dataGridViewRow = new DataGridViewRow();
-                    dataGridViewRow.CreateCells(dataGridViewWorkersIns, zamestnanec.ID, zamestnanec.Typ, 
+                    dataGridViewRow.CreateCells(dataGridViewWorkersIns, zamestnanec.ID, zamestnanec.Typ,
                         zamestnanec.Pracuje, zamestnanec.Vozidlo);
                     dataGridViewWorkersIns.Rows.Add(dataGridViewRow);
                 }
@@ -203,7 +203,7 @@ namespace DIS_1
 
                     //Cas v systeme
                     var dataGridViewRowSystem = new DataGridViewRow();
-                    dataGridViewRowSystem.CreateCells(dataGridViewGlobal, "Cas v systeme", _core.CasVSysteme.GetResult()/60, "minut");
+                    dataGridViewRowSystem.CreateCells(dataGridViewGlobal, "Cas v systeme", _core.CasVSysteme.GetResult() / 60, "minut");
                     dataGridViewGlobal.Rows.Add(dataGridViewRowSystem);
 
                     //Cas v systeme IS
@@ -272,11 +272,13 @@ namespace DIS_1
                 var pocetReplikacii = Convert.ToInt32(UpDownRepCount.Value);
                 var pocetAutomechanikov = Convert.ToInt32(inspectionWorkers.Value);
                 var pocetTechnikov = Convert.ToInt32(technicalWorkers.Value);
+                var prestavky = checkPrestavky.Checked;
 
                 _isRunning = true;
                 _core.AgentAutomechanici.PocetAutomechanikov = pocetAutomechanikov;
                 _core.AgentTechnici.PocetTechnikov = pocetTechnikov;
-                              
+                _core.AgentSTK.AktivovatPrestavky = prestavky;
+
                 _core.SimulateAsync(pocetReplikacii, 8 * 60 * 60);
                 SetNormalSpeed();
 
@@ -367,6 +369,11 @@ namespace DIS_1
             {
                 _coreChart2.StopSimulation();
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

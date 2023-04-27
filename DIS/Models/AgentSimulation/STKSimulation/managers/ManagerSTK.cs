@@ -71,20 +71,19 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             Request(sprava);
         }
 
-        //meta! sender="PlanovacPrestavky", id="50", type="Finish"
-        public void ProcessFinishPlanovacPrestavky(MessageForm message)
+		//meta! sender="PlanovacPrestavky", id="50", type="Finish"
+		public void ProcessFinish(MessageForm message)
 		{
-		}
-
-		//meta! sender="ProcessPrestavka", id="52", type="Finish"
-		public void ProcessFinishProcessPrestavka(MessageForm message)
-		{
-		}
-
-		//meta! sender="PlanovacPrestavky", id="55", type="Notice"
-		public void ProcessZacniPrestavku(MessageForm message)
-		{
-		}
+			message.Code = Mc.CasPrestavky;
+			var spravaTechnici = message;
+			var spravaAutomechanici = message.CreateCopy();
+			//Technici
+			spravaTechnici.Addressee = MySim.FindAgent(SimId.AgentTechnici);
+			Notice(spravaTechnici);
+            //Automechanici
+            spravaAutomechanici.Addressee = MySim.FindAgent(SimId.AgentAutomechanici);
+            Notice(spravaAutomechanici);
+        }
 
 		//meta! sender="AgentAutomechanici", id="76", type="Notice"
 		public void ProcessUvolnenieMiesta(MessageForm message)
@@ -108,10 +107,6 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 				ProcessObsluhaZakaznika(message);
 			break;
 
-			case Mc.ZaplatenieKontroly:
-				ProcessZaplatenieKontroly(message);
-			break;
-
 			case Mc.PrevziatieVozidla:
 				ProcessPrevziatieVozidla(message);
 			break;
@@ -120,25 +115,16 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 				ProcessKontrolaVozidla(message);
 			break;
 
-			case Mc.Finish:
-				switch (message.Sender.Id)
-				{
-				case SimId.PlanovacPrestavky:
-					ProcessFinishPlanovacPrestavky(message);
-				break;
-
-				case SimId.ProcessPrestavka:
-					ProcessFinishProcessPrestavka(message);
-				break;
-				}
-			break;
-
 			case Mc.UvolnenieMiesta:
 				ProcessUvolnenieMiesta(message);
 			break;
 
-			case Mc.ZacniPrestavku:
-				ProcessZacniPrestavku(message);
+			case Mc.ZaplatenieKontroly:
+				ProcessZaplatenieKontroly(message);
+			break;
+
+			case Mc.Finish:
+				ProcessFinish(message);
 			break;
 
 			default:

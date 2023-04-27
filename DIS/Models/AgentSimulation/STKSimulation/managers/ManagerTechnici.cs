@@ -115,6 +115,37 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             }
         }
 
+		//meta! sender="PrestavkaTechnici", id="83", type="Finish"
+		public void ProcessFinishPrestavkaTechnici(MessageForm message)
+		{
+            var sprava = (MyMessage)message;
+            UvolnenieTechnika(sprava.Zamestnanec);
+        }
+
+		//meta! sender="AgentSTK", id="87", type="Notice"
+		public void ProcessCasPrestavky(MessageForm message)
+		{            
+            //Vykonanie prestavky
+            for (int i = 0; i < MyAgent.VolniTechnici.Count; i++)
+            {
+                MyAgent.VolniTechnici.Dequeue();
+            }
+            foreach (var technik in MyAgent.VsetciTechnici)
+            {
+                var sprava = (MyMessage)message.CreateCopy();
+                sprava.Addressee = MyAgent.FindAssistant(SimId.PrestavkaTechnici);
+                if (technik.Pracuje == Pracuje.NIE)
+                {
+                    sprava.Zamestnanec = technik;
+                    StartContinualAssistant(sprava);
+                }
+                else
+                {
+                    technik.VykonajPrestavku = true;
+                }
+            }
+        }
+
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()
 		{
@@ -124,8 +155,25 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		{
 			switch (message.Code)
 			{
-			case Mc.UvolnenieMiesta:
-				ProcessUvolnenieMiesta(message);
+			case Mc.CasPrestavky:
+				ProcessCasPrestavky(message);
+			break;
+
+			case Mc.Finish:
+				switch (message.Sender.Id)
+				{
+				case SimId.PrestavkaTechnici:
+					ProcessFinishPrestavkaTechnici(message);
+				break;
+
+				case SimId.ProcessPlatenia:
+					ProcessFinishProcessPlatenia(message);
+				break;
+
+				case SimId.ProcessPrevziatia:
+					ProcessFinishProcessPrevziatia(message);
+				break;
+				}
 			break;
 
 			case Mc.ZaplatenieKontroly:
@@ -136,17 +184,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 				ProcessPrevziatieVozidla(message);
 			break;
 
-			case Mc.Finish:
-				switch (message.Sender.Id)
-				{
-				case SimId.ProcessPrevziatia:
-					ProcessFinishProcessPrevziatia(message);
-				break;
-
-				case SimId.ProcessPlatenia:
-					ProcessFinishProcessPlatenia(message);
-				break;
-				}
+			case Mc.UvolnenieMiesta:
+				ProcessUvolnenieMiesta(message);
 			break;
 
 			default:
@@ -164,8 +203,16 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
         }        
 		private void UvolnenieTechnika(Zamestnanec zamestnanec)
 		{
+            //Prestavka
+            if (zamestnanec.VykonajPrestavku)
+            {
+                var sprava = new MyMessage(MySim);
+                sprava.Zamestnanec = zamestnanec;
+                sprava.Addressee = MyAgent.FindAssistant(SimId.PrestavkaTechnici);
+                StartContinualAssistant(sprava);
+            }
 			//Platba
-			if(MyAgent.ParkoviskoPlatba.Count > 0){
+			else if(MyAgent.ParkoviskoPlatba.Count > 0){
 				var sprava = MyAgent.ParkoviskoPlatba.Dequeue();
                 sprava.Zamestnanec = zamestnanec;
                 sprava.Addressee = MyAgent.FindAssistant(SimId.ProcessPlatenia);

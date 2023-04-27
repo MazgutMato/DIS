@@ -33,8 +33,10 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
 		private void Init()
 		{
 			new ManagerAutomechanici(SimId.ManagerAutomechanici, MySim, this);
+			new PrestavkaAutomechanici(SimId.PrestavkaAutomechanici, MySim, this);
 			new ProcessKontroly(SimId.ProcessKontroly, MySim, this);
 			AddOwnMessage(Mc.KontrolaVozidla);
+			AddOwnMessage(Mc.CasPrestavky);
 		}
 		//meta! tag="end"
         private void ZmenPocetAutomechanikov(int pocet)
