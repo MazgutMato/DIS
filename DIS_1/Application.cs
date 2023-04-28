@@ -371,7 +371,27 @@ namespace DIS_1
             }
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPageSimulation_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel10_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel12_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }

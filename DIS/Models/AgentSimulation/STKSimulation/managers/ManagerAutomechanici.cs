@@ -76,7 +76,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		public void ProcessCasPrestavky(MessageForm message)
 		{
             //Nastavenie prestavky
-            foreach (var technik in MyAgent.VolniAutomechanici)
+            foreach (var technik in MyAgent.VsetciAutomechanici)
             {
                 technik.VykonajPrestavku = true;
             }
