@@ -124,25 +124,17 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 
 		//meta! sender="AgentSTK", id="87", type="Notice"
 		public void ProcessCasPrestavky(MessageForm message)
-		{            
-            //Vykonanie prestavky
-            for (int i = 0; i < MyAgent.VolniTechnici.Count; i++)
-            {
-                MyAgent.VolniTechnici.Dequeue();
-            }
+		{      
+            //Nastavenie prestavky
             foreach (var technik in MyAgent.VsetciTechnici)
             {
-                var sprava = (MyMessage)message.CreateCopy();
-                sprava.Addressee = MyAgent.FindAssistant(SimId.PrestavkaTechnici);
-                if (technik.Pracuje == Pracuje.NIE)
-                {
-                    sprava.Zamestnanec = technik;
-                    StartContinualAssistant(sprava);
-                }
-                else
-                {
-                    technik.VykonajPrestavku = true;
-                }
+                technik.VykonajPrestavku = true;
+            }
+            //Vykonanie prestavky
+            while(MyAgent.VolniTechnici.Count > 0)
+            {
+                var technik = MyAgent.VolniTechnici.Dequeue();
+                UvolnenieTechnika(technik);
             }
         }
 
