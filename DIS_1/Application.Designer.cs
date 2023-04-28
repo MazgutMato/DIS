@@ -821,7 +821,6 @@
             tabPageSimulation.TabIndex = 0;
             tabPageSimulation.Text = "Simulation";
             tabPageSimulation.UseVisualStyleBackColor = true;
-            tabPageSimulation.Click += tabPageSimulation_Click;
             // 
             // tableLayoutPanel30
             // 
@@ -1012,7 +1011,6 @@
             label14.Size = new Size(105, 30);
             label14.TabIndex = 73;
             label14.Text = "Automechanici (osobne, dodavka}";
-            label14.Click += label14_Click;
             // 
             // label22
             // 
@@ -1161,7 +1159,6 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 81.08108F));
             tableLayoutPanel1.Size = new Size(436, 244);
             tableLayoutPanel1.TabIndex = 68;
-            tableLayoutPanel1.Paint += tableLayoutPanel1_Paint;
             // 
             // tableLayoutPanel13
             // 
@@ -1208,7 +1205,6 @@
             tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Absolute, 54F));
             tableLayoutPanel12.Size = new Size(226, 158);
             tableLayoutPanel12.TabIndex = 76;
-            tableLayoutPanel12.Paint += tableLayoutPanel12_Paint;
             // 
             // checkBox2
             // 
@@ -1346,7 +1342,6 @@
             tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel10.Size = new Size(612, 88);
             tableLayoutPanel10.TabIndex = 74;
-            tableLayoutPanel10.Paint += tableLayoutPanel10_Paint;
             // 
             // tableLayoutPanel6
             // 

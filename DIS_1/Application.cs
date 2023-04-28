@@ -370,30 +370,5 @@ namespace DIS_1
                 _coreChart2.StopSimulation();
             }
         }
-
-        private void label14_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPageSimulation_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel10_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel12_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 }
