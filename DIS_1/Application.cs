@@ -237,10 +237,11 @@ namespace DIS_1
         }
         private void OnReplicationWillStart(Simulation obj)
         {
-            //
+
         }
         private void buttonNormal_Click(object sender, EventArgs e)
         {
+            panelRychlost.Enabled = true;
             SetNormalSpeed();
         }
         private void SetNormalSpeed()
@@ -263,6 +264,8 @@ namespace DIS_1
             textBoxInsP.Text = string.Empty;
             textBoxPayment.Text = string.Empty;
             textBoxArrival.Text = string.Empty;
+
+            panelRychlost.Enabled = false;
         }
         private void buttonRun_Click(object sender, EventArgs e)
         {
@@ -270,8 +273,8 @@ namespace DIS_1
             if (!_isRunning)
             {
                 var pocetReplikacii = Convert.ToInt32(UpDownRepCount.Value);
-                var pocetAutomechanikov = Convert.ToInt32(inspectionWorkers.Value);
-                var pocetTechnikov = Convert.ToInt32(technicalWorkers.Value);
+                var pocetAutomechanikov = Convert.ToInt32(AutomechaniciTyp1.Value);
+                var pocetTechnikov = Convert.ToInt32(technici.Value);
                 var prestavky = checkPrestavky.Checked;
 
                 _isRunning = true;
@@ -283,6 +286,9 @@ namespace DIS_1
                 SetNormalSpeed();
 
                 buttonRun.Enabled = false;
+                NastaveniaSimulácie.Enabled = false;
+                DalsieNastavenia.Enabled = false;
+                PocetTechnikov.Enabled = false;
             }
         }
         private void buttonStop_Click(object sender, EventArgs e)
@@ -292,6 +298,9 @@ namespace DIS_1
                 _core.StopSimulation();
                 _isRunning = false;
                 buttonRun.Enabled = true;
+                NastaveniaSimulácie.Enabled = true;
+                DalsieNastavenia.Enabled = true;
+                PocetTechnikov.Enabled = true;
             }
         }
 
@@ -368,6 +377,18 @@ namespace DIS_1
             if (_isRunningChart2)
             {
                 _coreChart2.StopSimulation();
+            }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked == true)
+            {
+                AutomechaniciTyp2.Enabled = true;
+            }
+            else
+            {
+                AutomechaniciTyp2.Enabled = false;
             }
         }
     }
