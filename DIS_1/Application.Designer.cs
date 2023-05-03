@@ -71,7 +71,7 @@
             dataGridViewTextBoxColumn11 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn12 = new DataGridViewTextBoxColumn();
             technici = new NumericUpDown();
-            AutomechaniciTyp1 = new NumericUpDown();
+            AutomechaniciTyp2 = new NumericUpDown();
             UpDownSpeed = new NumericUpDown();
             UpDownRefresh = new NumericUpDown();
             UpDownRepRefresh = new NumericUpDown();
@@ -92,11 +92,10 @@
             label24 = new Label();
             tableLayoutPanel25 = new TableLayoutPanel();
             tableLayoutPanel18 = new TableLayoutPanel();
-            label6 = new Label();
             PocetTechnikov = new TableLayoutPanel();
             tableLayoutPanel5 = new TableLayoutPanel();
             label2 = new Label();
-            AutomechaniciTyp2 = new NumericUpDown();
+            AutomechaniciTyp1 = new NumericUpDown();
             label14 = new Label();
             label22 = new Label();
             label21 = new Label();
@@ -104,13 +103,14 @@
             label9 = new Label();
             tableLayoutPanel19 = new TableLayoutPanel();
             tableLayoutPanel17 = new TableLayoutPanel();
+            label6 = new Label();
             NastaveniaSimulácie = new TableLayoutPanel();
             tableLayoutPanel4 = new TableLayoutPanel();
             label15 = new Label();
             DalsieNastavenia = new TableLayoutPanel();
             label25 = new Label();
             tableLayoutPanel12 = new TableLayoutPanel();
-            checkBox2 = new CheckBox();
+            checkAutomechaniciTyp1 = new CheckBox();
             checkBox1 = new CheckBox();
             checkPrestavky = new CheckBox();
             tableLayoutPanel27 = new TableLayoutPanel();
@@ -181,7 +181,7 @@
             ((System.ComponentModel.ISupportInitialize)dataGridViewPaymentParking).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewWorkersTech).BeginInit();
             ((System.ComponentModel.ISupportInitialize)technici).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)AutomechaniciTyp1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)AutomechaniciTyp2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)UpDownSpeed).BeginInit();
             ((System.ComponentModel.ISupportInitialize)UpDownRefresh).BeginInit();
             ((System.ComponentModel.ISupportInitialize)UpDownRepRefresh).BeginInit();
@@ -197,7 +197,7 @@
             tableLayoutPanel18.SuspendLayout();
             PocetTechnikov.SuspendLayout();
             tableLayoutPanel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)AutomechaniciTyp2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)AutomechaniciTyp1).BeginInit();
             tableLayoutPanel15.SuspendLayout();
             tableLayoutPanel19.SuspendLayout();
             tableLayoutPanel17.SuspendLayout();
@@ -506,7 +506,7 @@
             WorkerID.MinimumWidth = 8;
             WorkerID.Name = "WorkerID";
             WorkerID.ReadOnly = true;
-            WorkerID.Width = 60;
+            WorkerID.Width = 40;
             // 
             // Type
             // 
@@ -514,7 +514,7 @@
             Type.MinimumWidth = 8;
             Type.Name = "Type";
             Type.ReadOnly = true;
-            Type.Width = 125;
+            Type.Width = 145;
             // 
             // Working
             // 
@@ -682,15 +682,16 @@
             technici.TabIndex = 53;
             technici.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // AutomechaniciTyp1
+            // AutomechaniciTyp2
             // 
-            AutomechaniciTyp1.Anchor = AnchorStyles.None;
-            AutomechaniciTyp1.Location = new Point(156, 61);
-            AutomechaniciTyp1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            AutomechaniciTyp1.Name = "AutomechaniciTyp1";
-            AutomechaniciTyp1.Size = new Size(43, 23);
-            AutomechaniciTyp1.TabIndex = 54;
-            AutomechaniciTyp1.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            AutomechaniciTyp2.Anchor = AnchorStyles.None;
+            AutomechaniciTyp2.Location = new Point(156, 61);
+            AutomechaniciTyp2.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            AutomechaniciTyp2.Name = "AutomechaniciTyp2";
+            AutomechaniciTyp2.Size = new Size(43, 23);
+            AutomechaniciTyp2.TabIndex = 54;
+            AutomechaniciTyp2.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            AutomechaniciTyp2.ValueChanged += AutomechaniciTyp2_ValueChanged;
             // 
             // UpDownSpeed
             // 
@@ -937,8 +938,8 @@
             tableLayoutPanel18.ColumnCount = 2;
             tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 88.52097F));
             tableLayoutPanel18.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.4790287F));
-            tableLayoutPanel18.Controls.Add(label6, 0, 0);
             tableLayoutPanel18.Controls.Add(textBoxTechnical, 1, 0);
+            tableLayoutPanel18.Controls.Add(label12, 0, 0);
             tableLayoutPanel18.Dock = DockStyle.Fill;
             tableLayoutPanel18.Location = new Point(4, 4);
             tableLayoutPanel18.Name = "tableLayoutPanel18";
@@ -946,17 +947,6 @@
             tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel18.Size = new Size(453, 28);
             tableLayoutPanel18.TabIndex = 78;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
-            label6.Location = new Point(1, 0);
-            label6.Margin = new Padding(1, 0, 1, 0);
-            label6.Name = "label6";
-            label6.Size = new Size(122, 21);
-            label6.TabIndex = 49;
-            label6.Text = "Automechanici";
             // 
             // PocetTechnikov
             // 
@@ -984,11 +974,11 @@
             tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60.36036F));
             tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 39.63964F));
             tableLayoutPanel5.Controls.Add(label2, 0, 0);
-            tableLayoutPanel5.Controls.Add(AutomechaniciTyp2, 1, 2);
+            tableLayoutPanel5.Controls.Add(AutomechaniciTyp1, 1, 2);
             tableLayoutPanel5.Controls.Add(label14, 0, 2);
             tableLayoutPanel5.Controls.Add(label22, 0, 1);
             tableLayoutPanel5.Controls.Add(technici, 1, 0);
-            tableLayoutPanel5.Controls.Add(AutomechaniciTyp1, 1, 1);
+            tableLayoutPanel5.Controls.Add(AutomechaniciTyp2, 1, 1);
             tableLayoutPanel5.Dock = DockStyle.Fill;
             tableLayoutPanel5.Location = new Point(4, 28);
             tableLayoutPanel5.Name = "tableLayoutPanel5";
@@ -1010,16 +1000,17 @@
             label2.TabIndex = 73;
             label2.Text = "Technici";
             // 
-            // AutomechaniciTyp2
+            // AutomechaniciTyp1
             // 
-            AutomechaniciTyp2.Anchor = AnchorStyles.None;
-            AutomechaniciTyp2.Enabled = false;
-            AutomechaniciTyp2.Location = new Point(156, 110);
-            AutomechaniciTyp2.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            AutomechaniciTyp2.Name = "AutomechaniciTyp2";
-            AutomechaniciTyp2.Size = new Size(43, 23);
-            AutomechaniciTyp2.TabIndex = 74;
-            AutomechaniciTyp2.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            AutomechaniciTyp1.Anchor = AnchorStyles.None;
+            AutomechaniciTyp1.Enabled = false;
+            AutomechaniciTyp1.Location = new Point(156, 110);
+            AutomechaniciTyp1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            AutomechaniciTyp1.Name = "AutomechaniciTyp1";
+            AutomechaniciTyp1.Size = new Size(43, 23);
+            AutomechaniciTyp1.TabIndex = 74;
+            AutomechaniciTyp1.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            AutomechaniciTyp1.ValueChanged += AutomechaniciTyp1_ValueChanged;
             // 
             // label14
             // 
@@ -1100,14 +1091,25 @@
             tableLayoutPanel17.ColumnCount = 2;
             tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 89.38907F));
             tableLayoutPanel17.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10.6109324F));
+            tableLayoutPanel17.Controls.Add(label6, 0, 0);
             tableLayoutPanel17.Controls.Add(textBoxIns, 1, 0);
-            tableLayoutPanel17.Controls.Add(label12, 0, 0);
             tableLayoutPanel17.Location = new Point(4, 4);
             tableLayoutPanel17.Name = "tableLayoutPanel17";
             tableLayoutPanel17.RowCount = 1;
             tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel17.Size = new Size(453, 27);
             tableLayoutPanel17.TabIndex = 77;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            label6.Location = new Point(1, 0);
+            label6.Margin = new Padding(1, 0, 1, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(122, 21);
+            label6.TabIndex = 49;
+            label6.Text = "Automechanici";
             // 
             // NastaveniaSimulácie
             // 
@@ -1193,7 +1195,7 @@
             tableLayoutPanel12.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanel12.ColumnCount = 1;
             tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel12.Controls.Add(checkBox2, 0, 2);
+            tableLayoutPanel12.Controls.Add(checkAutomechaniciTyp1, 0, 2);
             tableLayoutPanel12.Controls.Add(checkBox1, 0, 1);
             tableLayoutPanel12.Controls.Add(checkPrestavky, 0, 0);
             tableLayoutPanel12.Dock = DockStyle.Fill;
@@ -1206,17 +1208,17 @@
             tableLayoutPanel12.Size = new Size(224, 148);
             tableLayoutPanel12.TabIndex = 76;
             // 
-            // checkBox2
+            // checkAutomechaniciTyp1
             // 
-            checkBox2.Anchor = AnchorStyles.None;
-            checkBox2.AutoSize = true;
-            checkBox2.Location = new Point(53, 110);
-            checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(118, 19);
-            checkBox2.TabIndex = 69;
-            checkBox2.Text = "Typy mechanikov";
-            checkBox2.UseVisualStyleBackColor = true;
-            checkBox2.CheckedChanged += checkBox2_CheckedChanged;
+            checkAutomechaniciTyp1.Anchor = AnchorStyles.None;
+            checkAutomechaniciTyp1.AutoSize = true;
+            checkAutomechaniciTyp1.Location = new Point(44, 110);
+            checkAutomechaniciTyp1.Name = "checkAutomechaniciTyp1";
+            checkAutomechaniciTyp1.Size = new Size(136, 19);
+            checkAutomechaniciTyp1.TabIndex = 69;
+            checkAutomechaniciTyp1.Text = "Automechanici typ 1";
+            checkAutomechaniciTyp1.UseVisualStyleBackColor = true;
+            checkAutomechaniciTyp1.CheckedChanged += checkBox2_CheckedChanged;
             // 
             // checkBox1
             // 
@@ -1938,7 +1940,7 @@
             ((System.ComponentModel.ISupportInitialize)dataGridViewPaymentParking).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewWorkersTech).EndInit();
             ((System.ComponentModel.ISupportInitialize)technici).EndInit();
-            ((System.ComponentModel.ISupportInitialize)AutomechaniciTyp1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)AutomechaniciTyp2).EndInit();
             ((System.ComponentModel.ISupportInitialize)UpDownSpeed).EndInit();
             ((System.ComponentModel.ISupportInitialize)UpDownRefresh).EndInit();
             ((System.ComponentModel.ISupportInitialize)UpDownRepRefresh).EndInit();
@@ -1960,7 +1962,7 @@
             PocetTechnikov.PerformLayout();
             tableLayoutPanel5.ResumeLayout(false);
             tableLayoutPanel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)AutomechaniciTyp2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)AutomechaniciTyp1).EndInit();
             tableLayoutPanel15.ResumeLayout(false);
             tableLayoutPanel15.PerformLayout();
             tableLayoutPanel19.ResumeLayout(false);
@@ -2033,7 +2035,7 @@
         private Label label12;
         private DataGridView dataGridViewWorkersTech;
         private NumericUpDown technici;
-        private NumericUpDown AutomechaniciTyp1;
+        private NumericUpDown AutomechaniciTyp2;
         private NumericUpDown UpDownSpeed;
         private NumericUpDown UpDownRefresh;
         private NumericUpDown UpDownRepRefresh;
@@ -2087,14 +2089,14 @@
         private TableLayoutPanel tableLayoutPanel6;
         private Label label5;
         private Label label2;
-        private NumericUpDown AutomechaniciTyp2;
+        private NumericUpDown AutomechaniciTyp1;
         private TableLayoutPanel tableLayoutPanel10;
         private TableLayoutPanel tableLayoutPanel9;
         private TableLayoutPanel tableLayoutPanel11;
         private TableLayoutPanel DalsieNastavenia;
         private Label label25;
         private TableLayoutPanel tableLayoutPanel12;
-        private CheckBox checkBox2;
+        private CheckBox checkAutomechaniciTyp1;
         private CheckBox checkBox1;
         private DataGridViewTextBoxColumn Name1;
         private DataGridViewTextBoxColumn Value;
@@ -2104,10 +2106,6 @@
         private DataGridViewTextBoxColumn Units2;
         private TableLayoutPanel tableLayoutPanel15;
         private Label label9;
-        private DataGridViewTextBoxColumn WorkerID;
-        private DataGridViewTextBoxColumn Type;
-        private DataGridViewTextBoxColumn Working;
-        private DataGridViewTextBoxColumn Vehicle;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
@@ -2156,5 +2154,9 @@
         private Label label24;
         private TableLayoutPanel tableLayoutPanel27;
         private TableLayoutPanel tableLayoutPanel26;
+        private DataGridViewTextBoxColumn WorkerID;
+        private DataGridViewTextBoxColumn Type;
+        private DataGridViewTextBoxColumn Working;
+        private DataGridViewTextBoxColumn Vehicle;
     }
 }

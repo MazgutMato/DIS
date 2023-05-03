@@ -34,6 +34,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 			{
                 //Stat
                 MyAgent.CasCakaniaPrevzatie.AddValue(MySim.CurrentTime - sprava.Vozidlo.CasPrichodu);
+                MyAgent.VytazenostTechnici.AddValue(MyAgent.VolniTechnici.Count);
 				//Rezervacia miesta
 				MyAgent.VolneMiestaKontrola--;
 				//Pridelenie technika
@@ -81,6 +82,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             var sprava = (MyMessage)message;
             if (MyAgent.VolniTechnici.Count > 0)
             {
+                //Stat
+                MyAgent.VytazenostTechnici.AddValue(MyAgent.VolniTechnici.Count);
                 //Pridelenie technika
                 sprava.Zamestnanec = MyAgent.VolniTechnici.Dequeue();
                 //Zacatie processu
@@ -109,6 +112,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             //Uvolnenie technika
             if (MyAgent.VolniTechnici.Count > 0)
             {
+                //Stat
+                MyAgent.VytazenostTechnici.AddValue(MyAgent.VolniTechnici.Count);
                 //Priradenie technika
                 var zamestnanec = MyAgent.VolniTechnici.Dequeue();
                 UvolnenieTechnika(zamestnanec);
@@ -225,7 +230,9 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             //Uvolnenie
             else
             {
-				MyAgent.VolniTechnici.Enqueue(zamestnanec);
+                //Stat
+                MyAgent.VytazenostTechnici.AddValue(MyAgent.VolniTechnici.Count);
+                MyAgent.VolniTechnici.Enqueue(zamestnanec);
 			}					
 		}
     }

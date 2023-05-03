@@ -102,15 +102,15 @@ namespace DIS_1
                 dataGridViewRowLine.CreateCells(dataGridViewLocal, "Dlzka rady", _core.AgentTechnici.DlzkaRadyPrevzatie.GetResult(), "vozidiel");
                 dataGridViewLocal.Rows.Add(dataGridViewRowLine);
 
-                ////Free technical
-                //var dataGridViewRowTechnical = new DataGridViewRow();
-                //dataGridViewRowTechnical.CreateCells(dataGridViewLocal, "Free technical", core._freeTechnicalLocal.GetResult(), "workers");
-                //dataGridViewLocal.Rows.Add(dataGridViewRowTechnical);
+                //Vytayenost technici
+                var dataGridViewRowTechnical = new DataGridViewRow();
+                dataGridViewRowTechnical.CreateCells(dataGridViewLocal, "Volni technici", _core.AgentTechnici.VytazenostTechnici.GetResult(), "technikov");
+                dataGridViewLocal.Rows.Add(dataGridViewRowTechnical);
 
-                ////Free inspection
-                //var dataGridViewRowInspection = new DataGridViewRow();
-                //dataGridViewRowInspection.CreateCells(dataGridViewLocal, "Free inspection", core._freeInspectionLocal.GetResult(), "workers");
-                //dataGridViewLocal.Rows.Add(dataGridViewRowInspection);
+                //Vytazenost automechanic
+                var dataGridViewRowInspection = new DataGridViewRow();
+                dataGridViewRowInspection.CreateCells(dataGridViewLocal, "Volni automechanic", _core.AgentAutomechanici.VytazenostAutomechanikov.GetResult(), "automechnikov");
+                dataGridViewLocal.Rows.Add(dataGridViewRowInspection);
 
                 //Arrival line
                 textBoxArrival.Text = _core.AgentTechnici.ParkoviskoPrevziate.Count.ToString();
@@ -127,7 +127,7 @@ namespace DIS_1
                 }
 
                 //Workers INS
-                textBoxIns.Text = (_core.AgentAutomechanici.VolniAutomechanici.Count).ToString() + "/" +
+                textBoxIns.Text = (_core.AgentAutomechanici.VolniAutomechaniciTyp1.Count).ToString() + "/" +
                     _core.AgentAutomechanici.VsetciAutomechanici.Count;
                 dataGridViewWorkersIns.Rows.Clear();
                 foreach (var zamestnanec in _core.AgentAutomechanici.VsetciAutomechanici)
@@ -223,15 +223,15 @@ namespace DIS_1
                     dataGridViewRowLine.CreateCells(dataGridViewGlobal, "Dlzka rady", _core.DlzkaRadyPrevzatie.GetResult(), "vozidiel");
                     dataGridViewGlobal.Rows.Add(dataGridViewRowLine);
 
-                    //    //Free technical
-                    //    var dataGridViewRowTechnical = new DataGridViewRow();
-                    //    dataGridViewRowTechnical.CreateCells(dataGridViewGlobal, "Free technical", core._freeTechnicalGlobal.GetResult(), "workers");
-                    //    dataGridViewGlobal.Rows.Add(dataGridViewRowTechnical);
+                    //Vytazenie technici
+                    var dataGridViewRowTechnical = new DataGridViewRow();
+                    dataGridViewRowTechnical.CreateCells(dataGridViewGlobal, "Volni technici", _core.VytazenieTechnici.GetResult(), "technikov");
+                    dataGridViewGlobal.Rows.Add(dataGridViewRowTechnical);
 
-                    //    //Free inspection
-                    //    var dataGridViewRowInspection = new DataGridViewRow();
-                    //    dataGridViewRowInspection.CreateCells(dataGridViewGlobal, "Free inspection", core._freeInspectionGlobal.GetResult(), "workers");
-                    //    dataGridViewGlobal.Rows.Add(dataGridViewRowInspection);
+                    //Vytazenie automechani
+                    var dataGridViewRowInspection = new DataGridViewRow();
+                    dataGridViewRowInspection.CreateCells(dataGridViewGlobal, "Volni automechanici", _core.VytazenieAutomechanici.GetResult(), "automechanikov");
+                    dataGridViewGlobal.Rows.Add(dataGridViewRowInspection);
                 }));
             }
         }
@@ -273,12 +273,22 @@ namespace DIS_1
             if (!_isRunning)
             {
                 var pocetReplikacii = Convert.ToInt32(UpDownRepCount.Value);
-                var pocetAutomechanikov = Convert.ToInt32(AutomechaniciTyp1.Value);
+                var automechaniciTyp1 = checkAutomechaniciTyp1.Checked;
+                var pocetAutomechanikovTyp1 = Convert.ToInt32(AutomechaniciTyp1.Value);
+                var pocetAutomechanikovTyp2 = Convert.ToInt32(AutomechaniciTyp2.Value);
                 var pocetTechnikov = Convert.ToInt32(technici.Value);
                 var prestavky = checkPrestavky.Checked;
 
                 _isRunning = true;
-                _core.AgentAutomechanici.PocetAutomechanikov = pocetAutomechanikov;
+                if (automechaniciTyp1)
+                {
+                    _core.AgentAutomechanici.PocetAutomechanikovTyp1 = pocetAutomechanikovTyp1;
+                }
+                else
+                {
+                    _core.AgentAutomechanici.PocetAutomechanikovTyp1 = 0;
+                }
+                _core.AgentAutomechanici.PocetAutomechanikovTyp2 = pocetAutomechanikovTyp2;
                 _core.AgentTechnici.PocetTechnikov = pocetTechnikov;
                 _core.AgentSTK.AktivovatPrestavky = prestavky;
 
@@ -382,14 +392,28 @@ namespace DIS_1
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox2.Checked == true)
+            if (checkAutomechaniciTyp1.Checked == true)
             {
-                AutomechaniciTyp2.Enabled = true;
+                AutomechaniciTyp1.Enabled = true;
+                _core.AgentAutomechanici.PocetAutomechanikovTyp1 = (int)AutomechaniciTyp1.Value;
+                _core.AgentAutomechanici.PocetAutomechanikovTyp2 = (int)AutomechaniciTyp2.Value;
             }
             else
             {
-                AutomechaniciTyp2.Enabled = false;
+                AutomechaniciTyp1.Enabled = false;
+                _core.AgentAutomechanici.PocetAutomechanikovTyp1 = 0;
+                _core.AgentAutomechanici.PocetAutomechanikovTyp2 = (int)AutomechaniciTyp2.Value;
             }
+        }
+
+        private void AutomechaniciTyp2_ValueChanged(object sender, EventArgs e)
+        {
+            _core.AgentAutomechanici.PocetAutomechanikovTyp2 = (int)AutomechaniciTyp2.Value;
+        }
+
+        private void AutomechaniciTyp1_ValueChanged(object sender, EventArgs e)
+        {
+            _core.AgentAutomechanici.PocetAutomechanikovTyp1 = (int)AutomechaniciTyp1.Value;
         }
     }
 }

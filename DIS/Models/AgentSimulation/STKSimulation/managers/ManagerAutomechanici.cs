@@ -42,10 +42,10 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
 		public void ProcessKontrolaVozidla(MessageForm message)
         {
             var sprava = (MyMessage)message;
-            if(MyAgent.VolniAutomechanici.Count > 0)
+            PriradAutomechanika(sprava);
+            if (sprava.Zamestnanec != null)
             {
                 //Zaciatok kontroly
-                sprava.Zamestnanec = MyAgent.VolniAutomechanici.Dequeue();
                 sprava.Addressee = MyAgent.FindAssistant(SimId.ProcessKontroly);
                 StartContinualAssistant(sprava);
                 //Uvolnenie miesta
@@ -55,10 +55,10 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             {
                 MyAgent.ParkoviskoKontrola.Enqueue(sprava);
             }
-        }
+        }      
 
-		//meta! userInfo="Process messages defined in code", id="0"
-		public void ProcessDefault(MessageForm message)
+        //meta! userInfo="Process messages defined in code", id="0"
+        public void ProcessDefault(MessageForm message)
         {
             switch (message.Code)
             {
@@ -81,9 +81,10 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
                 technik.VykonajPrestavku = true;
             }
             //Vykonanie prestavky
-            while(MyAgent.VolniAutomechanici.Count > 0)
+            while(MyAgent.VolniAutomechaniciTyp1.Count > 0)
             {
-                var mechanik = MyAgent.VolniAutomechanici.Dequeue();
+                //Prestavka
+                var mechanik = MyAgent.VolniAutomechaniciTyp1.Dequeue();
                 UvolnenieAutomechanika(mechanik);
             }
         }
@@ -149,20 +150,66 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
                 sprava.Addressee = MyAgent.FindAssistant(SimId.PrestavkaAutomechanici);
                 StartContinualAssistant(sprava);
             }
-            //Kontrola
-            else if (MyAgent.ParkoviskoKontrola.Count > 0)
-            {
-                var spravaKontrola = MyAgent.ParkoviskoKontrola.Dequeue();
-                spravaKontrola.Zamestnanec = zamestnanec;
-                spravaKontrola.Addressee = MyAgent.FindAssistant(SimId.ProcessKontroly);
-                StartContinualAssistant(spravaKontrola);
-                UvolnenieMiesta();
-            }
-            //uvolnenie
+            //Uvolnenie a kontrola
             else
             {
-                MyAgent.VolniAutomechanici.Enqueue(zamestnanec);
+                //Uvolnenie
+                if (zamestnanec.Typ == TypZamestnanca.AUTOMECHANIK_TYP_1)
+                {
+                    //Stat
+                    ZaznamenajVytazenost();
+                    MyAgent.VolniAutomechaniciTyp1.Enqueue(zamestnanec);
+                }
+                else
+                {
+                    //Stat
+                    ZaznamenajVytazenost();
+                    MyAgent.VolniAutomechaniciTyp2.Enqueue(zamestnanec);
+                }
+                //Vykonanie kontroly
+                if(MyAgent.ParkoviskoKontrola.Count > 0)
+                {
+                    var spravaKontrola = MyAgent.ParkoviskoKontrola.Peek();
+                    PriradAutomechanika(spravaKontrola);
+                    if (spravaKontrola.Zamestnanec != null)
+                    {
+                        MyAgent.ParkoviskoKontrola.Dequeue();
+                        spravaKontrola.Addressee = MyAgent.FindAssistant(SimId.ProcessKontroly);
+                        StartContinualAssistant(spravaKontrola);
+                        UvolnenieMiesta();
+                    }
+                }                
             }
+        }
+        private void PriradAutomechanika(MyMessage sprava)
+        {
+            sprava.Zamestnanec = null;
+            if(sprava.Vozidlo.TypVozidla == TypVozidla.NAKLADNE &&
+                MyAgent.VolniAutomechaniciTyp2.Count > 0)
+            {
+                //Stat
+                ZaznamenajVytazenost();
+                sprava.Zamestnanec = MyAgent.VolniAutomechaniciTyp2.Dequeue();                               
+            }
+            else
+            {
+                if(MyAgent.VolniAutomechaniciTyp1.Count>0)
+                {
+                    //Stat
+                    ZaznamenajVytazenost();
+                    sprava.Zamestnanec = MyAgent.VolniAutomechaniciTyp1.Dequeue();
+                }else if (MyAgent.VolniAutomechaniciTyp2.Count > 0)
+                {
+                    //Stat
+                    ZaznamenajVytazenost();
+                    sprava.Zamestnanec = MyAgent.VolniAutomechaniciTyp2.Dequeue();
+                }
+            }
+        }
+        private void ZaznamenajVytazenost()
+        {
+            MyAgent.VytazenostAutomechanikov.AddValue(MyAgent.VolniAutomechaniciTyp1.Count +
+                MyAgent.VolniAutomechaniciTyp2.Count);
         }
     }
 }

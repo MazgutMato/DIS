@@ -3,7 +3,8 @@
     public enum TypZamestnanca
     {
         TECHNIK,
-        AUTOMECHANIK,
+        AUTOMECHANIK_TYP_2,
+        AUTOMECHANIK_TYP_1,
     }
     public enum Pracuje
     {

@@ -11,6 +11,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.simulation
         public NormalStatistic PocetVozidielVSysteme { get; set; }
         public NormalStatistic PocetVozidielNaKonciDna { get; set; }
         public NormalStatistic DlzkaRadyPrevzatie { get; set; }
+        public NormalStatistic VytazenieTechnici { get; set; }
+        public NormalStatistic VytazenieAutomechanici { get; set; }
         public MySimulation()
         {
             Init();
@@ -25,6 +27,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.simulation
             PocetVozidielNaKonciDna = new NormalStatistic();
             PocetVozidielVSysteme = new NormalStatistic();
             DlzkaRadyPrevzatie = new NormalStatistic();
+            VytazenieAutomechanici = new NormalStatistic();
+            VytazenieTechnici = new NormalStatistic();
         }
 
         override protected void PrepareReplication()
@@ -36,14 +40,19 @@ namespace DIS.Models.AgentSimulation.STKSimulation.simulation
         override protected void ReplicationFinished()
         {
             //Local update
-            AgentOkolia.VozidlaVSysteme.AddValue(AgentOkolia.PocetVozidilVSysteme);
+            //AgentOkolia.VozidlaVSysteme.AddValue(AgentOkolia.PocetVozidilVSysteme);
             AgentTechnici.DlzkaRadyPrevzatie.AddValue(AgentTechnici.ParkoviskoPrevziate.Count);
+            AgentTechnici.VytazenostTechnici.AddValue(AgentTechnici.VolniTechnici.Count);
+            AgentAutomechanici.VytazenostAutomechanikov.AddValue(AgentAutomechanici.VolniAutomechaniciTyp1.Count +
+                AgentAutomechanici.VolniAutomechaniciTyp2.Count);
             //Global
             CasVSysteme.AddValue(AgentOkolia.CasVSysteme.GetResult());
             CasCakaniaPrevzatie.AddValue(AgentTechnici.CasCakaniaPrevzatie.GetResult());
             PocetVozidielVSysteme.AddValue(AgentOkolia.VozidlaVSysteme.GetResult());
             PocetVozidielNaKonciDna.AddValue(AgentOkolia.PocetVozidilVSysteme);
             DlzkaRadyPrevzatie.AddValue(AgentTechnici.DlzkaRadyPrevzatie.GetResult());
+            VytazenieTechnici.AddValue(AgentTechnici.VytazenostTechnici.GetResult());
+            VytazenieAutomechanici.AddValue(AgentAutomechanici.VytazenostAutomechanikov.GetResult());
             // Collect local statistics into global, update UI, etc...
             base.ReplicationFinished();
         }

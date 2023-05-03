@@ -18,6 +18,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
         public int VolneMiestaKontrola { get; set; }
         public NormalStatistic CasCakaniaPrevzatie { get; set; }
         public WeightStatistic DlzkaRadyPrevzatie { get;set; }
+        public WeightStatistic VytazenostTechnici { get; set; }
         public AgentTechnici(int id, Simulation mySim, Agent parent) :
             base(id, mySim, parent)
         {
@@ -35,6 +36,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
             //Stat
             CasCakaniaPrevzatie = new NormalStatistic();
             DlzkaRadyPrevzatie = new WeightStatistic(MySim);
+            VytazenostTechnici = new WeightStatistic(MySim);
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
