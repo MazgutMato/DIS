@@ -40,7 +40,6 @@ namespace DIS.Models.AgentSimulation.STKSimulation.simulation
         override protected void ReplicationFinished()
         {
             //Local update
-            //AgentOkolia.VozidlaVSysteme.AddValue(AgentOkolia.PocetVozidilVSysteme);
             AgentTechnici.DlzkaRadyPrevzatie.AddValue(AgentTechnici.ParkoviskoPrevziate.Count);
             AgentTechnici.VytazenostTechnici.AddValue(AgentTechnici.VolniTechnici.Count);
             AgentAutomechanici.VytazenostAutomechanikov.AddValue(AgentAutomechanici.VolniAutomechaniciTyp1.Count +

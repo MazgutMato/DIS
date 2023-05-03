@@ -71,6 +71,15 @@ namespace DIS_1
         {
             _isRunning = false;
             _isPaused = false;
+
+            RefreshUI(_core);
+            Invoke((System.Action)(() =>
+            {
+                buttonRun.Enabled = true;
+                NastaveniaSimulácie.Enabled = true;
+                DalsieNastavenia.Enabled = true;
+                PocetTechnikov.Enabled = true;
+            }));
         }
         private void RefreshUI(Simulation simulation)
         {
@@ -299,6 +308,7 @@ namespace DIS_1
                 NastaveniaSimulácie.Enabled = false;
                 DalsieNastavenia.Enabled = false;
                 PocetTechnikov.Enabled = false;
+                panelRychlost.Enabled = true;
             }
         }
         private void buttonStop_Click(object sender, EventArgs e)

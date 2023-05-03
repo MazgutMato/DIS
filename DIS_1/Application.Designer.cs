@@ -247,7 +247,7 @@
             buttonStop.Location = new Point(411, 2);
             buttonStop.Margin = new Padding(3, 2, 3, 2);
             buttonStop.Name = "buttonStop";
-            buttonStop.Size = new Size(188, 52);
+            buttonStop.Size = new Size(188, 50);
             buttonStop.TabIndex = 7;
             buttonStop.Text = "Stop";
             buttonStop.UseVisualStyleBackColor = true;
@@ -279,7 +279,7 @@
             // textBoxActualRep
             // 
             textBoxActualRep.Anchor = AnchorStyles.None;
-            textBoxActualRep.Location = new Point(109, 8);
+            textBoxActualRep.Location = new Point(109, 7);
             textBoxActualRep.Margin = new Padding(3, 2, 3, 2);
             textBoxActualRep.Name = "textBoxActualRep";
             textBoxActualRep.ReadOnly = true;
@@ -292,7 +292,7 @@
             buttonPause.Location = new Point(207, 2);
             buttonPause.Margin = new Padding(3, 2, 3, 2);
             buttonPause.Name = "buttonPause";
-            buttonPause.Size = new Size(198, 52);
+            buttonPause.Size = new Size(198, 50);
             buttonPause.TabIndex = 17;
             buttonPause.Text = "Pauza";
             buttonPause.UseVisualStyleBackColor = true;
@@ -304,7 +304,7 @@
             buttonRun.Location = new Point(3, 2);
             buttonRun.Margin = new Padding(3, 2, 3, 2);
             buttonRun.Name = "buttonRun";
-            buttonRun.Size = new Size(198, 52);
+            buttonRun.Size = new Size(198, 50);
             buttonRun.TabIndex = 18;
             buttonRun.Text = "Štart";
             buttonRun.UseVisualStyleBackColor = true;
@@ -316,7 +316,7 @@
             buttonTurbo.Location = new Point(3, 2);
             buttonTurbo.Margin = new Padding(3, 2, 3, 2);
             buttonTurbo.Name = "buttonTurbo";
-            buttonTurbo.Size = new Size(194, 35);
+            buttonTurbo.Size = new Size(194, 34);
             buttonTurbo.TabIndex = 23;
             buttonTurbo.Text = "Turbo";
             buttonTurbo.UseVisualStyleBackColor = true;
@@ -325,10 +325,10 @@
             // buttonNormal
             // 
             buttonNormal.Dock = DockStyle.Fill;
-            buttonNormal.Location = new Point(3, 41);
+            buttonNormal.Location = new Point(3, 40);
             buttonNormal.Margin = new Padding(3, 2, 3, 2);
             buttonNormal.Name = "buttonNormal";
-            buttonNormal.Size = new Size(194, 35);
+            buttonNormal.Size = new Size(194, 34);
             buttonNormal.TabIndex = 24;
             buttonNormal.Text = "Normal";
             buttonNormal.UseVisualStyleBackColor = true;
@@ -391,7 +391,7 @@
             dataGridViewLocal.RowHeadersVisible = false;
             dataGridViewLocal.RowHeadersWidth = 62;
             dataGridViewLocal.RowTemplate.Height = 25;
-            dataGridViewLocal.Size = new Size(434, 256);
+            dataGridViewLocal.Size = new Size(434, 225);
             dataGridViewLocal.TabIndex = 30;
             // 
             // dataGridViewTextBoxColumn1
@@ -423,7 +423,7 @@
             // textBoxActualTime
             // 
             textBoxActualTime.Anchor = AnchorStyles.None;
-            textBoxActualTime.Location = new Point(109, 47);
+            textBoxActualTime.Location = new Point(109, 45);
             textBoxActualTime.Margin = new Padding(3, 2, 3, 2);
             textBoxActualTime.Name = "textBoxActualTime";
             textBoxActualTime.ReadOnly = true;
@@ -438,13 +438,13 @@
             dataGridViewArrivalQueue.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewArrivalQueue.Columns.AddRange(new DataGridViewColumn[] { VehicleID, VehicleType, ArrivalTime });
             dataGridViewArrivalQueue.Dock = DockStyle.Fill;
-            dataGridViewArrivalQueue.Location = new Point(4, 65);
+            dataGridViewArrivalQueue.Location = new Point(4, 40);
             dataGridViewArrivalQueue.Name = "dataGridViewArrivalQueue";
             dataGridViewArrivalQueue.ReadOnly = true;
             dataGridViewArrivalQueue.RowHeadersVisible = false;
             dataGridViewArrivalQueue.RowHeadersWidth = 62;
             dataGridViewArrivalQueue.RowTemplate.Height = 25;
-            dataGridViewArrivalQueue.Size = new Size(205, 266);
+            dataGridViewArrivalQueue.Size = new Size(286, 211);
             dataGridViewArrivalQueue.TabIndex = 33;
             // 
             // VehicleID
@@ -462,7 +462,7 @@
             VehicleType.MinimumWidth = 8;
             VehicleType.Name = "VehicleType";
             VehicleType.ReadOnly = true;
-            VehicleType.Width = 80;
+            VehicleType.Width = 120;
             // 
             // ArrivalTime
             // 
@@ -470,7 +470,7 @@
             ArrivalTime.MinimumWidth = 8;
             ArrivalTime.Name = "ArrivalTime";
             ArrivalTime.ReadOnly = true;
-            ArrivalTime.Width = 80;
+            ArrivalTime.Width = 120;
             // 
             // label7
             // 
@@ -479,7 +479,7 @@
             label7.Location = new Point(1, 0);
             label7.Margin = new Padding(1, 0, 1, 0);
             label7.Name = "label7";
-            label7.Size = new Size(96, 42);
+            label7.Size = new Size(160, 21);
             label7.TabIndex = 34;
             label7.Text = "Parkovisko prichody";
             // 
@@ -491,13 +491,13 @@
             dataGridViewWorkersIns.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewWorkersIns.Columns.AddRange(new DataGridViewColumn[] { WorkerID, Type, Working, Vehicle });
             dataGridViewWorkersIns.Dock = DockStyle.Fill;
-            dataGridViewWorkersIns.Location = new Point(4, 41);
+            dataGridViewWorkersIns.Location = new Point(4, 35);
             dataGridViewWorkersIns.Name = "dataGridViewWorkersIns";
             dataGridViewWorkersIns.ReadOnly = true;
             dataGridViewWorkersIns.RowHeadersVisible = false;
             dataGridViewWorkersIns.RowHeadersWidth = 62;
             dataGridViewWorkersIns.RowTemplate.Height = 25;
-            dataGridViewWorkersIns.Size = new Size(453, 208);
+            dataGridViewWorkersIns.Size = new Size(453, 214);
             dataGridViewWorkersIns.TabIndex = 35;
             // 
             // WorkerID
@@ -506,7 +506,7 @@
             WorkerID.MinimumWidth = 8;
             WorkerID.Name = "WorkerID";
             WorkerID.ReadOnly = true;
-            WorkerID.Width = 40;
+            WorkerID.Width = 30;
             // 
             // Type
             // 
@@ -522,7 +522,6 @@
             Working.MinimumWidth = 8;
             Working.Name = "Working";
             Working.ReadOnly = true;
-            Working.Width = 125;
             // 
             // Vehicle
             // 
@@ -530,7 +529,7 @@
             Vehicle.MinimumWidth = 8;
             Vehicle.Name = "Vehicle";
             Vehicle.ReadOnly = true;
-            Vehicle.Width = 140;
+            Vehicle.Width = 170;
             // 
             // dataGridViewInspectionParking
             // 
@@ -540,13 +539,13 @@
             dataGridViewInspectionParking.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewInspectionParking.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6 });
             dataGridViewInspectionParking.Dock = DockStyle.Fill;
-            dataGridViewInspectionParking.Location = new Point(4, 65);
+            dataGridViewInspectionParking.Location = new Point(4, 51);
             dataGridViewInspectionParking.Name = "dataGridViewInspectionParking";
             dataGridViewInspectionParking.ReadOnly = true;
             dataGridViewInspectionParking.RowHeadersVisible = false;
             dataGridViewInspectionParking.RowHeadersWidth = 62;
             dataGridViewInspectionParking.RowTemplate.Height = 25;
-            dataGridViewInspectionParking.Size = new Size(169, 266);
+            dataGridViewInspectionParking.Size = new Size(225, 200);
             dataGridViewInspectionParking.TabIndex = 39;
             // 
             // dataGridViewTextBoxColumn5
@@ -555,7 +554,6 @@
             dataGridViewTextBoxColumn5.MinimumWidth = 8;
             dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             dataGridViewTextBoxColumn5.ReadOnly = true;
-            dataGridViewTextBoxColumn5.Width = 60;
             // 
             // dataGridViewTextBoxColumn6
             // 
@@ -563,6 +561,7 @@
             dataGridViewTextBoxColumn6.MinimumWidth = 8;
             dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             dataGridViewTextBoxColumn6.ReadOnly = true;
+            dataGridViewTextBoxColumn6.Width = 120;
             // 
             // dataGridViewPaymentParking
             // 
@@ -572,13 +571,13 @@
             dataGridViewPaymentParking.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewPaymentParking.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn7, dataGridViewTextBoxColumn8 });
             dataGridViewPaymentParking.Dock = DockStyle.Fill;
-            dataGridViewPaymentParking.Location = new Point(4, 65);
+            dataGridViewPaymentParking.Location = new Point(4, 50);
             dataGridViewPaymentParking.Name = "dataGridViewPaymentParking";
             dataGridViewPaymentParking.ReadOnly = true;
             dataGridViewPaymentParking.RowHeadersVisible = false;
             dataGridViewPaymentParking.RowHeadersWidth = 62;
             dataGridViewPaymentParking.RowTemplate.Height = 25;
-            dataGridViewPaymentParking.Size = new Size(165, 266);
+            dataGridViewPaymentParking.Size = new Size(226, 201);
             dataGridViewPaymentParking.TabIndex = 42;
             // 
             // dataGridViewTextBoxColumn7
@@ -587,7 +586,6 @@
             dataGridViewTextBoxColumn7.MinimumWidth = 8;
             dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
             dataGridViewTextBoxColumn7.ReadOnly = true;
-            dataGridViewTextBoxColumn7.Width = 60;
             // 
             // dataGridViewTextBoxColumn8
             // 
@@ -595,6 +593,7 @@
             dataGridViewTextBoxColumn8.MinimumWidth = 8;
             dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             dataGridViewTextBoxColumn8.ReadOnly = true;
+            dataGridViewTextBoxColumn8.Width = 120;
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -631,13 +630,13 @@
             dataGridViewWorkersTech.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewWorkersTech.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn9, dataGridViewTextBoxColumn10, dataGridViewTextBoxColumn11, dataGridViewTextBoxColumn12 });
             dataGridViewWorkersTech.Dock = DockStyle.Fill;
-            dataGridViewWorkersTech.Location = new Point(4, 39);
+            dataGridViewWorkersTech.Location = new Point(4, 35);
             dataGridViewWorkersTech.Name = "dataGridViewWorkersTech";
             dataGridViewWorkersTech.ReadOnly = true;
             dataGridViewWorkersTech.RowHeadersVisible = false;
             dataGridViewWorkersTech.RowHeadersWidth = 62;
             dataGridViewWorkersTech.RowTemplate.Height = 25;
-            dataGridViewWorkersTech.Size = new Size(453, 240);
+            dataGridViewWorkersTech.Size = new Size(453, 214);
             dataGridViewWorkersTech.TabIndex = 48;
             // 
             // dataGridViewTextBoxColumn9
@@ -646,7 +645,7 @@
             dataGridViewTextBoxColumn9.MinimumWidth = 8;
             dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             dataGridViewTextBoxColumn9.ReadOnly = true;
-            dataGridViewTextBoxColumn9.Width = 60;
+            dataGridViewTextBoxColumn9.Width = 30;
             // 
             // dataGridViewTextBoxColumn10
             // 
@@ -654,7 +653,7 @@
             dataGridViewTextBoxColumn10.MinimumWidth = 8;
             dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             dataGridViewTextBoxColumn10.ReadOnly = true;
-            dataGridViewTextBoxColumn10.Width = 125;
+            dataGridViewTextBoxColumn10.Width = 145;
             // 
             // dataGridViewTextBoxColumn11
             // 
@@ -662,7 +661,6 @@
             dataGridViewTextBoxColumn11.MinimumWidth = 8;
             dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
             dataGridViewTextBoxColumn11.ReadOnly = true;
-            dataGridViewTextBoxColumn11.Width = 125;
             // 
             // dataGridViewTextBoxColumn12
             // 
@@ -670,7 +668,7 @@
             dataGridViewTextBoxColumn12.MinimumWidth = 8;
             dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
             dataGridViewTextBoxColumn12.ReadOnly = true;
-            dataGridViewTextBoxColumn12.Width = 140;
+            dataGridViewTextBoxColumn12.Width = 170;
             // 
             // technici
             // 
@@ -698,7 +696,7 @@
             UpDownSpeed.Anchor = AnchorStyles.None;
             UpDownSpeed.DecimalPlaces = 1;
             UpDownSpeed.Increment = new decimal(new int[] { 2, 0, 0, 65536 });
-            UpDownSpeed.Location = new Point(115, 8);
+            UpDownSpeed.Location = new Point(115, 7);
             UpDownSpeed.Minimum = new decimal(new int[] { 2, 0, 0, 65536 });
             UpDownSpeed.Name = "UpDownSpeed";
             UpDownSpeed.Size = new Size(51, 23);
@@ -709,7 +707,7 @@
             // UpDownRefresh
             // 
             UpDownRefresh.Anchor = AnchorStyles.None;
-            UpDownRefresh.Location = new Point(115, 47);
+            UpDownRefresh.Location = new Point(115, 45);
             UpDownRefresh.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             UpDownRefresh.Name = "UpDownRefresh";
             UpDownRefresh.Size = new Size(51, 23);
@@ -742,11 +740,11 @@
             // textBoxArrival
             // 
             textBoxArrival.Anchor = AnchorStyles.None;
-            textBoxArrival.Location = new Point(136, 15);
+            textBoxArrival.Location = new Point(236, 3);
             textBoxArrival.Margin = new Padding(3, 2, 3, 2);
             textBoxArrival.Name = "textBoxArrival";
             textBoxArrival.ReadOnly = true;
-            textBoxArrival.Size = new Size(49, 23);
+            textBoxArrival.Size = new Size(47, 23);
             textBoxArrival.TabIndex = 62;
             // 
             // textBoxTechnical
@@ -762,17 +760,17 @@
             // textBoxInsP
             // 
             textBoxInsP.Anchor = AnchorStyles.None;
-            textBoxInsP.Location = new Point(112, 15);
+            textBoxInsP.Location = new Point(181, 8);
             textBoxInsP.Margin = new Padding(3, 2, 3, 2);
             textBoxInsP.Name = "textBoxInsP";
             textBoxInsP.ReadOnly = true;
-            textBoxInsP.Size = new Size(49, 23);
+            textBoxInsP.Size = new Size(41, 23);
             textBoxInsP.TabIndex = 64;
             // 
             // textBoxPayment
             // 
             textBoxPayment.Anchor = AnchorStyles.None;
-            textBoxPayment.Location = new Point(107, 15);
+            textBoxPayment.Location = new Point(173, 8);
             textBoxPayment.Margin = new Padding(3, 2, 3, 2);
             textBoxPayment.Name = "textBoxPayment";
             textBoxPayment.ReadOnly = true;
@@ -843,19 +841,19 @@
             tableLayoutPanel30.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel30.Controls.Add(tableLayoutPanel31, 0, 0);
             tableLayoutPanel30.Controls.Add(dataGridViewInspectionParking, 0, 1);
-            tableLayoutPanel30.Location = new Point(1141, 273);
+            tableLayoutPanel30.Location = new Point(817, 453);
             tableLayoutPanel30.Name = "tableLayoutPanel30";
             tableLayoutPanel30.RowCount = 2;
             tableLayoutPanel30.RowStyles.Add(new RowStyle(SizeType.Percent, 18.3734932F));
             tableLayoutPanel30.RowStyles.Add(new RowStyle(SizeType.Percent, 81.6265F));
-            tableLayoutPanel30.Size = new Size(177, 335);
+            tableLayoutPanel30.Size = new Size(233, 255);
             tableLayoutPanel30.TabIndex = 80;
             // 
             // tableLayoutPanel31
             // 
             tableLayoutPanel31.ColumnCount = 2;
-            tableLayoutPanel31.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.6436768F));
-            tableLayoutPanel31.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.3563232F));
+            tableLayoutPanel31.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 79.23077F));
+            tableLayoutPanel31.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20.76923F));
             tableLayoutPanel31.Controls.Add(label10, 0, 0);
             tableLayoutPanel31.Controls.Add(textBoxInsP, 1, 0);
             tableLayoutPanel31.Dock = DockStyle.Fill;
@@ -863,7 +861,7 @@
             tableLayoutPanel31.Name = "tableLayoutPanel31";
             tableLayoutPanel31.RowCount = 1;
             tableLayoutPanel31.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel31.Size = new Size(169, 54);
+            tableLayoutPanel31.Size = new Size(225, 40);
             tableLayoutPanel31.TabIndex = 77;
             // 
             // label10
@@ -873,7 +871,7 @@
             label10.Location = new Point(1, 0);
             label10.Margin = new Padding(1, 0, 1, 0);
             label10.Name = "label10";
-            label10.Size = new Size(96, 42);
+            label10.Size = new Size(159, 21);
             label10.TabIndex = 34;
             label10.Text = "Parkovisko kontrola";
             // 
@@ -884,19 +882,19 @@
             tableLayoutPanel28.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel28.Controls.Add(tableLayoutPanel29, 0, 0);
             tableLayoutPanel28.Controls.Add(dataGridViewPaymentParking, 0, 1);
-            tableLayoutPanel28.Location = new Point(1326, 273);
+            tableLayoutPanel28.Location = new Point(1074, 453);
             tableLayoutPanel28.Name = "tableLayoutPanel28";
             tableLayoutPanel28.RowCount = 2;
             tableLayoutPanel28.RowStyles.Add(new RowStyle(SizeType.Percent, 18.0722885F));
             tableLayoutPanel28.RowStyles.Add(new RowStyle(SizeType.Percent, 81.92771F));
-            tableLayoutPanel28.Size = new Size(173, 335);
+            tableLayoutPanel28.Size = new Size(234, 255);
             tableLayoutPanel28.TabIndex = 79;
             // 
             // tableLayoutPanel29
             // 
             tableLayoutPanel29.ColumnCount = 2;
-            tableLayoutPanel29.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 59.7701149F));
-            tableLayoutPanel29.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40.2298851F));
+            tableLayoutPanel29.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 74.89712F));
+            tableLayoutPanel29.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25.10288F));
             tableLayoutPanel29.Controls.Add(label24, 0, 0);
             tableLayoutPanel29.Controls.Add(textBoxPayment, 1, 0);
             tableLayoutPanel29.Dock = DockStyle.Fill;
@@ -904,7 +902,7 @@
             tableLayoutPanel29.Name = "tableLayoutPanel29";
             tableLayoutPanel29.RowCount = 1;
             tableLayoutPanel29.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel29.Size = new Size(165, 54);
+            tableLayoutPanel29.Size = new Size(226, 39);
             tableLayoutPanel29.TabIndex = 77;
             // 
             // label24
@@ -914,7 +912,7 @@
             label24.Location = new Point(1, 0);
             label24.Margin = new Padding(1, 0, 1, 0);
             label24.Name = "label24";
-            label24.Size = new Size(96, 42);
+            label24.Size = new Size(143, 21);
             label24.TabIndex = 34;
             label24.Text = "Parkovisko platby";
             // 
@@ -925,12 +923,12 @@
             tableLayoutPanel25.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel25.Controls.Add(tableLayoutPanel18, 0, 0);
             tableLayoutPanel25.Controls.Add(dataGridViewWorkersTech, 0, 1);
-            tableLayoutPanel25.Location = new Point(455, 452);
+            tableLayoutPanel25.Location = new Point(455, 193);
             tableLayoutPanel25.Name = "tableLayoutPanel25";
             tableLayoutPanel25.RowCount = 2;
             tableLayoutPanel25.RowStyles.Add(new RowStyle(SizeType.Percent, 12.3674908F));
             tableLayoutPanel25.RowStyles.Add(new RowStyle(SizeType.Percent, 87.63251F));
-            tableLayoutPanel25.Size = new Size(461, 283);
+            tableLayoutPanel25.Size = new Size(461, 253);
             tableLayoutPanel25.TabIndex = 79;
             // 
             // tableLayoutPanel18
@@ -945,7 +943,7 @@
             tableLayoutPanel18.Name = "tableLayoutPanel18";
             tableLayoutPanel18.RowCount = 1;
             tableLayoutPanel18.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel18.Size = new Size(453, 28);
+            tableLayoutPanel18.Size = new Size(453, 24);
             tableLayoutPanel18.TabIndex = 78;
             // 
             // PocetTechnikov
@@ -1055,7 +1053,7 @@
             tableLayoutPanel15.RowCount = 2;
             tableLayoutPanel15.RowStyles.Add(new RowStyle());
             tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Percent, 81.08108F));
-            tableLayoutPanel15.Size = new Size(442, 286);
+            tableLayoutPanel15.Size = new Size(442, 255);
             tableLayoutPanel15.TabIndex = 69;
             // 
             // label9
@@ -1077,11 +1075,11 @@
             tableLayoutPanel19.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel19.Controls.Add(dataGridViewWorkersIns, 0, 1);
             tableLayoutPanel19.Controls.Add(tableLayoutPanel17, 0, 0);
-            tableLayoutPanel19.Location = new Point(455, 193);
+            tableLayoutPanel19.Location = new Point(922, 193);
             tableLayoutPanel19.Name = "tableLayoutPanel19";
             tableLayoutPanel19.RowCount = 2;
-            tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 14.7982063F));
-            tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 85.2018F));
+            tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 12.3015871F));
+            tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Percent, 87.69841F));
             tableLayoutPanel19.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel19.Size = new Size(461, 253);
             tableLayoutPanel19.TabIndex = 79;
@@ -1097,7 +1095,7 @@
             tableLayoutPanel17.Name = "tableLayoutPanel17";
             tableLayoutPanel17.RowCount = 1;
             tableLayoutPanel17.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel17.Size = new Size(453, 27);
+            tableLayoutPanel17.Size = new Size(453, 24);
             tableLayoutPanel17.TabIndex = 77;
             // 
             // label6
@@ -1154,11 +1152,11 @@
             // 
             label15.Anchor = AnchorStyles.None;
             label15.AutoSize = true;
-            label15.Location = new Point(11, 103);
+            label15.Location = new Point(18, 95);
             label15.Name = "label15";
-            label15.Size = new Size(92, 15);
+            label15.Size = new Size(78, 30);
             label15.TabIndex = 62;
-            label15.Text = "Pocet vykresleni";
+            label15.Text = "Intenzita vykreslovania";
             // 
             // DalsieNastavenia
             // 
@@ -1249,19 +1247,19 @@
             tableLayoutPanel27.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel27.Controls.Add(dataGridViewArrivalQueue, 0, 1);
             tableLayoutPanel27.Controls.Add(tableLayoutPanel26, 0, 0);
-            tableLayoutPanel27.Location = new Point(922, 273);
+            tableLayoutPanel27.Location = new Point(493, 453);
             tableLayoutPanel27.Name = "tableLayoutPanel27";
             tableLayoutPanel27.RowCount = 2;
-            tableLayoutPanel27.RowStyles.Add(new RowStyle(SizeType.Percent, 18.1347141F));
-            tableLayoutPanel27.RowStyles.Add(new RowStyle(SizeType.Percent, 81.86529F));
-            tableLayoutPanel27.Size = new Size(213, 335);
+            tableLayoutPanel27.RowStyles.Add(new RowStyle(SizeType.Percent, 14.1732283F));
+            tableLayoutPanel27.RowStyles.Add(new RowStyle(SizeType.Percent, 85.8267746F));
+            tableLayoutPanel27.Size = new Size(294, 255);
             tableLayoutPanel27.TabIndex = 78;
             // 
             // tableLayoutPanel26
             // 
             tableLayoutPanel26.ColumnCount = 2;
-            tableLayoutPanel26.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 57.4879227F));
-            tableLayoutPanel26.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 42.5120773F));
+            tableLayoutPanel26.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 81.6129F));
+            tableLayoutPanel26.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 18.3870964F));
             tableLayoutPanel26.Controls.Add(label7, 0, 0);
             tableLayoutPanel26.Controls.Add(textBoxArrival, 1, 0);
             tableLayoutPanel26.Dock = DockStyle.Fill;
@@ -1269,7 +1267,7 @@
             tableLayoutPanel26.Name = "tableLayoutPanel26";
             tableLayoutPanel26.RowCount = 1;
             tableLayoutPanel26.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel26.Size = new Size(205, 54);
+            tableLayoutPanel26.Size = new Size(286, 29);
             tableLayoutPanel26.TabIndex = 77;
             // 
             // tableLayoutPanel11
@@ -1284,7 +1282,7 @@
             tableLayoutPanel11.RowCount = 2;
             tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel11.Size = new Size(618, 187);
+            tableLayoutPanel11.Size = new Size(618, 183);
             tableLayoutPanel11.TabIndex = 75;
             // 
             // tableLayoutPanel8
@@ -1301,7 +1299,7 @@
             tableLayoutPanel8.RowStyles.Add(new RowStyle());
             tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 81.08108F));
             tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel8.Size = new Size(610, 86);
+            tableLayoutPanel8.Size = new Size(610, 84);
             tableLayoutPanel8.TabIndex = 69;
             // 
             // label23
@@ -1329,7 +1327,7 @@
             tableLayoutPanel7.Name = "tableLayoutPanel7";
             tableLayoutPanel7.RowCount = 1;
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel7.Size = new Size(602, 56);
+            tableLayoutPanel7.Size = new Size(602, 54);
             tableLayoutPanel7.TabIndex = 72;
             // 
             // tableLayoutPanel10
@@ -1343,11 +1341,11 @@
             tableLayoutPanel10.Controls.Add(panelRychlost, 2, 0);
             tableLayoutPanel10.Controls.Add(tableLayoutPanel9, 1, 0);
             tableLayoutPanel10.Dock = DockStyle.Fill;
-            tableLayoutPanel10.Location = new Point(4, 97);
+            tableLayoutPanel10.Location = new Point(4, 95);
             tableLayoutPanel10.Name = "tableLayoutPanel10";
             tableLayoutPanel10.RowCount = 1;
             tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel10.Size = new Size(610, 86);
+            tableLayoutPanel10.Size = new Size(610, 84);
             tableLayoutPanel10.TabIndex = 74;
             // 
             // tableLayoutPanel6
@@ -1365,14 +1363,14 @@
             tableLayoutPanel6.RowCount = 2;
             tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel6.Size = new Size(200, 78);
+            tableLayoutPanel6.Size = new Size(200, 76);
             tableLayoutPanel6.TabIndex = 71;
             // 
             // label5
             // 
             label5.Anchor = AnchorStyles.None;
             label5.AutoSize = true;
-            label5.Location = new Point(37, 51);
+            label5.Location = new Point(37, 49);
             label5.Name = "label5";
             label5.Size = new Size(26, 15);
             label5.TabIndex = 72;
@@ -1382,7 +1380,7 @@
             // 
             label13.Anchor = AnchorStyles.None;
             label13.AutoSize = true;
-            label13.Location = new Point(20, 12);
+            label13.Location = new Point(20, 11);
             label13.Name = "label13";
             label13.Size = new Size(60, 15);
             label13.TabIndex = 71;
@@ -1402,14 +1400,14 @@
             panelRychlost.RowCount = 2;
             panelRychlost.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             panelRychlost.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            panelRychlost.Size = new Size(188, 78);
+            panelRychlost.Size = new Size(188, 76);
             panelRychlost.TabIndex = 72;
             // 
             // label3
             // 
             label3.Anchor = AnchorStyles.None;
             label3.AutoSize = true;
-            label3.Location = new Point(8, 51);
+            label3.Location = new Point(8, 49);
             label3.Name = "label3";
             label3.Size = new Size(77, 15);
             label3.TabIndex = 73;
@@ -1419,7 +1417,7 @@
             // 
             label4.Anchor = AnchorStyles.None;
             label4.AutoSize = true;
-            label4.Location = new Point(9, 12);
+            label4.Location = new Point(9, 11);
             label4.Name = "label4";
             label4.Size = new Size(75, 15);
             label4.TabIndex = 72;
@@ -1437,7 +1435,7 @@
             tableLayoutPanel9.RowCount = 2;
             tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel9.Size = new Size(200, 78);
+            tableLayoutPanel9.Size = new Size(200, 76);
             tableLayoutPanel9.TabIndex = 73;
             // 
             // tabPageChart1
@@ -1927,7 +1925,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1530, 791);
+            ClientSize = new Size(1429, 768);
             Controls.Add(tabControl1);
             Margin = new Padding(3, 2, 3, 2);
             Name = "Application";
@@ -2106,10 +2104,6 @@
         private DataGridViewTextBoxColumn Units2;
         private TableLayoutPanel tableLayoutPanel15;
         private Label label9;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
         private TableLayoutPanel tableLayoutPanel25;
         private TableLayoutPanel tableLayoutPanel18;
         private Label label6;
@@ -2139,13 +2133,6 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn25;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn26;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn27;
-        private DataGridViewTextBoxColumn VehicleID;
-        private DataGridViewTextBoxColumn VehicleType;
-        private DataGridViewTextBoxColumn ArrivalTime;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private TableLayoutPanel tableLayoutPanel30;
         private TableLayoutPanel tableLayoutPanel31;
         private Label label10;
@@ -2158,5 +2145,16 @@
         private DataGridViewTextBoxColumn Type;
         private DataGridViewTextBoxColumn Working;
         private DataGridViewTextBoxColumn Vehicle;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private DataGridViewTextBoxColumn VehicleID;
+        private DataGridViewTextBoxColumn VehicleType;
+        private DataGridViewTextBoxColumn ArrivalTime;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
     }
 }
