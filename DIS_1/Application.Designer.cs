@@ -111,7 +111,7 @@
             label25 = new Label();
             tableLayoutPanel12 = new TableLayoutPanel();
             checkAutomechaniciTyp1 = new CheckBox();
-            checkBox1 = new CheckBox();
+            checkBoxZrychlenie = new CheckBox();
             checkPrestavky = new CheckBox();
             tableLayoutPanel27 = new TableLayoutPanel();
             tableLayoutPanel26 = new TableLayoutPanel();
@@ -1194,7 +1194,7 @@
             tableLayoutPanel12.ColumnCount = 1;
             tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel12.Controls.Add(checkAutomechaniciTyp1, 0, 2);
-            tableLayoutPanel12.Controls.Add(checkBox1, 0, 1);
+            tableLayoutPanel12.Controls.Add(checkBoxZrychlenie, 0, 1);
             tableLayoutPanel12.Controls.Add(checkPrestavky, 0, 0);
             tableLayoutPanel12.Dock = DockStyle.Fill;
             tableLayoutPanel12.Location = new Point(4, 28);
@@ -1218,16 +1218,17 @@
             checkAutomechaniciTyp1.UseVisualStyleBackColor = true;
             checkAutomechaniciTyp1.CheckedChanged += checkBox2_CheckedChanged;
             // 
-            // checkBox1
+            // checkBoxZrychlenie
             // 
-            checkBox1.Anchor = AnchorStyles.None;
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(71, 60);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(81, 19);
-            checkBox1.TabIndex = 68;
-            checkBox1.Text = "Zrychlenie";
-            checkBox1.UseVisualStyleBackColor = true;
+            checkBoxZrychlenie.Anchor = AnchorStyles.None;
+            checkBoxZrychlenie.AutoSize = true;
+            checkBoxZrychlenie.Location = new Point(71, 60);
+            checkBoxZrychlenie.Name = "checkBoxZrychlenie";
+            checkBoxZrychlenie.Size = new Size(81, 19);
+            checkBoxZrychlenie.TabIndex = 68;
+            checkBoxZrychlenie.Text = "Zrychlenie";
+            checkBoxZrychlenie.UseVisualStyleBackColor = true;
+            checkBoxZrychlenie.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // checkPrestavky
             // 
@@ -2095,7 +2096,7 @@
         private Label label25;
         private TableLayoutPanel tableLayoutPanel12;
         private CheckBox checkAutomechaniciTyp1;
-        private CheckBox checkBox1;
+        private CheckBox checkBoxZrychlenie;
         private DataGridViewTextBoxColumn Name1;
         private DataGridViewTextBoxColumn Value;
         private DataGridViewTextBoxColumn Units;

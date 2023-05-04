@@ -425,5 +425,10 @@ namespace DIS_1
         {
             _core.AgentAutomechanici.PocetAutomechanikovTyp1 = (int)AutomechaniciTyp1.Value;
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            _core.AgentOkolia.ZrychleniePrichodu = checkBoxZrychlenie.Checked;
+        }
     }
 }

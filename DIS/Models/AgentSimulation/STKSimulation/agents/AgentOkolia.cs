@@ -9,6 +9,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
     //meta! id="2"
     public class AgentOkolia : Agent
     {
+        public bool ZrychleniePrichodu { get; set; } = false;
         public NormalStatistic CasVSysteme { get; set; }
         public WeightStatistic VozidlaVSysteme { get; set; }
         public int PocetVozidilVSysteme { get; set; }

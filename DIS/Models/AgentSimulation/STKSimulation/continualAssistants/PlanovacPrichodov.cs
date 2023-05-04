@@ -10,11 +10,13 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
     public class PlanovacPrichodov : Scheduler
     {
         private Exponential RozdeleniePrichod { get; set; }
+        private Exponential RozdeleniePrichodZrychlene { get; set; }
         private DiscreteEmpirical RozdelenieTyp { get; set; }
         private int PocetVozidiel { get; set; }
         public PlanovacPrichodov(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)
         {
+            RozdeleniePrichodZrychlene = new Exponential((double)3600 / 23 * 0.76);
             RozdeleniePrichod = new Exponential((double)3600 / 23);
             var empParams = new List<EmpiricalParam>();
             empParams.AddRange(new[] {
@@ -46,7 +48,15 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
             switch (message.Code)
             {
                 case Mc.NovyZakaznik:
-                    var dalsiPrichod = RozdeleniePrichod.Next();
+                    var dalsiPrichod = 0.0;
+                    if (MyAgent.ZrychleniePrichodu)
+                    {
+                        dalsiPrichod = RozdeleniePrichodZrychlene.Next();
+                    }
+                    else
+                    {
+                        dalsiPrichod = RozdeleniePrichod.Next();
+                    }                    
                     if ((MySim.CurrentTime + dalsiPrichod) < 405 * 60)
                     {
                         Hold(dalsiPrichod, message.CreateCopy());
