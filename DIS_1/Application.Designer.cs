@@ -708,6 +708,7 @@
             // 
             UpDownRefresh.Anchor = AnchorStyles.None;
             UpDownRefresh.Location = new Point(115, 45);
+            UpDownRefresh.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             UpDownRefresh.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             UpDownRefresh.Name = "UpDownRefresh";
             UpDownRefresh.Size = new Size(51, 23);

@@ -72,7 +72,6 @@ namespace DIS_1
             _isRunning = false;
             _isPaused = false;
 
-            RefreshUI(_core);
             Invoke((System.Action)(() =>
             {
                 buttonRun.Enabled = true;

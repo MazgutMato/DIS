@@ -39,11 +39,6 @@ namespace DIS.Models.AgentSimulation.STKSimulation.simulation
 
         override protected void ReplicationFinished()
         {
-            //Local update
-            AgentTechnici.DlzkaRadyPrevzatie.AddValue(AgentTechnici.ParkoviskoPrevziate.Count);
-            AgentTechnici.VytazenostTechnici.AddValue(AgentTechnici.VolniTechnici.Count);
-            AgentAutomechanici.VytazenostAutomechanikov.AddValue(AgentAutomechanici.VolniAutomechaniciTyp1.Count +
-                AgentAutomechanici.VolniAutomechaniciTyp2.Count);
             //Global
             CasVSysteme.AddValue(AgentOkolia.CasVSysteme.GetResult());
             CasCakaniaPrevzatie.AddValue(AgentTechnici.CasCakaniaPrevzatie.GetResult());

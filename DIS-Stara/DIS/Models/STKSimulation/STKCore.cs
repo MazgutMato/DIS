@@ -142,11 +142,6 @@ namespace DIS.Models.STKSimulation
 
             if (!_stopSimulation)
             {
-                this._lineLengthLocal.AddValue(this._vehicleLine.Count);
-                //this._vehicleInSystemLocal.AddValue(this._actualCarsInSystem);
-                this._freeTechnicalLocal.AddValue(this._technicWorkers.Count);
-                this._freeInspectionLocal.AddValue(this._inspectionWorkers.Count);
-
                 this._waitingTimeGlobal.AddValue(_waitingTimeLocal.GetResult());
                 this._timeInSystemGlobal.AddValue(_timeInSystemLocal.GetResult());
                 this._lineLengthGlobal.AddValue(_lineLengthLocal.GetResult());
