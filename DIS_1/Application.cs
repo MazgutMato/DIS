@@ -72,6 +72,8 @@ namespace DIS_1
             _isRunning = false;
             _isPaused = false;
 
+            RefreshGlobalStat();
+
             Invoke((System.Action)(() =>
             {
                 buttonRun.Enabled = true;
@@ -183,7 +185,13 @@ namespace DIS_1
         }
         private void OnReplicationDidFinish(Simulation obj)
         {
-            if ((_core.CurrentReplication % UpDownRepRefresh.Value) == 0)
+            RefreshGlobalStat();
+        }
+        private void RefreshGlobalStat()
+        {
+            //Local clear
+            ClearLocalStat();
+            if ((_core.CurrentReplication % UpDownRepRefresh.Value) == 0 || _isRunning == false)
             {
                 Invoke((System.Action)(() =>
                 {
@@ -256,16 +264,22 @@ namespace DIS_1
         {
             _core.SetSimSpeed(Convert.ToDouble(UpDownRefresh.Value), Convert.ToDouble(UpDownSpeed.Value));
         }
-
+        private void ClearLocalStat()
+        {
+            Invoke((System.Action)(() =>
+            {
+                dataGridViewArrivalQueue.Rows.Clear();
+                dataGridViewLocal.Rows.Clear();
+                dataGridViewPaymentParking.Rows.Clear();
+                dataGridViewInspectionParking.Rows.Clear();
+                dataGridViewWorkersIns.Rows.Clear();
+                dataGridViewWorkersTech.Rows.Clear();
+            }));
+        }
         private void buttonTurbo_Click(object sender, EventArgs e)
         {
             _core.SetMaxSimSpeed();
-            dataGridViewArrivalQueue.Rows.Clear();
-            dataGridViewLocal.Rows.Clear();
-            dataGridViewPaymentParking.Rows.Clear();
-            dataGridViewInspectionParking.Rows.Clear();
-            dataGridViewWorkersIns.Rows.Clear();
-            dataGridViewWorkersTech.Rows.Clear();
+            ClearLocalStat();
             textBoxActualTime.Text = string.Empty;
             textBoxIns.Text = string.Empty;
             textBoxTechnical.Text = string.Empty;
