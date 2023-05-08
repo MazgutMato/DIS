@@ -110,9 +110,10 @@
             DalsieNastavenia = new TableLayoutPanel();
             label25 = new Label();
             tableLayoutPanel12 = new TableLayoutPanel();
-            checkAutomechaniciTyp1 = new CheckBox();
+            checkBoxCSV = new CheckBox();
             checkBoxZrychlenie = new CheckBox();
             checkPrestavky = new CheckBox();
+            checkAutomechaniciTyp1 = new CheckBox();
             tableLayoutPanel27 = new TableLayoutPanel();
             tableLayoutPanel26 = new TableLayoutPanel();
             tableLayoutPanel11 = new TableLayoutPanel();
@@ -1219,38 +1220,41 @@
             tableLayoutPanel12.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanel12.ColumnCount = 1;
             tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel12.Controls.Add(checkAutomechaniciTyp1, 0, 2);
+            tableLayoutPanel12.Controls.Add(checkBoxCSV, 0, 2);
             tableLayoutPanel12.Controls.Add(checkBoxZrychlenie, 0, 1);
             tableLayoutPanel12.Controls.Add(checkPrestavky, 0, 0);
+            tableLayoutPanel12.Controls.Add(checkAutomechaniciTyp1, 0, 3);
             tableLayoutPanel12.Dock = DockStyle.Fill;
             tableLayoutPanel12.Location = new Point(4, 36);
             tableLayoutPanel12.Margin = new Padding(3, 4, 3, 4);
             tableLayoutPanel12.Name = "tableLayoutPanel12";
-            tableLayoutPanel12.RowCount = 3;
+            tableLayoutPanel12.RowCount = 4;
             tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Absolute, 72F));
+            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Absolute, 67F));
             tableLayoutPanel12.Size = new Size(257, 199);
             tableLayoutPanel12.TabIndex = 76;
             // 
-            // checkAutomechaniciTyp1
+            // checkBoxCSV
             // 
-            checkAutomechaniciTyp1.Anchor = AnchorStyles.None;
-            checkAutomechaniciTyp1.AutoSize = true;
-            checkAutomechaniciTyp1.Location = new Point(45, 149);
-            checkAutomechaniciTyp1.Margin = new Padding(3, 4, 3, 4);
-            checkAutomechaniciTyp1.Name = "checkAutomechaniciTyp1";
-            checkAutomechaniciTyp1.Size = new Size(167, 24);
-            checkAutomechaniciTyp1.TabIndex = 69;
-            checkAutomechaniciTyp1.Text = "Automechanici typ 1";
-            checkAutomechaniciTyp1.UseVisualStyleBackColor = true;
-            checkAutomechaniciTyp1.CheckedChanged += checkBox2_CheckedChanged;
+            checkBoxCSV.Anchor = AnchorStyles.None;
+            checkBoxCSV.AutoSize = true;
+            checkBoxCSV.Checked = true;
+            checkBoxCSV.CheckState = CheckState.Checked;
+            checkBoxCSV.Location = new Point(65, 97);
+            checkBoxCSV.Margin = new Padding(3, 4, 3, 4);
+            checkBoxCSV.Name = "checkBoxCSV";
+            checkBoxCSV.Size = new Size(126, 24);
+            checkBoxCSV.TabIndex = 81;
+            checkBoxCSV.Text = "Export do CSV";
+            checkBoxCSV.UseVisualStyleBackColor = true;
             // 
             // checkBoxZrychlenie
             // 
             checkBoxZrychlenie.Anchor = AnchorStyles.None;
             checkBoxZrychlenie.AutoSize = true;
-            checkBoxZrychlenie.Location = new Point(79, 81);
+            checkBoxZrychlenie.Location = new Point(79, 54);
             checkBoxZrychlenie.Margin = new Padding(3, 4, 3, 4);
             checkBoxZrychlenie.Name = "checkBoxZrychlenie";
             checkBoxZrychlenie.Size = new Size(99, 24);
@@ -1263,13 +1267,26 @@
             // 
             checkPrestavky.Anchor = AnchorStyles.None;
             checkPrestavky.AutoSize = true;
-            checkPrestavky.Location = new Point(82, 19);
+            checkPrestavky.Location = new Point(82, 10);
             checkPrestavky.Margin = new Padding(3, 4, 3, 4);
             checkPrestavky.Name = "checkPrestavky";
             checkPrestavky.Size = new Size(92, 24);
             checkPrestavky.TabIndex = 67;
             checkPrestavky.Text = "Prestavky";
             checkPrestavky.UseVisualStyleBackColor = true;
+            // 
+            // checkAutomechaniciTyp1
+            // 
+            checkAutomechaniciTyp1.Anchor = AnchorStyles.None;
+            checkAutomechaniciTyp1.AutoSize = true;
+            checkAutomechaniciTyp1.Location = new Point(45, 152);
+            checkAutomechaniciTyp1.Margin = new Padding(3, 4, 3, 4);
+            checkAutomechaniciTyp1.Name = "checkAutomechaniciTyp1";
+            checkAutomechaniciTyp1.Size = new Size(167, 24);
+            checkAutomechaniciTyp1.TabIndex = 69;
+            checkAutomechaniciTyp1.Text = "Automechanici typ 1";
+            checkAutomechaniciTyp1.UseVisualStyleBackColor = true;
+            checkAutomechaniciTyp1.CheckedChanged += checkBox2_CheckedChanged;
             // 
             // tableLayoutPanel27
             // 
@@ -2199,5 +2216,6 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private CheckBox checkBoxCSV;
     }
 }

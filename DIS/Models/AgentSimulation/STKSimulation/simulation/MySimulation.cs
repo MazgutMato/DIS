@@ -12,7 +12,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.simulation
         public NormalStatistic PocetVozidielNaKonciDna { get; set; }
         public NormalStatistic DlzkaRadyPrevzatie { get; set; }
         public NormalStatistic VytazenieTechnici { get; set; }
-        public NormalStatistic VytazenieAutomechanici { get; set; }
+        public NormalStatistic VytazenieAutomechaniciTyp1 { get; set; }
+        public NormalStatistic VytazenieAutomechaniciTyp2 { get; set; }
         public MySimulation()
         {
             Init();
@@ -27,7 +28,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.simulation
             PocetVozidielNaKonciDna = new NormalStatistic();
             PocetVozidielVSysteme = new NormalStatistic();
             DlzkaRadyPrevzatie = new NormalStatistic();
-            VytazenieAutomechanici = new NormalStatistic();
+            VytazenieAutomechaniciTyp1 = new NormalStatistic();
+            VytazenieAutomechaniciTyp2 = new NormalStatistic();
             VytazenieTechnici = new NormalStatistic();
         }
 
@@ -46,7 +48,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.simulation
             PocetVozidielNaKonciDna.AddValue(AgentOkolia.PocetVozidilVSysteme);
             DlzkaRadyPrevzatie.AddValue(AgentTechnici.DlzkaRadyPrevzatie.GetResult());
             VytazenieTechnici.AddValue(AgentTechnici.VytazenostTechnici.GetResult());
-            VytazenieAutomechanici.AddValue(AgentAutomechanici.VytazenostAutomechanikov.GetResult());
+            VytazenieAutomechaniciTyp1.AddValue(AgentAutomechanici.VytazenostAutomechanikovTyp1.GetResult());
+            VytazenieAutomechaniciTyp2.AddValue(AgentAutomechanici.VytazenostAutomechanikovTyp2.GetResult());
             // Collect local statistics into global, update UI, etc...
             base.ReplicationFinished();
         }

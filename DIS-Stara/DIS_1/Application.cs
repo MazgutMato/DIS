@@ -52,6 +52,8 @@ namespace DIS_1
                 _core?.RunSimulation();
             });
 
+            ExportToCSV();
+
             _core = null;
             buttonRun.Enabled = true;
             buttonStop.Enabled = false;
@@ -62,6 +64,58 @@ namespace DIS_1
             UpDownRepCount.Enabled = true;
             buttonTurbo.Enabled = false;
             buttonNormal.Enabled = false;
+        }
+
+        private void ExportToCSV()
+        {
+            var core = (STKCore)_core;
+            // Sample data to append
+            string[] newRow = {
+                core._actualRepCount.ToString(),
+                core._technicWorkersCount.ToString(),
+                core._inspectionWorkersCount.ToString(),
+                core._vehicleInSystemGlobal.GetResult().ToString(),
+                core._vehicleInSystemGlobal.ConfidenceInterval(95).ToString(),
+                core._vehiclesAtTheEnd.GetResult().ToString(),
+                core._timeInSystemGlobal.GetResult().ToString(),
+                core._timeInSystemGlobal.ConfidenceInterval(90).ToString(),
+                core._waitingTimeGlobal.GetResult().ToString(),
+                core._lineLengthGlobal.GetResult().ToString(),
+                core._freeTechnicalGlobal.GetResult().ToString(),
+                core._freeInspectionGlobal.GetResult().ToString(),                
+            };
+
+            string csvFilePath = "..\\..\\..\\data.csv";
+
+            // Check if the file exists
+            bool fileExists = File.Exists(csvFilePath);
+
+            // Open the file in append mode
+            using (StreamWriter writer = new StreamWriter(csvFilePath, true))
+            {
+                // Write headers if the file doesn't exist
+                if (!fileExists)
+                {
+                    string[] headers = {
+                        "Pocet replikacii",
+                        "Pocet technikov",
+                        "Pocet automechanikov",
+                        "Pocet vozidiel v systeme",
+                        "Pocet vozidiel v systeme IS",
+                        "Pocet vozidel na konci dna",
+                        "Cas v systeme",
+                        "Cas v systeme IS",
+                        "Cakanie na prevzatie",
+                        "Dlzka rady",
+                        "Volni technici",
+                        "Volni automechanici typ",
+                    };
+                    writer.WriteLine(string.Join(";", headers));
+                }
+
+                // Write the new row
+                writer.WriteLine(string.Join(";", newRow));
+            }
         }
 
         private void UpdateData(object sender, EventArgs e)

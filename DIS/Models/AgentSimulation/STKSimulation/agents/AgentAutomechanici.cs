@@ -10,7 +10,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
     //meta! id="21"
     public class AgentAutomechanici : Agent
     {        
-        public WeightStatistic VytazenostAutomechanikov { get; set; }
+        public WeightStatistic VytazenostAutomechanikovTyp1 { get; set; }
+        public WeightStatistic VytazenostAutomechanikovTyp2 { get; set; }
         public int PocetAutomechanikovTyp1 { get; set; } = Config.PocetAutomechanikovTyp1;
         public Queue<Zamestnanec> VolniAutomechaniciTyp1 { get; set; }
         public int PocetAutomechanikovTyp2 { get; set; } = Config.PocetAutomechanikovTyp2;
@@ -32,7 +33,8 @@ namespace DIS.Models.AgentSimulation.STKSimulation.agents
             ParkoviskoKontrola = new Queue<MyMessage>(Config.KapacitaParkoviskaKontrola);
             ZmenPocetAutomechanikov(PocetAutomechanikovTyp1, PocetAutomechanikovTyp2);
             //Stat
-            VytazenostAutomechanikov = new WeightStatistic(MySim);
+            VytazenostAutomechanikovTyp1 = new WeightStatistic(MySim);
+            VytazenostAutomechanikovTyp2 = new WeightStatistic(MySim);
         }
 
         //meta! userInfo="Generated code: do not modify", tag="begin"

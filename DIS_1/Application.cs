@@ -74,6 +74,11 @@ namespace DIS_1
 
             RefreshGlobalStat();
 
+            if (checkBoxCSV.Checked)
+            {
+                ExportToCSV();
+            }
+
             Invoke((System.Action)(() =>
             {
                 buttonRun.Enabled = true;
@@ -82,6 +87,61 @@ namespace DIS_1
                 PocetTechnikov.Enabled = true;
             }));
         }
+
+        private void ExportToCSV()
+        {
+            // Sample data to append
+            string[] newRow = {
+                _core.CurrentReplication.ToString(),
+                _core.AgentTechnici.PocetTechnikov.ToString(),
+                _core.AgentAutomechanici.PocetAutomechanikovTyp1.ToString(),
+                _core.AgentAutomechanici.PocetAutomechanikovTyp2.ToString(),
+                _core.PocetVozidielVSysteme.GetResult().ToString(),
+                _core.PocetVozidielVSysteme.ConfidenceInterval(95).ToString(),
+                _core.PocetVozidielNaKonciDna.GetResult().ToString(),
+                _core.CasVSysteme.GetResult().ToString(),
+                _core.CasVSysteme.ConfidenceInterval(90).ToString(),
+                _core.CasCakaniaPrevzatie.GetResult().ToString(),
+                _core.DlzkaRadyPrevzatie.GetResult().ToString(),
+                _core.VytazenieTechnici.GetResult().ToString(),
+                _core.VytazenieAutomechaniciTyp1.GetResult().ToString(),
+                _core.VytazenieAutomechaniciTyp2.GetResult().ToString(),
+            };
+
+            string csvFilePath = "..\\..\\..\\data.csv";
+
+            // Check if the file exists
+            bool fileExists = File.Exists(csvFilePath);
+
+            // Open the file in append mode
+            using (StreamWriter writer = new StreamWriter(csvFilePath, true))
+            {
+                // Write headers if the file doesn't exist
+                if (!fileExists)
+                {
+                    string[] headers = {
+                        "Pocet replikacii",
+                        "Pocet technikov",
+                        "Pocet automechanikov typ 1",
+                        "Pocet automechanikov typ 2",
+                        "Pocet vozidiel v systeme",
+                        "Pocet vozidiel v systeme IS",
+                        "Pocet vozidel na konci dna",
+                        "Cas v systeme",
+                        "Cas v systeme IS",
+                        "Cakanie na prevzatie",
+                        "Dlzka rady",
+                        "Volni technici",
+                        "Volni automechanici typ 1",
+                        "Volni automechanici typ 2", };
+                    writer.WriteLine(string.Join(";", headers));
+                }
+
+                // Write the new row
+                writer.WriteLine(string.Join(";", newRow));
+            }
+        }
+
         private void RefreshUI(Simulation simulation)
         {
             Invoke((System.Action)(() =>
@@ -118,9 +178,12 @@ namespace DIS_1
                 dataGridViewLocal.Rows.Add(dataGridViewRowTechnical);
 
                 //Vytazenost automechanic
-                var dataGridViewRowInspection = new DataGridViewRow();
-                dataGridViewRowInspection.CreateCells(dataGridViewLocal, "Volni automechanic", _core.AgentAutomechanici.VytazenostAutomechanikov.GetResult(), "automechnikov");
-                dataGridViewLocal.Rows.Add(dataGridViewRowInspection);
+                var dataGridViewRowInspection1 = new DataGridViewRow();
+                dataGridViewRowInspection1.CreateCells(dataGridViewLocal, "Volni automechanici typ 1", _core.AgentAutomechanici.VytazenostAutomechanikovTyp1.GetResult(), "automechnikov");
+                dataGridViewLocal.Rows.Add(dataGridViewRowInspection1);
+                var dataGridViewRowInspection2 = new DataGridViewRow();
+                dataGridViewRowInspection2.CreateCells(dataGridViewLocal, "Volni automechanici typ 2", _core.AgentAutomechanici.VytazenostAutomechanikovTyp2.GetResult(), "automechnikov");
+                dataGridViewLocal.Rows.Add(dataGridViewRowInspection2);
 
                 //Arrival line
                 textBoxArrival.Text = _core.AgentTechnici.ParkoviskoPrevziate.Count.ToString();
@@ -245,9 +308,12 @@ namespace DIS_1
                     dataGridViewGlobal.Rows.Add(dataGridViewRowTechnical);
 
                     //Vytazenie automechani
-                    var dataGridViewRowInspection = new DataGridViewRow();
-                    dataGridViewRowInspection.CreateCells(dataGridViewGlobal, "Volni automechanici", _core.VytazenieAutomechanici.GetResult(), "automechanikov");
-                    dataGridViewGlobal.Rows.Add(dataGridViewRowInspection);
+                    var dataGridViewRowInspection1 = new DataGridViewRow();
+                    dataGridViewRowInspection1.CreateCells(dataGridViewGlobal, "Volni automechanici typ 1", _core.VytazenieAutomechaniciTyp1.GetResult(), "automechanikov");
+                    dataGridViewGlobal.Rows.Add(dataGridViewRowInspection1);
+                    var dataGridViewRowInspection2 = new DataGridViewRow();
+                    dataGridViewRowInspection2.CreateCells(dataGridViewGlobal, "Volni automechanici typ 2", _core.VytazenieAutomechaniciTyp2.GetResult(), "automechanikov");
+                    dataGridViewGlobal.Rows.Add(dataGridViewRowInspection2);
                 }));
             }
         }

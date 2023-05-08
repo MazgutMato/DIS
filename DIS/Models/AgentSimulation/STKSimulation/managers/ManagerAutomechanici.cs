@@ -80,11 +80,20 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
             {
                 technik.VykonajPrestavku = true;
             }
+            //Stat
+            MyAgent.VytazenostAutomechanikovTyp1.AddValue(MyAgent.VolniAutomechaniciTyp1.Count);
+            MyAgent.VytazenostAutomechanikovTyp2.AddValue(MyAgent.VolniAutomechaniciTyp2.Count);
             //Vykonanie prestavky
-            while(MyAgent.VolniAutomechaniciTyp1.Count > 0)
+            while (MyAgent.VolniAutomechaniciTyp1.Count > 0)
             {
                 //Prestavka
                 var mechanik = MyAgent.VolniAutomechaniciTyp1.Dequeue();
+                UvolnenieAutomechanika(mechanik);
+            }
+            while (MyAgent.VolniAutomechaniciTyp2.Count > 0)
+            {                
+                //Prestavka
+                var mechanik = MyAgent.VolniAutomechaniciTyp2.Dequeue();
                 UvolnenieAutomechanika(mechanik);
             }
         }
@@ -157,13 +166,13 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
                 if (zamestnanec.Typ == TypZamestnanca.AUTOMECHANIK_TYP_1)
                 {
                     //Stat
-                    ZaznamenajVytazenost();
+                    MyAgent.VytazenostAutomechanikovTyp1.AddValue(MyAgent.VolniAutomechaniciTyp1.Count); 
                     MyAgent.VolniAutomechaniciTyp1.Enqueue(zamestnanec);
                 }
                 else
                 {
                     //Stat
-                    ZaznamenajVytazenost();
+                    MyAgent.VytazenostAutomechanikovTyp2.AddValue(MyAgent.VolniAutomechaniciTyp2.Count);
                     MyAgent.VolniAutomechaniciTyp2.Enqueue(zamestnanec);
                 }
                 //Vykonanie kontroly
@@ -188,7 +197,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
                 MyAgent.VolniAutomechaniciTyp2.Count > 0)
             {
                 //Stat
-                ZaznamenajVytazenost();
+                MyAgent.VytazenostAutomechanikovTyp2.AddValue(MyAgent.VolniAutomechaniciTyp2.Count);
                 sprava.Zamestnanec = MyAgent.VolniAutomechaniciTyp2.Dequeue();                               
             }
             else
@@ -196,20 +205,15 @@ namespace DIS.Models.AgentSimulation.STKSimulation.managers
                 if(MyAgent.VolniAutomechaniciTyp1.Count>0)
                 {
                     //Stat
-                    ZaznamenajVytazenost();
+                    MyAgent.VytazenostAutomechanikovTyp1.AddValue(MyAgent.VolniAutomechaniciTyp1.Count);
                     sprava.Zamestnanec = MyAgent.VolniAutomechaniciTyp1.Dequeue();
                 }else if (MyAgent.VolniAutomechaniciTyp2.Count > 0)
                 {
                     //Stat
-                    ZaznamenajVytazenost();
+                    MyAgent.VytazenostAutomechanikovTyp2.AddValue(MyAgent.VolniAutomechaniciTyp2.Count);
                     sprava.Zamestnanec = MyAgent.VolniAutomechaniciTyp2.Dequeue();
                 }
             }
-        }
-        private void ZaznamenajVytazenost()
-        {
-            MyAgent.VytazenostAutomechanikov.AddValue(MyAgent.VolniAutomechaniciTyp1.Count +
-                MyAgent.VolniAutomechaniciTyp2.Count);
         }
     }
 }
