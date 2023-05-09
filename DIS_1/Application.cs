@@ -50,8 +50,9 @@ namespace DIS_1
             cartesianChart1.Series = _chartModel1._series;
             cartesianChart1.XAxes = _chartModel1._xAxes;
             cartesianChart1.YAxes = _chartModel1._yAxes;
-            _chartModel1.RenameX("Count of technical workers");
-            _chartModel1.RenameY("Average of waiting vehicles");
+            _chartModel1.RenameX("Pocet technikov");
+            _chartModel1.RenameY("Priemerny pocet vozidiel na parkovisku");
+            _coreChart1.OnSimulationDidFinish(OnUpdateChart1);
 
             _coreChart2 = new MySimulation();
             buttonStopChart2.Enabled = false;
@@ -59,9 +60,23 @@ namespace DIS_1
             cartesianChart2.Series = _chartModel2._series;
             cartesianChart2.XAxes = _chartModel2._xAxes;
             cartesianChart2.YAxes = _chartModel2._yAxes;
-            _chartModel2.RenameX("Count of inspection workers");
-            _chartModel2.RenameY("Average time in system / min");
+            _chartModel2.RenameX("Pocet automechanikov(Typ1/Typ2)");
+            _chartModel2.RenameY("Priemerny cas v systeme(minuty)");
+            _coreChart2.OnSimulationDidFinish(OnUpdateChart2);
         }
+
+        private void OnUpdateChart1(Simulation obj)
+        {
+            _chartModel1.Add(new(_coreChart1.AgentTechnici.PocetTechnikov,
+                _coreChart1.DlzkaRadyPrevzatie.GetResult()));
+        }
+
+        private void OnUpdateChart2(Simulation obj)
+        {
+            _chartModel2.Add(new(_coreChart2.AgentAutomechanici.PocetAutomechanikovTyp1,
+                _coreChart1.CasVSysteme.GetResult()));
+        }
+
         private void OnSimulationWillStart(Simulation obj)
         {
             _isRunning = true;
@@ -431,53 +446,6 @@ namespace DIS_1
         {
             SetNormalSpeed();
         }
-        private void buttonRunChart1_Click(object sender, EventArgs e)
-        {
-            if (!_isRunningChart1)
-            {
-                for (int i = 1; i < 16; i++)
-                {
-                    var repCount = Convert.ToInt32(UpDownRepCountCH1.Value);
-                    //_coreChart1._inspectionWorkersCount = Convert.ToInt32(UpDownInspCH1.Value);
-                    //_coreChart1._technicWorkersCount = i;
-
-                    _isRunningChart1 = true;
-                    _coreChart1.SimulateAsync(repCount);
-                }
-            }
-            _chartModel1.Clear();
-        }
-        private void buttonStopChart1_Click(object sender, EventArgs e)
-        {
-            if (_isRunningChart1)
-            {
-                _coreChart1.StopSimulation();
-            }
-        }
-        private void buttonRunChart2_Click(object sender, EventArgs e)
-        {
-            if (!_isRunningChart2)
-            {
-                for (int i = 10; i < 26; i++)
-                {
-                    var repCount = Convert.ToInt32(UpDownRepCountCH2.Value);
-                    //_coreChart2._technicWorkersCount = Convert.ToInt32(UpDownTechCH2.Value);
-                    //_coreChart2._inspectionWorkersCount = i;
-
-                    _isRunningChart2 = true;
-                    _coreChart2.SimulateAsync(repCount);
-                }
-            }
-            _chartModel2.Clear();
-        }
-
-        private void buttonStopChart2_Click(object sender, EventArgs e)
-        {
-            if (_isRunningChart2)
-            {
-                _coreChart2.StopSimulation();
-            }
-        }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
@@ -508,6 +476,107 @@ namespace DIS_1
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             _core.AgentOkolia.ZrychleniePrichodu = checkBoxZrychlenie.Checked;
+        }
+
+        private async void buttonRunChart1_Click_1(object sender, EventArgs e)
+        {
+            if (!_isRunningChart1)
+            {
+                _chartModel1.Clear();
+                _isRunningChart1 = true;
+
+                var repCount = Convert.ToInt32(RepCountCH1.Value);
+
+                AutemchaniciTyp1CH1.Enabled = false;
+                AutemchaniciTyp2CH1.Enabled = false;
+                RepCountCH1.Enabled = false;
+                buttonRunChart1.Enabled = false;
+                buttonStopChart1.Enabled = true;
+
+                _coreChart1.AgentAutomechanici.PocetAutomechanikovTyp1 = Convert.ToInt32(AutemchaniciTyp1CH1.Value);
+                _coreChart1.AgentAutomechanici.PocetAutomechanikovTyp2 = Convert.ToInt32(AutemchaniciTyp2CH1.Value);
+                for (int i = 1; i < 16; i++)
+                {
+                    _coreChart1.AgentTechnici.PocetTechnikov = i;
+
+                    if (_isRunningChart1)
+                    {
+                        await Task.Run(() => _coreChart1.Simulate(repCount));
+                    }
+                }
+                StopChart1();
+            }
+        }
+
+        private void StopChart1()
+        {
+            _isRunningChart1 = false;
+
+            AutemchaniciTyp1CH1.Enabled = true;
+            AutemchaniciTyp2CH1.Enabled = true;
+            RepCountCH1.Enabled = true;
+            buttonRunChart1.Enabled = true;
+            buttonStopChart1.Enabled = false;
+        }
+
+        private void buttonStopChart1_Click(object sender, EventArgs e)
+        {
+            if (_isRunningChart1)
+            {
+                _coreChart1.StopSimulation();
+
+                StopChart1();
+            }
+        }
+
+        private async void buttonRunChart2_Click(object sender, EventArgs e)
+        {
+            if (!_isRunningChart2)
+            {
+                _chartModel2.Clear();
+                _isRunningChart2 = true;
+
+                var repCount = Convert.ToInt32(UpDownRepCountCH2.Value);
+
+                UpDownRepCountCH2.Enabled = false;
+                UpDownTechCH2.Enabled = false;
+                buttonRunChart2.Enabled = false;
+                buttonStopChart2.Enabled = true;
+
+                _coreChart2.AgentTechnici.PocetTechnikov = Convert.ToInt32(UpDownTechCH2.Value);
+                for (int i = 10; i < 26; i++)
+                {
+                    _coreChart2.AgentAutomechanici.PocetAutomechanikovTyp1 = i;
+                    for (int j = 10; j < 26; j++)
+                    {
+                        _coreChart2.AgentAutomechanici.PocetAutomechanikovTyp2 = j;
+                        if (_isRunningChart2)
+                        {
+                            await Task.Run(() => _coreChart2.Simulate(repCount));
+                        }
+                    }
+                }
+                StopChart2();
+            }
+        }
+
+        private void StopChart2()
+        {
+            _isRunningChart2 = false;
+
+            UpDownRepCountCH2.Enabled = true;
+            UpDownTechCH2.Enabled = true;
+            buttonRunChart2.Enabled = true;
+            buttonStopChart2.Enabled = false;
+        }
+
+        private void buttonStopChart2_Click(object sender, EventArgs e)
+        {
+            if (_isRunningChart2)
+            {
+                _coreChart2.StopSimulation();
+                StopChart2();
+            }
         }
     }
 }
