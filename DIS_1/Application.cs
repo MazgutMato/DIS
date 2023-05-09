@@ -14,7 +14,7 @@ namespace DIS_1
         public MySimulation _coreChart1 { get; set; }
         public MySimulation _coreChart2 { get; set; }
         public ChartModel _chartModel1 { get; set; }
-        public ChartModel _chartModel2 { get; set; }
+        public ChartModelWorkers _chartModel2 { get; set; }
         private DateTime _startTime = new DateTime(2022, 1, 1, 9, 0, 0);
         public bool _isRunning { get; set; } = false;
         public bool _isPaused { get; set; } = false;
@@ -47,6 +47,7 @@ namespace DIS_1
             _coreChart1 = new MySimulation();
             buttonStopChart1.Enabled = false;
             _chartModel1 = new ChartModel();
+            _coreChart1.AgentSTK.AktivovatPrestavky = true;
             cartesianChart1.Series = _chartModel1._series;
             cartesianChart1.XAxes = _chartModel1._xAxes;
             cartesianChart1.YAxes = _chartModel1._yAxes;
@@ -55,8 +56,9 @@ namespace DIS_1
             _coreChart1.OnSimulationDidFinish(OnUpdateChart1);
 
             _coreChart2 = new MySimulation();
+            _coreChart2.AgentSTK.AktivovatPrestavky = true;
             buttonStopChart2.Enabled = false;
-            _chartModel2 = new ChartModel();
+            _chartModel2 = new ChartModelWorkers();
             cartesianChart2.Series = _chartModel2._series;
             cartesianChart2.XAxes = _chartModel2._xAxes;
             cartesianChart2.YAxes = _chartModel2._yAxes;
@@ -74,7 +76,8 @@ namespace DIS_1
         private void OnUpdateChart2(Simulation obj)
         {
             _chartModel2.Add(new(_coreChart2.AgentAutomechanici.PocetAutomechanikovTyp1,
-                _coreChart1.CasVSysteme.GetResult()));
+                _coreChart2.AgentAutomechanici.PocetAutomechanikovTyp2,
+                _coreChart2.CasVSysteme.GetResult() / 60));
         }
 
         private void OnSimulationWillStart(Simulation obj)
