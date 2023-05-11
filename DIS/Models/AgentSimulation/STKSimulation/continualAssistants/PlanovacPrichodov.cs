@@ -16,7 +16,7 @@ namespace DIS.Models.AgentSimulation.STKSimulation.continualAssistants
         public PlanovacPrichodov(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)
         {
-            RozdeleniePrichodZrychlene = new Exponential((double)3600 / 23 * 0.76);
+            RozdeleniePrichodZrychlene = new Exponential((double)3600 / (23 * 1.24));
             RozdeleniePrichod = new Exponential((double)3600 / 23);
             var empParams = new List<EmpiricalParam>();
             empParams.AddRange(new[] {
