@@ -115,18 +115,22 @@ namespace DIS_1
                 _core.AgentAutomechanici.PocetAutomechanikovTyp1.ToString(),
                 _core.AgentAutomechanici.PocetAutomechanikovTyp2.ToString(),
                 _core.PocetVozidielVSysteme.GetResult().ToString(),
-                _core.PocetVozidielVSysteme.ConfidenceInterval(95).ToString(),
+                Math.Round((_core.PocetVozidielVSysteme.ConfidenceInterval(95).Item1),2).ToString() + " - " +
+                    Math.Round((_core.PocetVozidielVSysteme.ConfidenceInterval(95).Item2),2).ToString(),
                 _core.PocetVozidielNaKonciDna.GetResult().ToString(),
-                _core.CasVSysteme.GetResult().ToString(),
-                _core.CasVSysteme.ConfidenceInterval(90).ToString(),
-                _core.CasCakaniaPrevzatie.GetResult().ToString(),
+                (_core.CasVSysteme.GetResult() / 60).ToString(),
+                Math.Round((_core.CasVSysteme.ConfidenceInterval(90).Item1 / 60),2).ToString() + " - " +
+                    Math.Round((_core.CasVSysteme.ConfidenceInterval(90).Item2 / 60),2).ToString(),
+                (_core.CasCakaniaPrevzatie.GetResult() / 60).ToString(),
                 _core.DlzkaRadyPrevzatie.GetResult().ToString(),
                 _core.VytazenieTechnici.GetResult().ToString(),
                 _core.VytazenieAutomechaniciTyp1.GetResult().ToString(),
                 _core.VytazenieAutomechaniciTyp2.GetResult().ToString(),
+                ((_core.AgentTechnici.PocetTechnikov * 1100) + (_core.AgentAutomechanici.PocetAutomechanikovTyp1 * 1500) +
+                    (_core.AgentAutomechanici.PocetAutomechanikovTyp2 * 1500)).ToString(),
             };
 
-            string csvFilePath = "..\\..\\..\\data.csv";
+            string csvFilePath = "..\\..\\..\\..\\data_nova.csv";
 
             // Check if the file exists
             bool fileExists = File.Exists(csvFilePath);
@@ -151,7 +155,9 @@ namespace DIS_1
                         "Dlzka rady",
                         "Volni technici",
                         "Volni automechanici typ 1",
-                        "Volni automechanici typ 2", };
+                        "Volni automechanici typ 2",
+                        "Potrebne financie"
+                    };
                     writer.WriteLine(string.Join(";", headers));
                 }
 
@@ -332,6 +338,13 @@ namespace DIS_1
                     var dataGridViewRowInspection2 = new DataGridViewRow();
                     dataGridViewRowInspection2.CreateCells(dataGridViewGlobal, "Volni automechanici typ 2", _core.VytazenieAutomechaniciTyp2.GetResult(), "automechanikov");
                     dataGridViewGlobal.Rows.Add(dataGridViewRowInspection2);
+
+                    //Priemrny plat
+                    var plat = ((_core.AgentTechnici.PocetTechnikov * 1100) + (_core.AgentAutomechanici.PocetAutomechanikovTyp1 * 1500) +
+                        (_core.AgentAutomechanici.PocetAutomechanikovTyp2 * 2000));
+                    var dataGridViewRowPlat = new DataGridViewRow();
+                    dataGridViewRowPlat.CreateCells(dataGridViewGlobal, "Priemerny plat", plat, "eur");
+                    dataGridViewGlobal.Rows.Add(dataGridViewRowPlat);
                 }));
             }
         }
@@ -547,20 +560,20 @@ namespace DIS_1
                 buttonStopChart2.Enabled = true;
 
                 _coreChart2.AgentTechnici.PocetTechnikov = Convert.ToInt32(UpDownTechCH2.Value);
-                for (int i = 10; i < 26; i++)
+                for (int j = 5; j < 15; j++)
                 {
-                    _coreChart2.AgentAutomechanici.PocetAutomechanikovTyp1 = i;
-                    for (int j = 10; j < 26; j++)
+                    _coreChart2.AgentAutomechanici.PocetAutomechanikovTyp2 = j;
+                    for (int i = 5; i < 15; i++)
                     {
-                        _coreChart2.AgentAutomechanici.PocetAutomechanikovTyp2 = j;
+                        _coreChart2.AgentAutomechanici.PocetAutomechanikovTyp1 = i;
                         if (_isRunningChart2)
                         {
                             await Task.Run(() => _coreChart2.Simulate(repCount));
                         }
                     }
                 }
-                StopChart2();
             }
+            StopChart2();
         }
 
         private void StopChart2()

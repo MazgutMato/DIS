@@ -690,7 +690,7 @@
             // technici
             // 
             technici.Anchor = AnchorStyles.None;
-            technici.Location = new Point(156, 4);
+            technici.Location = new Point(156, 5);
             technici.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             technici.Name = "technici";
             technici.Size = new Size(43, 23);
@@ -700,7 +700,7 @@
             // AutomechaniciTyp2
             // 
             AutomechaniciTyp2.Anchor = AnchorStyles.None;
-            AutomechaniciTyp2.Location = new Point(156, 33);
+            AutomechaniciTyp2.Location = new Point(156, 40);
             AutomechaniciTyp2.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             AutomechaniciTyp2.Name = "AutomechaniciTyp2";
             AutomechaniciTyp2.Size = new Size(43, 23);
@@ -999,9 +999,9 @@
             tableLayoutPanel5.Location = new Point(4, 28);
             tableLayoutPanel5.Name = "tableLayoutPanel5";
             tableLayoutPanel5.RowCount = 3;
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 49F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 48.2758636F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 51.7241364F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 38F));
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel5.Size = new Size(223, 110);
             tableLayoutPanel5.TabIndex = 9;
@@ -1010,7 +1010,7 @@
             // 
             label2.Anchor = AnchorStyles.None;
             label2.AutoSize = true;
-            label2.Location = new Point(42, 7);
+            label2.Location = new Point(42, 9);
             label2.Name = "label2";
             label2.Size = new Size(50, 15);
             label2.TabIndex = 73;
@@ -1020,7 +1020,7 @@
             // 
             AutomechaniciTyp1.Anchor = AnchorStyles.None;
             AutomechaniciTyp1.Enabled = false;
-            AutomechaniciTyp1.Location = new Point(156, 72);
+            AutomechaniciTyp1.Location = new Point(156, 78);
             AutomechaniciTyp1.Name = "AutomechaniciTyp1";
             AutomechaniciTyp1.Size = new Size(43, 23);
             AutomechaniciTyp1.TabIndex = 74;
@@ -1031,21 +1031,21 @@
             // 
             label14.Anchor = AnchorStyles.None;
             label14.AutoSize = true;
-            label14.Location = new Point(14, 69);
+            label14.Location = new Point(8, 82);
             label14.Name = "label14";
-            label14.Size = new Size(105, 30);
+            label14.Size = new Size(118, 15);
             label14.TabIndex = 73;
-            label14.Text = "Automechanici (osobne, dodavka)";
+            label14.Text = "Automechanici Typ 1";
             // 
             // label22
             // 
             label22.Anchor = AnchorStyles.None;
             label22.AutoSize = true;
-            label22.Location = new Point(13, 30);
+            label22.Location = new Point(8, 44);
             label22.Name = "label22";
-            label22.Size = new Size(107, 28);
+            label22.Size = new Size(118, 15);
             label22.TabIndex = 72;
-            label22.Text = "Automechanici (osobne, dodavka, nakladne)";
+            label22.Text = "Automechanici Typ 2";
             // 
             // label21
             // 

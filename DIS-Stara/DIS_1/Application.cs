@@ -75,17 +75,19 @@ namespace DIS_1
                 core._technicWorkersCount.ToString(),
                 core._inspectionWorkersCount.ToString(),
                 core._vehicleInSystemGlobal.GetResult().ToString(),
-                core._vehicleInSystemGlobal.ConfidenceInterval(95).ToString(),
+                Math.Round((core._vehicleInSystemGlobal.ConfidenceInterval(95).Item1 / 60),2).ToString() + " - " +
+                    Math.Round((core._vehicleInSystemGlobal.ConfidenceInterval(95).Item2 / 60),2).ToString(),
                 core._vehiclesAtTheEnd.GetResult().ToString(),
-                core._timeInSystemGlobal.GetResult().ToString(),
-                core._timeInSystemGlobal.ConfidenceInterval(90).ToString(),
-                core._waitingTimeGlobal.GetResult().ToString(),
+                (core._timeInSystemGlobal.GetResult() / 60).ToString(),
+                Math.Round(( core._timeInSystemGlobal.ConfidenceInterval(90).Item1 / 60),2).ToString() + " - " +
+                    Math.Round(( core._timeInSystemGlobal.ConfidenceInterval(90).Item2 / 60),2).ToString(),
+                (core._waitingTimeGlobal.GetResult() / 60).ToString(),
                 core._lineLengthGlobal.GetResult().ToString(),
                 core._freeTechnicalGlobal.GetResult().ToString(),
                 core._freeInspectionGlobal.GetResult().ToString(),                
             };
 
-            string csvFilePath = "..\\..\\..\\data.csv";
+            string csvFilePath = "..\\..\\..\\..\\..\\data_stara.csv";
 
             // Check if the file exists
             bool fileExists = File.Exists(csvFilePath);
